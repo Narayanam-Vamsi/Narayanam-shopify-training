@@ -1,0 +1,178 @@
+{{ 'offer-flash-sale-timer.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+{%- style -%}
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+  .section-{{ section.id }}-margin {
+    margin-top: {{ section.settings.margin_top_desktop }}px;
+  }
+
+  .offer-flash-sale-timer-container .countdown-timer-announce {
+    background: {{section.settings.timer_bg}}
+  }
+
+  .offer-flash-sale-timer-container .countdown-timer-announce{
+    margin{{section.settings.timer_alignment}}: auto;
+  }
+
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+    .section-{{ section.id }}-margin {
+    margin-top: {{ section.settings.margin_top_mobile }}px;
+  }
+  }
+{%- endstyle -%}
+
+{% if section.settings.saleEnd != blank %}
+  <section class="offer-flash-sale-timer-container page-width section-{{ section.id }}-margin" id="{{ section.id }}">
+    <div id="offer-countdown-timer-new" class="saleStartParent">
+      <div class="countdown-timer-announce">
+        <h5 class="expire-text">Expire in:</h5>
+        <div class="offerSalesCount">
+          <h4 id="offer_time_hour" class="time">0</h4>
+          <span>:</span>
+        </div>
+        <div class="offerSalesCount">
+          <h4 id="offer_time_min" class="time">0</h4>
+          <span>:</span>
+        </div>
+        <div class="offerSalesCount">
+          <h4 id="offer_time_sec" class="time">0</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+<script>
+  // Define the sale end date and time (example: October 31, 2023, at 12:00:00 UTC)
+  //const offerSaleEnd = new Date("2023-10-13 19:00:00");
+  const offerSaleEnd = new Date('{{ section.settings.saleEnd }}');
+
+  function updateTimer() {
+    // Current date and time
+    const now = new Date();
+    const timeDifference = offerSaleEnd - now;
+
+    if (timeDifference <= 0) {
+      // If the timer has expired, hide the countdown block
+      document.getElementById('offer-countdown-timer-new').style.display = 'none';
+    } else {
+      // Calculate hours, minutes, and seconds
+      const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+      // Add leading zeros if needed
+      const formattedHours = String(hours).padStart(2, '0');
+      const formattedMinutes = String(minutes).padStart(2, '0');
+      const formattedSeconds = String(seconds).padStart(2, '0');
+
+      // Update the timer display
+      document.getElementById('offer_time_hour').textContent = formattedHours;
+      document.getElementById('offer_time_min').textContent = formattedMinutes;
+      document.getElementById('offer_time_sec').textContent = formattedSeconds;
+    }
+  }
+
+  // Call the function to start the timer immediately
+  updateTimer();
+
+  // Update the timer every second using setInterval
+  setInterval(updateTimer, 1000);
+</script>
+
+{% schema %}
+{
+  "name": "Offer Flash Sale Timer",
+  "settings": [
+    {
+      "type": "range",
+      "id": "margin_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Top Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Top Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "text",
+      "id": "saleEnd",
+      "label": "Enter Sale End Date",
+      "info": "Enter End Date Like: year-month-day space hours:minutes:seconds (2023-10-13 19:00:00)"
+    },
+    {
+      "type": "select",
+      "id": "timer_alignment",
+      "label": "Timer Alignment",
+      "options": [
+        {
+          "value": "-right",
+          "label": "Left"
+        },
+        {
+          "value": "",
+          "label": "Center"
+        },
+        {
+          "value": "-left",
+          "label": "Right"
+        }
+      ],
+      "default": "-left"
+    },
+    {
+      "type": "color",
+      "id": "timer_bg",
+      "label": "Background Color",
+      "default": "#54c5d0"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Offer Flash Sale Timer"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,255 @@
+{{ 'our-story-t2.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+  .custom-page-width{ padding: 0 20px; }
+
+  .our-story-t2 .read_button {
+    background: {{section.settings.body_bg_color}};
+    color: {{section.settings.btn_text_color}}
+  }
+
+  @media screen and (min-width: 750px) {
+    .custom-page-width{ padding: 0 9%; }
+  }
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-padding {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+    @media screen and (min-width: 750px) and (max-width: 1499px){
+    .custom-page-width {
+      padding: 0 5%;
+    }
+  }
+{%- endstyle -%}
+
+<section class="our-story-t2  custom-page-width section-{{ section.id }}-padding">
+  <!-- main div starts -->
+  <!-- code for ddesktop -->
+  <div class="main_container_Desktop makeover-hidden">
+    <div class="left_flex">
+      {% if section.settings['Desktop-left-Image'] != blank %}
+        <div
+          class="inner_left_box "
+          style="transition-delay:200ms;"
+        >
+          {% assign desktopAlt = section.settings['Desktop-left-Image'].alt | default: 'desktop-left-image' %}
+          {{
+            section.settings['Desktop-left-Image']
+            | image_url: width: 600
+            | image_tag: class: 'Desktop-left-Image', loading: 'lazy', alt: desktopAlt
+          }}
+        </div>
+      {% endif %}
+      <div
+        class="inner_right_box "
+        style="transition-delay:400ms;"
+      >
+        {% if section.settings['Desktop-inner-right-Image'] != blank %}
+          <div>
+            {% assign desktopAlt = section.settings['Desktop-inner-right-Image'].alt
+              | default: 'Desktop-inner-right-Image '
+            %}
+            {{
+              section.settings['Desktop-inner-right-Image']
+              | image_url: width: 300
+              | image_tag: class: 'Desktop-inner-right-Image ', loading: 'lazy', alt: desktopAlt
+            }}
+          </div>
+        {% endif %}
+
+        <p class="desktop_title_text">{{ section.settings.inner_right_title }}</p>
+        <p class="desktop_Description_text">{{ section.settings.inner_right_Description }}</p>
+
+        <a href="{{ section.settings.button_link }}">
+          <p class="read_button">{{ section.settings.read_btn_text }}</p>
+        </a>
+      </div>
+    </div>
+    <div
+      class="right_flex"
+      style="transition-delay:600ms;"
+    >
+      <p class="outer_Righttitle">{{ section.settings.outer_right_div_title }}</p>
+      {% if section.settings['Desktop-outerdiv_right-Image'] != blank %}
+        <div>
+          {% assign desktopAlt = section.settings['Desktop-outerdiv_right-Image'].alt
+            | default: 'Desktop-outerdiv_right-Image'
+          %}
+          {{
+            section.settings['Desktop-outerdiv_right-Image']
+            | image_url: width: 600
+            | image_tag: class: 'Desktop-outerdiv_right-Image', loading: 'lazy', alt: desktopAlt
+          }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- code for mobile -->
+  <div class="main_container_mobile makeover-hidden">
+    <div class="topdiv_mobile">
+      {% if section.settings['mobile-topdiv_left-Image'] != blank %}
+        <div class="topdiv_mobile_leftimg" style="transition-delay:200ms;">
+          {% assign desktopAlt = section.settings['mobile-topdiv_left-Image'].alt
+            | default: 'mobile-topdiv_left-Image'
+          %}
+          {{
+            section.settings['mobile-topdiv_left-Image']
+            | image_url: width: 300
+            | image_tag: class: 'mobile-topdiv_left-Image', loading: 'lazy', alt: desktopAlt
+          }}
+        </div>
+      {% endif %}
+      <div class="topdiv_mobile_rightimg" style="transition-delay:400ms;">
+        <p class="mobile_top_right_title">{{ section.settings.outer_right_div_title }}</p>
+        {% if section.settings['mobile-topdiv_right-Image'] != blank %}
+          {% assign desktopAlt = section.settings['mobile-topdiv_right-Image'].alt
+            | default: 'mobile-topdiv_right-Image'
+          %}
+          {{
+            section.settings['mobile-topdiv_right-Image']
+            | image_url: width: 300
+            | image_tag: class: 'mobile-topdiv_right-Image', loading: 'lazy', alt: desktopAlt
+          }}
+        {% endif %}
+      </div>
+    </div>
+    <div class="bottomdiv_mobile" style="transition-delay:600ms;">
+      <p class="mobile_title_text">{{ section.settings.inner_right_title }}</p>
+      <p class="mobile_Description_text">{{ section.settings.inner_right_Description }}</p>
+      <a href="{{ section.settings.button_link }}">
+        <p class="read_button">{{ section.settings.read_btn_text }}</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const observer2 = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show-makeover');
+      }
+    });
+  });
+
+  const hiddenElement = document.querySelectorAll('.makeover-hidden');
+  hiddenElement.forEach((element) => {
+    observer2.observe(element);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Our Story T2",
+  "settings": [
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "image_picker",
+      "id": "Desktop-left-Image",
+      "label": "Desktop Left Image",
+      "info": "Image size should be 354px X 516px"
+    },
+    {
+      "type": "image_picker",
+      "id": "Desktop-inner-right-Image",
+      "label": "Desktop Inner Right Image",
+      "info": "Image size should be 200px X 170px"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile-topdiv_left-Image",
+      "label": "Mobile Top Left Image",
+      "info": "Image size should be 200px X 290px"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile-topdiv_right-Image",
+      "label": "Mobile Top Right Image",
+      "info": "Image size should be 190px X 170px"
+    },
+    {
+      "type": "text",
+      "id": "inner_right_title",
+      "label": "Enter Main Title",
+      "default": "Enter Title"
+    },
+    {
+      "type": "text",
+      "id": "inner_right_Description",
+      "label": "Enter Description",
+      "default": "Enter Description"
+    },
+    {
+      "type": "text",
+      "id": "outer_right_div_title",
+      "label": "Outer Right Section Title",
+      "default": "Enter title"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button's text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "body_bg_color",
+      "label": "Button's Background",
+      "default": "#000000"
+    },
+    {
+      "type": "text",
+      "id": "read_btn_text",
+      "label": "Read Our Story Button Text",
+      "default": "READ OUR STORY"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Read More Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "Desktop-outerdiv_right-Image",
+      "label": "Desktop Outer Right Image",
+      "info": "Image size should be 180px X 220px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Story T2"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

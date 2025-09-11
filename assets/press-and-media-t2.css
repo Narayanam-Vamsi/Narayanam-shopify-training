@@ -1,0 +1,277 @@
+.press-media-container-t2 .top-up-container .main-heading {
+  line-height: normal;
+  margin-bottom: 5px;
+}
+.press-media-container-t2 .top-up-container .subheading {
+  margin-bottom: 28px;
+}
+
+@media screen and (min-width: 768px) {
+  .press-media-container-t2 .swiper {
+    width: 100%;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .press-media-container-t2 {
+    background: #fcf9f4;
+  }
+
+  .press-media-container-t2 .mediaSwiper .swiper-slide {
+    width: calc(235 * (100vw / 1600));
+    margin-right: 10px;
+  }
+
+  .press-media-container-t2 .swiper-slide {
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .press-media-container-t2 .mySwiper {
+    height: 20%;
+    box-sizing: border-box;
+    padding: 10px 0;
+  }
+  .press-media-container-t2 .mySwiper .swiper-slide {
+    width: 25%;
+    height: 100%;
+    opacity: 0.4;
+  }
+  .press-media-container-t2 .mySwiper .swiper-slide-thumb-active {
+    opacity: 1;
+  }
+  .press-media-container-t2 .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  .press-media-container-t2 .center_text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+    font-family: "Jost-Regular";
+    width: 60%;
+    text-align: center;
+    margin: 0px;
+    font-size: calc(26 * (100vw / 1600));
+    font-weight: 500;
+    line-height: calc(40 * (100vw / 1600));
+    letter-spacing: 0.26px;
+  }
+
+  .press-media-container-t2 .Brands_testimonial_image {
+    width: 100%;
+    height: auto;
+  }
+  .press-media-container-t2 .swiper-slide-thumb-active:after {
+    content: "";
+    border-bottom: 2px solid #000;
+    margin-top: 14px;
+    position: absolute;
+    width: 51px;
+    bottom: 40px;
+  }
+
+  .press-media-container-t2 .button_style {
+    font-size: 1.25vw;
+    line-height: 2.875vw;
+    color: #000000;
+    position: relative;
+    pointer-events: auto;
+  }
+
+  .press-media-container-t2 .swiper-wrapper a {
+    text-decoration: none;
+  }
+
+  .press-media-container-t2 .Brands_testimonial_image {
+    filter: grayscale(1);
+  }
+  /* .press-media-container-t2 .Brands_testimonial_image:hover {
+      filter: grayscale(0);
+    }
+    .press-media-container-t2 .swiper-slide-thumb-active {
+      .Brands_testimonial_image {
+        filter: grayscale(0);
+      } */
+}
+.press-media-container-t2 .bottom_line2 {
+  position: absolute;
+  width: 9.3rem;
+  bottom: 13px;
+  border: 1px solid black;
+}
+.press-media-container-t2 .swiper-wrapper a {
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.press-media-container-t2 .mediaSwiper .center_text {
+  display: none;
+}
+.press-media-container-t2 .mediaSwiper .swiper-slide-active .center_text {
+  display: block;
+  width: 100%;
+}
+.press-media-container-t2 .mediaSwiper .swiper-slide-active .Brands_testimonial_image {
+  filter: grayscale(0);
+}
+.press-media-container-t2 .mediaSwiper .swiper-slide-active .custom-border {
+  display: block !important;
+}
+.press-media-container-t2 .my-text {
+  width: 100%;
+  height: 50%;
+  /* text-align: center;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%); */
+}
+.press-media-container-t2 .image-div {
+  width: 100%;
+  height: 50%;
+}
+.press-media-container-t2 .custom-border {
+  height: 2px;
+  width: 30%;
+  background-color: black;
+}
+
+.press-media-container-t2 .swiper-button-prev {
+  display: none;
+}
+.press-media-container-t2 .swiper-button-next {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .press-media-container-t2 .center_text {
+    width: 100%;
+  }
+  .press-media-container-t2 .top-up-container .main-heading {
+    line-height: 1.1;
+  }
+  .press-media-container-t2 .top-up-container .subheading {
+    line-height: 1.1;
+  }
+
+  .press-media-container-t2 .mediaSwiper .swiper-slide {
+    width: calc(131 * (100vw / 428));
+  }
+
+  .press-media-container-t2 .swiper {
+    width: 100%;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .press-media-container-t2 {
+    background: #fcf9f4;
+  }
+  .press-media-container-t2 .swiper-slide {
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .press-media-container-t2 .mySwiper {
+    height: 20%;
+    box-sizing: border-box;
+    padding: 10px 0;
+  }
+  .press-media-container-t2 .mySwiper .swiper-slide {
+    width: 25%;
+    height: 100%;
+    opacity: 0.4;
+  }
+  .press-media-container-t2 .mySwiper .swiper-slide-thumb-active {
+    opacity: 1;
+  }
+  .press-media-container-t2 .image-div {
+    height: 30%;
+  }
+  .press-media-container-t2 .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  .press-media-container-t2 .center_text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #000000;
+    line-height: 26px;
+    font-family: "Jost-Regular";
+    width: 95%;
+    text-align: center;
+    margin: 0px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+  }
+
+  .press-media-container-t2 .Brands_testimonial_image {
+    width: 100%;
+    height: auto;
+  }
+  .press-media-container-t2 .swiper-slide-thumb-active:after {
+    content: "";
+    border-bottom: 2px solid #000;
+    margin-top: 14px;
+    position: absolute;
+    width: 51px;
+    bottom: 35px;
+  }
+
+  .press-media-container-t2 .button_style {
+    font-size: 20px;
+    line-height: 46px;
+    color: #000000;
+    position: relative;
+    pointer-events: auto;
+  }
+  .press-media-container-t2 .swiper-wrapper a {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+  }
+
+  .press-media-container-t2 .Brands_testimonial_image {
+    filter: grayscale(1);
+  }
+  /* .press-media-container-t2 .Brands_testimonial_image:hover {
+      filter: grayscale(0);
+    }
+    .press-media-container-t2 .swiper-slide-thumb-active {
+      .Brands_testimonial_image {
+        filter: grayscale(0);
+      }
+    } */
+  .press-media-container-t2 .bottom_line2 {
+    position: absolute;
+    width: 98px;
+    bottom: 23px;
+    border: 1px solid black;
+  }
+  .press-media-container-t2 .swiper-button-prev {
+    display: none;
+  }
+  .press-media-container-t2 .swiper-button-next {
+    display: none;
+  }
+}

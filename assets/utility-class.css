@@ -1,0 +1,220 @@
+@charset "UTF-8";
+
+/*
+ __        ,           .___       ,   .  .       .   ,    
+/  `. . __-+- _ ._ _   [__  _ ._ -+-  |  | _ * _ |_ -+- __
+\__.(_|_)  | (_)[ | )  |   (_)[ ) |   |/\|(/,|(_][ ) | _) 
+                                              ._|         
+*/
+
+.fw-100 {
+  font-family: var(--font-family-100);
+  font-weight: 100;
+}
+.fw-200 {
+  font-family: var(--font-family-200);
+  font-weight: 200;
+}
+.fw-300 {
+  font-family: var(--font-family-300);
+  font-weight: 300;
+}
+.fw-400 {
+  font-family: var(--font-family-400);
+  font-weight: 400;
+}
+.fw-500 {
+  font-family: var(--font-family-500);
+  font-weight: 500;
+}
+.fw-600 {
+  font-family: var(--font-family-600);
+  font-weight: 600;
+}
+.fw-700 {
+  font-family: var(--font-family-700);
+  font-weight: 700;
+}
+.fw-800 {
+  font-family: var(--font-family-800);
+  font-weight: 800;
+}
+.fw-900 {
+  font-family: var(--font-family-900);
+  font-weight: 900;
+}
+/* Custom Font Weights */
+
+/* Used For: Docked Utility Bar */
+.pointer-events-none {
+  pointer-events: none;
+}
+.pointer-events-unset {
+  pointer-events: unset;
+}
+.visible {
+  visibility: visible;
+}
+.invisible {
+  visibility: hidden;
+}
+.collapse {
+  visibility: collapse;
+}
+.fixed {
+  position: fixed;
+}
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+}
+.top-0 {
+  top: 0;
+}
+.right-0 {
+  right: 0;
+}
+.bottom-0 {
+  bottom: 0;
+}
+.left-0 {
+  left: 0;
+}
+.m-0 {
+  margin: 0;
+}
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.mb-0 {
+  margin-bottom: 0;
+}
+.block {
+  display: block;
+}
+.inline-block {
+  display: inline-block;
+}
+.inline {
+  display: inline;
+}
+.flex {
+  display: flex;
+}
+.inline-flex {
+  display: inline-flex;
+}
+.table {
+  display: table;
+}
+.display-grid {
+  display: grid;
+}
+.hidden,
+.not-show {
+  display: none;
+}
+.h-full {
+  height: 100%;
+}
+.w-full {
+  width: 100%;
+}
+.w-auto {
+  width: auto;
+}
+.flex-auto {
+  flex: 1 1 auto;
+}
+.flex-none {
+  flex: none;
+}
+.basis-full {
+  flex-basis: 100%;
+}
+.columns-1 {
+  columns: 1;
+}
+.columns-2 {
+  columns: 2;
+}
+.flex-col {
+  flex-direction: column;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+.flex-row {
+  flex-direction: row;
+}
+.flex-column {
+  flex-direction: column;
+}
+.items-start {
+  align-items: flex-start;
+}
+.items-end {
+  align-items: flex-end;
+}
+.items-center {
+  align-items: center;
+}
+.justify-start {
+  justify-content: flex-start;
+}
+.justify-end {
+  justify-content: flex-end;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.text-center {
+  text-align: center;
+}
+.text-start {
+  text-align: start;
+}
+.text-end {
+  text-align: end;
+}
+.text-sm {
+  font-size: 0.8em;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+.capitalize {
+  text-transform: capitalize;
+}
+.text-current {
+  color: currentColor;
+}
+.underline {
+  text-decoration-line: underline;
+}
+.border-radius {
+  border-radius: 10px;
+}
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

@@ -1,0 +1,51 @@
+{{ 'pdp-usp-swiper.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+{% assign uspImage = product.metafields.custom.product_usp_image.value %}
+{% assign uspTitle = product.metafields.custom.product_usp_title.value %}
+
+<div class="usp-content-container-scroll-container" {{ block.shopify_attributes }}>
+  <div class="swiper usp_Images">
+    <div class="swiper-wrapper">
+      {% for usp_image in uspImage %}
+        <div class="swiper-slide">
+          <div class="usp-image-content">
+            {% assign alt = usp_image.alt | default: 'USP of the Product' %}
+            {{ usp_image | image_url: width: 180 | image_tag: class: 'usp-image', loading: 'lazy', alt: alt }}
+            <p class="usp-title">{{ uspTitle[forloop.index0] }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+    window.addEventListener(
+      'DOMContentLoaded',
+      () => {
+      const uspImages = new Swiper(`.usp_Images`, {
+      slidesPerView: {{ slidesPerViewMobile }},
+      spaceBetween: 10,
+      breakpoints: {
+        600: {
+          slidesPerView: 4,
+          spaceBetween: 15,
+        },
+        890: {
+          slidesPerView: 3,
+          spaceBetween: 14,
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 14,
+        },
+        1280: {
+          slidesPerView: {{ slidesPerViewDesktop }},
+          spaceBetween: 25,
+        },
+      },
+    });
+  },
+  { once: true }
+  );
+</script>

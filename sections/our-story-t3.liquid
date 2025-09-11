@@ -1,0 +1,296 @@
+{{ 'our-story-t3.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+      .main-our-story-t3-wrapper{
+        padding: 4%;background: {{section.settings.color-background}}; margin-top: {{ section.settings.margin-top }}px; margin-bottom: {{ section.settings.margin-bottom }}px;}
+      .main-our-story-t3-wrapper .swiper-button-next:after, .swiper-button-prev:after {
+        content: none;
+    }
+
+    .about-desc p:nth-of-type(2) {
+      padding: 10px 0;
+    }
+    .about-title {
+      color: {{ section.settings.heading_color }}
+    }
+    .our-story-t3 .right-wrapper p {
+      color: {{ section.settings.desc_color }}
+    }
+    .our-story-t3 .right-wrapper .Button {
+      background: {{section.settings.btn_bg}};
+    }
+    .our-story-t3 .right-wrapper .Button .btn-txt{
+      color: {{section.settings.btn_text_color}};
+    }
+</style>
+
+<div class="main-our-story-t3-wrapper" id="{{- section.id -}}">
+  <div class="our-story-t3">
+    <div class="left-wrapper">
+      {% if section.settings.heading != blank %}
+        <h2 class="mobAbout-title about-title">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.desktop_video != blank %}
+        <div class="disktopfullImage">
+          {% render 'video',
+            videoObj: section.settings.desktop_video,
+            lazy: true,
+            mutedOnLoad: true,
+            muteButtons: true,
+            loop: true,
+            controlsList: 'nodownload'
+          %}
+        </div>
+      {% else %}
+        {%- if section.settings.desktop_image != blank -%}
+          <div class="disktopfullImage">
+            {% assign desktopAlt = section.settings.desktop_image.alt | default: 'desktop-left-image' %}
+            {{ section.settings.desktop_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: desktopAlt }}
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+    <div class="right-wrapper">
+      <div class="about-desc">
+        {% if section.settings.heading != blank %}
+          <h2 class="deskAbout-title about-title">{{ section.settings.heading }}</h2>
+        {% endif %}
+
+        {% if section.settings.para != blank %}
+          {{ section.settings.para }}
+        {% endif %}
+        {% if section.settings.btn_url != blank %}
+          <a class="h6 Button" href="{{ section.settings.btn_url }}">
+            <p class="btn-txt">
+              <span>{{- section.settings.btn_txt }}</span>
+              {% render 'icon-arrow' -%}
+            </p>
+          </a>
+        {% endif %}
+      </div>
+      <div class="swiperContainer">
+        <div class="swiper mySwiper aboutSlideWrapper">
+          <div class="swiper-wrapper">
+            {% for card in section.blocks %}
+              {% if card.type == 'slider-card' %}
+                <div class="aboutCard swiper-slide">
+                  {% if card.settings.image %}
+                    <div class="cardImage">
+                      {% assign slideCardAlt = card.settings.image.alt | default: 'card image' %}
+                      {{ card.settings.image | image_url: width: 50 | image_tag: loading: 'lazy', alt: slideCardAlt }}
+                    </div>
+                  {% endif %}
+                  {% if card.settings.slideheading != blank %}
+                    <p class="h6 font-w-400 slide-aboutTitle">{{ card.settings.slideheading }}</p>
+                  {% endif %}
+                  {% if card.settings.slidedesc != blank %}
+                    <p class="slidedesc">{{ card.settings.slidedesc }}</p>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="swiper-pagination aboutSlidePagination"></div>
+        </div>
+        <div class="swiper-button-next nextButton homeaboutnext">
+          {% render 'all-icon' with 'next-arrow' %}
+        </div>
+        <div class="swiper-button-prev prevButton homeaboutprev">
+          {% render 'all-icon' with 'prev-arrow' %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="aboutPolicyWrapper">
+    {% for block in section.blocks %}
+      {% if block.type == 'return-policy' %}
+        <div class="policyWrapper">
+          {% if block.settings.policy_image != blank %}
+            <div class="policyImage">
+              {% assign policyImageAlt = block.settings.policy_image.alt | default: 'card image' %}
+              {{ block.settings.policy_image | image_url: width: 50 | image_tag: loading: 'lazy', alt: policyImageAlt }}
+            </div>
+          {% endif %}
+          {% if block.settings.policy_heading != blank %}
+            <p class="h6">{{ block.settings.policy_heading }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {   let aboutSlideWrapper = new Swiper(".swiper.mySwiper.aboutSlideWrapper", {
+    slidesPerView: 1.5,
+    spaceBetween:10,
+    speed:1000,
+  {% if section.settings.autoplay %}
+     autoplay: {
+      delay: 2500,
+      disableOnInteraction: false,
+    },
+      {% endif %}
+    pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+    navigation: {
+          nextEl: ".homeaboutnext",
+          prevEl: ".homeaboutprev",
+        },
+  }); }, { once: true });
+</script>
+
+<script>
+  window.addEventListener(
+    'DOMContentLoaded',
+    () => {
+      (async () => {
+        const videoElement = document.querySelector('#{{- section.id }} video-element');
+        if (videoElement) {
+          new VideoPlayer(videoElement);
+        }
+      })();
+    },
+    { once: true }
+  );
+</script>
+
+{% schema %}
+{
+  "name": "Our Story T3",
+  "settings": [
+    {
+      "type": "color_background",
+      "id": "color-background",
+      "label": "Background",
+      "default": "linear-gradient(#ffffff, #000000)"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "select desktop Image"
+    },
+    {
+      "type": "video",
+      "id": "desktop_video",
+      "label": "Desktop Video",
+      "info": "Video Ratio should be 1920px X 710px, Format:mp4, Size:10mb"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "heading",
+      "default": "About Us"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Text Color",
+      "default": "#fff"
+    },
+    {
+      "type": "richtext",
+      "id": "para",
+      "label": "description"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description Text Color",
+      "default": "#fff"
+    },
+    {
+      "type": "text",
+      "id": "btn_txt",
+      "label": "Button Text",
+      "default": "Read More"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button Text Color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Slide autoplay ON/OFF",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "margin-top",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slider-card",
+      "name": "slider-card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "card image"
+        },
+        {
+          "type": "text",
+          "id": "slideheading",
+          "label": "heading"
+        },
+        {
+          "type": "text",
+          "id": "slidedesc",
+          "label": "description"
+        }
+      ]
+    },
+    {
+      "type": "return-policy",
+      "name": "return-policy",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "policy_image",
+          "label": "select-image"
+        },
+        {
+          "type": "text",
+          "id": "policy_heading",
+          "label": "heading"
+        }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Our Story T3" }]
+}
+{% endschema %}

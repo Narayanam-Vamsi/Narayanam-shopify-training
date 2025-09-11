@@ -1,0 +1,68 @@
+.offers_accordian_tab {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.offers_for_you_accordian .swiper-slide {
+  width: auto;
+}
+
+.offers_for_you_accordian .icon-caret {
+  height: calc(var(--font-heading-scale) * 0.6rem);
+}
+
+.offers_for_accordian_swiper .offers-card {
+  margin-bottom: 5px;
+  padding: 14px 15px;
+  max-width: 280px;
+  min-width: 280px;
+  border-radius: 4px;
+  background: #e3f2fd;
+  box-shadow: 0 2px 3px #00000040;
+}
+
+.discount-name {
+  color: #000;
+  line-height: 23px;
+  margin-bottom: 15px;
+}
+
+.offers1-div {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px dashed #000;
+  background: #fff;
+}
+
+.offers_accordian_content {
+  display: block;
+  overflow: hidden;
+  max-height: 0px;
+  transition: max-height 0.2s ease-out;
+  padding-top: 15px;
+}
+
+.centralize {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #000;
+}
+
+.copy_offer_btn {
+  color: #000;
+}
+
+.centralize.copy svg {
+  cursor: pointer;
+}
+
+.offers_accordian_tab .icon-caret {
+  margin-right: 15px;
+}
+
+.offers_accordian_tab.active .icon-caret {
+  transform: rotate(180deg);
+}

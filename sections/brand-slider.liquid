@@ -1,0 +1,211 @@
+{{ 'brand-slider.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  #{{ section.id }}.brand-slider {
+    padding-top: {{ section.settings.padding_top}}px;
+    padding-bottom: {{ section.settings.padding_bottom}}px;
+  }
+
+  #{{ section.id }}.brand-slider .oec_text1 {
+    text-align: {{ section.settings.heading_alignment }};
+  }
+
+  #{{ section.id }}.brand-slider .oec_img-main a[aria-disabled='true'] {
+    cursor: default;
+  }
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+</style>
+
+<div class="brand-slider oec_main-container watch_tab section-{{ section.id }}-margin" id="{{ section.id }}">
+  <div class="section-{{ section.id }}-padding-tb">
+    <div class="oec-box">
+      <div class="oec_text1 oec_iptxt page-width">
+        <h2 class="oec-head1 section-{{ section.id }}-padding-lr">{{ section.settings['oec-head1'] }}</h2>
+      </div>
+      <div class="oec-main-rd1 page-width oec_iptxt section-{{ section.id }}-padding-lr">
+        {% for block in section.blocks %}
+          <div class="oec_mainimgcon">
+            <div class="oec_img-main">
+              <a {% if block.settings.offer-url == blank %}
+                role="link" aria-disabled="true"
+              {% else %}
+                href="{{ block.settings.offer-url }}"
+              {% endif %} >
+                {% if block.settings['oec-desk'] != blank %}
+                  <div class="oec_desk">
+                    {% if forloop.index0 == 0 %}
+                      {% assign lazy = 'eager' %}
+                    {% else %}
+                      {% assign lazy = 'lazy' %}
+                    {% endif %}
+                    {% assign alt = block.settings['oec-desk'].alt | default: 'slider-image-desktop' %}
+                    {{
+                      block.settings['oec-desk']
+                      | image_url: width: 2000
+                      | image_tag: class: 'slider-image-desktop', loading: lazy, alt: alt
+                    }}
+                  </div>
+                {% endif %}
+
+                {% if block.settings['oec-mob'] != blank %}
+                  <div class="oec_mob">
+                    {% if forloop.index0 == 0 %}
+                      {% assign lazy = 'eager' %}
+                    {% else %}
+                      {% assign lazy = 'lazy' %}
+                    {% endif %}
+                    {% assign alt = block.settings['oec-mob'].alt | default: 'slider-image-mobile' %}
+                    {{
+                      block.settings['oec-mob']
+                      | image_url: width: 600
+                      | image_tag: class: 'slider-image-mobile', loading: lazy, alt: alt
+                    }}
+                  </div>
+                {% endif %}
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  if (screen.width > 786) {
+    const slider = document.querySelectorAll('.oec-main-rd1');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    for (let i = 0; i < document.querySelectorAll('.oec-main-rd1').length; i++) {
+      slider[i].addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider[i].classList.add('active');
+        startX = e.pageX - slider[i].offsetLeft;
+        scrollLeft = slider[i].scrollLeft;
+      });
+      slider[i].addEventListener('mouseleave', () => {
+        isDown = false;
+        slider[i].classList.remove('active');
+      });
+      slider[i].addEventListener('mouseup', () => {
+        isDown = false;
+        slider[i].classList.remove('active');
+      });
+      slider[i].addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider[i].offsetLeft;
+        const walk = (x - startX) * 3; //scroll-fast
+        slider[i].scrollLeft = scrollLeft - walk;
+      });
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Brand Slider",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "oec-head1",
+      "label": "Main Heading",
+      "default": "Curated By Style"
+    },
+    {
+      "type": "text_alignment",
+      "id": "heading_alignment",
+      "label": "Text alignment",
+      "default": "left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Curated By Style",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "oec-desk",
+          "label": "Desktop Image",
+          "info": "Image size should be 1035x707px"
+        },
+        {
+          "type": "image_picker",
+          "id": "oec-mob",
+          "label": "Mobile Image",
+          "info": "Image size should be 1035x707px"
+        },
+        {
+          "type": "url",
+          "id": "offer-url",
+          "label": "Offer Url"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Slider"
+    }
+  ]
+}
+{% endschema %}

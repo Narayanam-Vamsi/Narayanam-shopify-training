@@ -1,0 +1,142 @@
+<style>
+.collection-list-{{ section.id }} {
+  padding: 20px 20px;
+  text-align: center;
+  margin-top:{{ section.settings.margin_top }}px;
+  margin-bottom:{{ section.settings.margin_bottom }}px;
+  width:100%;
+}
+
+.collection-list-{{ section.id }} .collection-heading {
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight:600;
+}
+
+.collection-list-{{ section.id }} .collection-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.collection-list-{{ section.id }} .collection-card {
+  text-align: center;
+}
+
+.collection-list-{{ section.id }} .collection-card:first-child img {
+  border-top-left-radius: 60px;
+}
+
+.collection-list-{{ section.id }} .collection-card:last-child img {
+  border-bottom-right-radius: 60px;
+}
+
+
+.collection-list-{{ section.id }} .collection-card img {
+  height: 410px;
+  object-fit: cover;
+  margin-bottom:15px;
+}
+
+.collection-list-{{ section.id }} .collection-card h3 {
+  font-size: 24px;
+  font-weight:300;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.collection-list-{{ section.id }} .collection-card a {
+  text-decoration: none; 
+}
+
+@media (max-width: 768px) {
+  .collection-list-{{ section.id }} .collection-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .collection-list-{{ section.id }} .collection-card img {
+    height: 250px;
+    background-size: cover;
+    width:100%;
+    margin-bottom:6px;
+
+  }
+  .collection-list-{{ section.id }} .collection-card h3 {
+    font-size: 17px;
+    font-weight:300;
+    font-family: 'Montserrat', sans-serif;
+  }
+}
+</style>
+
+<section class="collection-list collection-list-{{ section.id }}">
+  {% if section.settings.section_heading != blank %}
+    <h2 class="collection-heading">{{ section.settings.section_heading }}</h2>
+  {% endif %}
+  <div class="collection-grid">
+    {% for block in section.blocks %}
+      {% if block.settings.collection != blank %}
+        {% assign collection = block.settings.collection %}
+        <div class="collection-card">
+          <a href="{{ collection.url }}">
+            {% if collection.image %}
+              {{ collection.image | image_url: width: 600 | image_tag: alt: collection.title }}
+            {% endif %}
+            <h3>{{ collection.title }}</h3>
+          </a> 
+        </div>
+      {% endif %} 
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Object List",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Heading",
+      "default": "Get Started"
+    },
+{
+      "type": "range",
+      "id": "margin_top",
+      "label": "Top Margin",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Bottom Margin",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection Card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Object List",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

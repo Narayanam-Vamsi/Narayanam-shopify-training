@@ -1,0 +1,187 @@
+{{ 'pdp-key-features.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+  .key-features-container {
+    background: {{ section.settings.kf-bg-color }};
+    border-radius: 5px;
+    padding: 20px;
+  }
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+</style>
+
+{% if section.settings.swiper_type == 'overflow_swiper' %}
+  {% assign kfImage = product.metafields.custom.product_key_feature_image.value %}
+  {% assign kfTitle = product.metafields.custom.product_key_feature_text.value %}
+
+  {% if kfImage != blank %}
+    <div class="overflow-kf page-width section-{{ section.id }}-margin">
+      <div class="key-features-container">
+        <h2 class="kf_heading">{{ section.settings.kf_heading }}</h2>
+        <div class="kf-content-container">
+          {% for kf_image in kfImage %}
+            <div class="kf-image-content">
+              {% assign alt = kf_image.alt | default: 'Key features of the Product' %}
+              <div class="kf-image">
+                {{ kf_image | image_url: width: 180 | image_tag: class: 'usp-image', loading: 'lazy', alt: alt }}
+              </div>
+              <div class="kf-text">
+                <p>{{ kfTitle[forloop.index0] }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+{% elsif section.settings.swiper_type == 'swiper_scroll' %}
+  {% assign kfImage = product.metafields.custom.product_key_feature_image.value %}
+  {% assign kfTitle = product.metafields.custom.product_key_feature_text.value %}
+
+  {% if kfImage != blank %}
+    <div class="swiper-kf page-width section-{{ section.id }}-margin">
+      <div class="key-features-container">
+        <h2 class="kf_heading">{{ section.settings.kf_heading }}</h2>
+        <div class="swiper keyFeatures_Images">
+          <div class="swiper-wrapper">
+            {% for kf_image in kfImage %}
+              <div class="swiper-slide">
+                <div class="kf-image-content">
+                  {% assign alt = kf_image.alt | default: 'Key feature of the Product' %}
+                  <div class="kf-image">
+                    {{ kf_image | image_url: width: 180 | image_tag: class: 'usp-image', loading: 'lazy', alt: alt }}
+                  </div>
+                  <div class="kf-text">
+                    <p>{{ kfTitle[forloop.index0] }}</p>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endif %}
+
+<script>
+    window.addEventListener(
+      'DOMContentLoaded',
+      () => {
+      const uspImages = new Swiper(`.keyFeatures_Images`, {
+      slidesPerView: {{ section.settings.slides_per_view_mobile }},
+      spaceBetween: 10,
+      breakpoints: {
+        600: {
+          slidesPerView: 2,
+          spaceBetween: 25,
+        },
+        890: {
+          slidesPerView: 3,
+          spaceBetween: 14,
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 14,
+        },
+        1280: {
+          slidesPerView: {{ section.settings.slides_per_view_desktop }},
+          spaceBetween: 25,
+        },
+      },
+    });
+  },
+  { once: true }
+  );
+</script>
+
+{% schema %}
+{
+  "name": "Product Key Features",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kf_heading",
+      "label": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "color",
+      "id": "kf-bg-color",
+      "label": "Body text",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "swiper_type",
+      "options": [
+        {
+          "value": "overflow_swiper",
+          "label": "Overflow Swiper"
+        },
+        {
+          "value": "swiper_scroll",
+          "label": "Swiper Scroll"
+        }
+      ],
+      "default": "overflow_swiper",
+      "label": "Swiper Type",
+      "info": "Select the Swiper Type"
+    },
+    {
+      "type": "header",
+      "content": "Only for Swiper Scroll Settings"
+    },
+    {
+      "type": "range",
+      "id": "slides_per_view_desktop",
+      "min": 1,
+      "max": 6,
+      "step": 0.1,
+      "label": "Slides Per View Desktop",
+      "default": 3.6
+    },
+    {
+      "type": "range",
+      "id": "slides_per_view_mobile",
+      "min": 1,
+      "max": 6,
+      "step": 0.1,
+      "label": "Slides Per View Mobile",
+      "default": 1.5
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Key Features"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,30 @@
+{% comment %} {% unless template.suffix == 'gift_card' %}
+    {% if show_rating != blank and card_product.metafields.judgeme.badge != blank %}
+      {% assign judgmeReview = card_product.metafields.judgeme.badge %}
+      {% assign averageRating = judgmeReview | split: "data-average-rating='" | last | split: "'" | first %}
+      {% assign numberOfReviews = judgmeReview
+        | split: "data-number-of-reviews='"
+        | last
+        | split: "'"
+        | first
+      %}
+      <div class="custom-reviews-main judge-me">
+        <div class="custom-reviews-main-svg review-first">
+          <div>
+            <p class="custom-average-number">{{ averageRating }}</p>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="11" viewBox="0 0 24 23" fill="none">
+            <path d="M12.2192 0.835938L15.7004 7.81562L23.4852 8.94174L17.8522 14.3716L19.1816 22.0426L12.2192 18.419L5.25675 22.0426L6.58614 14.3716L0.953125 8.94174L8.73795 7.81562L12.2192 0.835938Z" fill="#FFDE30"/>
+          </svg>
+        </div>
+
+        <div class="seprator"></div>
+
+        <div class="custom-reviews-main-svg">
+          <div>
+            <p class="custom-average-number">{{ numberOfReviews }}</p>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% endunless %} {% endcomment %}

@@ -1,0 +1,136 @@
+{% comment %} {{ 'flash-sale-timer.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  /* .flash-sale-timer-container .saleStart p{
+    color: {{ section.settings.sale_text_color }};
+  } */
+  @media only screen and (max-width: 767px) {
+    {% if section.settings.sale_text != empty %}
+      .countdown-timer-announce {
+        padding-top: 0 !important;
+      }
+    {% endif %}
+  }
+{%- endstyle -%}
+
+{% if section.settings.saleEnd != blank %}
+  <section
+    class="flash-sale-timer-container section-{{ section.id }}-margin color-{{ section.settings.color_scheme }}"
+    id="{{ section.id }}"
+  >
+    <div class="countdown-timer-main">
+      <div id="countdown-timer-new" class="saleStartParent">
+        {% if section.settings.sale_text != blank %}
+          <div class="saleStart color-{{ section.settings.color_scheme }}">{{ section.settings.sale_text }}</div>
+        {% endif %}
+        <div
+          class="countdown-timer-announce color-{{ section.settings.color_scheme }}"
+          {% if section.settings.sale_text == blank %}
+            style="justify-content:center"
+          {% endif %}
+        >
+          <div class="salesCount">
+            <h4 id="time_hour" class="time">0</h4>
+            hrs
+            <span>:</span>
+          </div>
+          <div class="salesCount">
+            <h4 id="time_min" class="time">0</h4>
+            mins
+            <span>:</span>
+          </div>
+          <div class="salesCount">
+            <h4 id="time_sec" class="time">0</h4>
+            sec
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+<script>
+  // Define the sale end date and time (example: October 31, 2023, at 12:00:00 UTC)
+  const saleStart = new Date('{{ section.settings.saleStart }}');
+  const saleEnd = new Date('{{ section.settings.saleEnd }}');
+
+  function updateTimer() {
+    // Current date and time
+    const now = new Date();
+    const timeDifference = saleEnd - now;
+
+    if (timeDifference <= 0) {
+      // If the timer has expired, hide the countdown block
+      document.getElementById('countdown-timer-new').style.display = 'none';
+    } else if (timeDifference > 0 && now >= saleStart) {
+      // Calculate hours, minutes, and seconds
+      const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+      // Add leading zeros if needed
+      const formattedHours = String(hours).padStart(2, '0');
+      const formattedMinutes = String(minutes).padStart(2, '0');
+      const formattedSeconds = String(seconds).padStart(2, '0');
+
+      // Update the timer display
+      document.getElementById('time_hour').textContent = formattedHours;
+      document.getElementById('time_min').textContent = formattedMinutes;
+      document.getElementById('time_sec').textContent = formattedSeconds;
+      document.getElementById('countdown-timer-new').style.display = 'flex';
+    } else {
+      document.getElementById('countdown-timer-new').style.display = 'none';
+    }
+  }
+
+  // Call the function to start the timer immediately
+  updateTimer();
+
+  // Update the timer every second using setInterval
+  setInterval(updateTimer, 1000);
+</script>
+
+{% schema %}
+{
+  "name": "Flash Sale Timer",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "accent-1"
+    },
+    {
+      "type": "richtext",
+      "id": "sale_text",
+      "label": "Sale Text"
+    },
+    {
+      "type": "text",
+      "id": "saleStart",
+      "label": "Enter Sale Start Date",
+      "info": "Enter Start Date Like: year-month-day space hours:minutes:seconds (2024-01-01 19:00:00)"
+    },
+    {
+      "type": "text",
+      "id": "saleEnd",
+      "label": "Enter Sale End Date",
+      "info": "Enter End Date Like: year-month-day space hours:minutes:seconds (2024-02-01 19:00:00)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Flash Sale Timer"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %} {% endcomment %}

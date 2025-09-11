@@ -1,0 +1,161 @@
+{{ 'our-story-t4.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+
+    .our-story-t4
+    .our-story-t4-container
+    .our-story-t4-bottom-container
+    .our-story-t4-bottom-right-container
+    .our-story-t4-right-button
+    .our-story-t4-right-button-para { background: {{section.settings.button_color}};
+  margin-top: 50px }
+
+    @media screen and (min-width: 750px) {
+      .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+      .our-story-t4-content-sub-title-mt-1 p{
+        /* font-size: 20px !important; */
+      }
+      .left-icon-mt-1{
+        right: 95% !important;
+      }
+    }
+{%- endstyle -%}
+
+<section class="our-story-t4 page-width section-{{ section.id }}-padding">
+  <div class="our-story-t4-container">
+    <div class="our-story-t4-content-container">
+      <div class="our-story-t4-content-heading">
+        <h2 class="main-heading">{{ section.settings.routine_step_one_title }}</h2>
+      </div>
+    </div>
+    <div
+      class="our-story-t4-bottom-container {% if section.settings.step_row_reverse %} row-reverse-class {% endif %}"
+    >
+      {% if section.settings.routine_step_one_image_left != blank %}
+        <div class="our-story-t4-bottom-left-image-container">
+          {% assign desktopAlt = section.settings.routine_step_one_image_left.alt | default: 'desktop-left-image' %}
+          {{
+            section.settings.routine_step_one_image_left
+            | image_url: width: 1200
+            | image_tag: loading: 'lazy', alt: desktopAlt
+          }}
+        </div>
+      {% endif %}
+      <div class="our-story-t4-bottom-right-container">
+        <div class="our-story-t4-right-content-container">
+          <div class="our-story-t4-right-content-heading">
+            <div class="content-heading-container">
+              <h2 class="content-heading-small">{{ section.settings.content_title }}</h2>
+            </div>
+          </div>
+          <div class="our-story-t4-right-content-sub-title">
+            <p>{{ section.settings.content_description }}</p>
+          </div>
+
+          {% if section.settings.shop_now_step_one_link != blank %}
+            <div class="our-story-t4-right-button">
+              <div class="our-story-t4-right-button-para">
+                <a href="{{ section.settings.shop_now_step_one_link }}">
+                  <p class="our-story-t4-shopnow-title">{{ section.settings.button_text }}</p>
+                </a>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Our Story T4",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "step_row_reverse",
+      "label": "Step Row Reverse",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "routine_step_one_title",
+      "label": "Routine Step One Title",
+      "default": "STEP 1: DOUBLE CLEANSE"
+    },
+    {
+      "type": "image_picker",
+      "id": "routine_step_one_image_left",
+      "label": "Routine Step One Image Left"
+    },
+    {
+      "type": "text",
+      "id": "content_title",
+      "label": "Content Title Small",
+      "default": "Content Title 1"
+    },
+    {
+      "type": "text",
+      "id": "content_description",
+      "label": "Content Description",
+      "default": "Content Description"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button's Color",
+      "default": "#000000"
+    },
+
+    {
+      "type": "url",
+      "id": "shop_now_step_one_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Read More"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Story T4"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

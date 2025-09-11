@@ -1,0 +1,320 @@
+<style>
+.custom-footer-{{ section.id }} {
+  background-color: #fbeee9;
+  padding: 40px 20px;
+}
+
+.custom-footer-{{ section.id }} .footer-container {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 30px;
+  margin: 0 auto;
+}
+
+.custom-footer-{{ section.id }} .footer-logo {
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: 14px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.custom-footer-{{ section.id }} .footer-brand p {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.custom-footer-{{ section.id }} .social-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.custom-footer-{{ section.id }} .social-icons a {
+  display: inline-flex;           
+  align-items: center;
+  justify-content: center;    
+  border-radius: 50%;            
+  background-color: #fff;         
+  width: 40px;                    
+  height: 40px;                    
+}
+
+.custom-footer-{{ section.id }} .footer-links h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.custom-footer-{{ section.id }} .footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.custom-footer-{{ section.id }} .footer-links ul li {
+  margin-bottom: 8px;
+}
+
+.custom-footer-{{ section.id }} .footer-links ul li a {
+  text-decoration: none;
+  color: #000;
+  font-size: 14px;
+}
+
+.custom-footer-{{ section.id }} .footer-links ul li a:hover {
+  text-decoration: underline;
+}
+
+.custom-footer-{{ section.id }} .footer-accordions {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .custom-footer-{{ section.id }} .footer-container {
+    display: block;
+  }
+
+  .custom-footer-{{ section.id }} .footer-brand,
+  .custom-footer-{{ section.id }} .footer-links {
+    display: none; 
+  }
+
+  .custom-footer-{{ section.id }} .footer-accordions {
+    display: block;
+    width: 100%;
+  }
+
+  .custom-footer-{{ section.id }} .footer-accordion {
+    border-bottom: 1px solid #ddd;
+  }
+
+  .custom-footer-{{ section.id }} .accordion-toggle {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    font-weight: bold;
+    padding: 15px;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .custom-footer-{{ section.id }} .accordion-toggle .arrow {
+    transition: transform 0.3s ease;
+  }
+
+  .custom-footer-{{ section.id }} .accordion-toggle.active .arrow {
+    transform: rotate(180deg);
+  }
+
+  .custom-footer-{{ section.id }} .accordion-content {
+    display: none;
+    padding: 0 15px 10px;
+  }
+
+  .custom-footer-{{ section.id }} .accordion-content ul li {
+    margin: 8px 0;
+  }
+
+  .custom-footer-{{ section.id }} .mobile-social-icons {
+    margin-top: 20px;
+    display:flex;
+    justify-content:center;
+  }
+
+  .custom-footer-{{ section.id }} .mobile-social-icons a {
+    margin: 0 10px;
+    display: inline-flex;           
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;            
+    background-color: #fff;  
+    width: 40px;                    
+    height: 40px;  
+  }
+}
+</style>
+
+<footer class="custom-footer custom-footer-{{ section.id }}">
+  <div class="footer-container">
+
+    <div class="footer-brand">
+      <h2 class="footer-logo">{{ section.settings.brand_name }}</h2>
+      <p>Follow us on</p>
+      <div class="social-icons">
+        {% if section.settings.facebook_link != blank and section.settings.facebook_svg != blank %}
+          <a href="{{ section.settings.facebook_link }}">{{ section.settings.facebook_svg }}</a>
+        {% endif %}
+        {% if section.settings.instagram_link != blank and section.settings.instagram_svg != blank %}
+          <a href="{{ section.settings.instagram_link }}">{{ section.settings.instagram_svg }}</a>
+        {% endif %}
+        {% if section.settings.twitter_link != blank and section.settings.twitter_svg != blank %}
+          <a href="{{ section.settings.twitter_link }}">{{ section.settings.twitter_svg }}</a>
+        {% endif %}
+        {% if section.settings.youtube_link != blank and section.settings.youtube_svg != blank %}
+          <a href="{{ section.settings.youtube_link }}">{{ section.settings.youtube_svg }}</a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% for block in section.blocks %}
+      <div class="footer-links">
+        <h4>{{ block.settings.menu_title }}</h4>
+        <ul>
+          {% for link in linklists[block.settings.menu_links].links %}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+
+    <div class="footer-accordions">
+      {% for block in section.blocks %}
+        <div class="footer-accordion">
+          <button class="accordion-toggle">
+            {{ block.settings.menu_title }}
+            <span class="arrow">{% render 'footer-dropdown' %}</span>
+          </button>
+          <div class="accordion-content">
+            <ul>
+              {% for link in linklists[block.settings.menu_links].links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endfor %}
+
+      <div class="mobile-social-icons">
+        {% if section.settings.facebook_link != blank and section.settings.facebook_svg != blank %}
+          <a href="{{ section.settings.facebook_link }}">{{ section.settings.facebook_svg }}</a>
+        {% endif %}
+        {% if section.settings.instagram_link != blank and section.settings.instagram_svg != blank %}
+          <a href="{{ section.settings.instagram_link }}">{{ section.settings.instagram_svg }}</a>
+        {% endif %}
+        {% if section.settings.twitter_link != blank and section.settings.twitter_svg != blank %}
+          <a href="{{ section.settings.twitter_link }}">{{ section.settings.twitter_svg }}</a>
+        {% endif %}
+        {% if section.settings.youtube_link != blank and section.settings.youtube_svg != blank %}
+          <a href="{{ section.settings.youtube_link }}">{{ section.settings.youtube_svg }}</a>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const footer = document.querySelector(".custom-footer-{{ section.id }}");
+
+  if (footer) {
+    footer.querySelectorAll(".accordion-toggle").forEach(button => {
+      button.addEventListener("click", () => {
+        const content = button.nextElementSibling;
+
+        
+        footer.querySelectorAll(".accordion-content").forEach(c => {
+          if (c !== content) {
+            c.style.display = "none";
+            c.previousElementSibling.classList.remove("active");
+          }
+        });
+
+        if (content.style.display === "block") {
+          content.style.display = "none";
+          button.classList.remove("active");
+        } else {
+          content.style.display = "block";
+          button.classList.add("active");
+        }
+      });
+    });
+  }
+});
+</script>
+
+{% schema %}
+{
+  "name": "Custom Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand Name",
+      "default": "CENTELLA"
+    },
+    {
+      "type": "paragraph",
+      "content": "Social Links - add URL and paste SVG code"
+    },
+    {
+      "type": "url",
+      "id": "facebook_link",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "textarea",
+      "id": "facebook_svg",
+      "label": "Facebook SVG code"
+    },
+    {
+      "type": "url",
+      "id": "instagram_link",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "textarea",
+      "id": "instagram_svg",
+      "label": "Instagram SVG code"
+    },
+    {
+      "type": "url",
+      "id": "twitter_link",
+      "label": "Twitter URL"
+    },
+    {
+      "type": "textarea",
+      "id": "twitter_svg",
+      "label": "Twitter SVG code"
+    },
+    {
+      "type": "url",
+      "id": "youtube_link",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "textarea",
+      "id": "youtube_svg",
+      "label": "YouTube SVG code"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Footer Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_title",
+          "label": "Menu Title"
+        },
+        {
+          "type": "link_list",
+          "id": "menu_links",
+          "label": "Select Menu"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Footer",
+      "category": "Footer"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,80 @@
+<div><h1>Hello</h1></div>
+
+{% schema %}
+{
+  "name": "Video Text Slider",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Desktop Devices"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Mobile Devices"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "text",
+      "id": "trending_campaign_heading",
+      "label": "Heading",
+      "default": "KNOW JOCKEY"
+    },
+    {
+      "type": "text",
+      "id": "trending_campaign_subheading",
+      "label": "Sub-Heading",
+      "default": "Trending Campaigns"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#252A35"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Video Gallery",
+      "type": "slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "video_text_image",
+          "label": "Trending Campaigns Image",
+          "info": "Recommended size is: 578px x 330px"
+        },
+        {
+          "type": "video",
+          "id": "video_text_video",
+          "label": "Trending Campaigns Video",
+          "info": "Recommended size is: 578px x 330px"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Text Slider"
+    }
+  ]
+}
+{% endschema %}

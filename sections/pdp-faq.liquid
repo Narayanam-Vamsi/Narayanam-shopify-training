@@ -1,0 +1,164 @@
+{{ 'pdp-faq.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+  #{{ section.id }}.faq_main_container {
+    padding-top: {{ section.settings.section_padding_top }}px;
+    padding-bottom: {{ section.settings.section_padding_bottom }}px;
+  }
+
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  #{{ section.id }}.faq_main_container{
+    background: {{ section.settings.section_background }};
+  }
+
+  #{{ section.id }} .faq_heading{
+    text-align: {{ section.settings.section_text_alignment }};
+  }
+
+  .faq-question{
+    background: {{ section.settings.question_background }};
+  }
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+</style>
+
+{% assign questions = product.metafields.custom.product_faq_questions.value %}
+{% assign answers = product.metafields.custom.product_faq_answers.value %}
+
+{% if questions != blank %}
+  <div class="faq_main_container page-width section-{{ section.id }}-margin" id="{{ section.id }}">
+    <h2 class="faq_heading">{{ section.settings.faq_heading }}</h2>
+    <div class="faq-main-container">
+      {% for question in questions %}
+        <div class="faq-point">
+          <div class="faq-question" onclick="toggleAnswer(this)">
+            <p>{{ question }}</p>
+            <div class="svg-icon">
+              <svg width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="m14 5-6.5 7L1 5" stroke="#000" stroke-linecap="square"/>
+              </svg>
+            </div>
+          </div>
+          <div class="faq-answer">{{ answers[forloop.index0] }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+<script>
+  let openAnswerElement = null;
+
+  function toggleAnswer(questionElement) {
+    const answerElement = questionElement.nextElementSibling;
+    const isOpen = questionElement.classList.toggle('open');
+
+    if (openAnswerElement && openAnswerElement !== questionElement) {
+      const openAnswer = openAnswerElement.nextElementSibling;
+      openAnswer.style.maxHeight = '';
+      openAnswer.classList.remove('open');
+      openAnswerElement.classList.remove('open');
+    }
+
+    if (isOpen) {
+      answerElement.style.maxHeight = answerElement.scrollHeight + 'px';
+      answerElement.classList.add('open');
+      openAnswerElement = questionElement;
+    } else {
+      answerElement.style.maxHeight = '';
+      answerElement.classList.remove('open');
+      openAnswerElement = null;
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Product FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "faq_heading",
+      "label": "Heading"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Inner Spacing Top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Inner Spacing Bottom",
+      "default": 20
+    },
+    {
+      "type": "text_alignment",
+      "id": "section_text_alignment",
+      "label": "Section Text Alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Section Colors"
+    },
+    {
+      "type": "color_background",
+      "id": "section_background",
+      "label": "Section Background Color",
+      "default": "linear-gradient(#ffffff, #ffffff)"
+    },
+    {
+      "type": "color",
+      "id": "question_background",
+      "label": "Question Background Color",
+      "default": "#f8f8f8"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product FAQ"
+    }
+  ]
+}
+{% endschema %}

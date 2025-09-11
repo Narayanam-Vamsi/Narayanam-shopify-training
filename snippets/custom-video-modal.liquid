@@ -1,0 +1,22 @@
+<div data-id="zoomModal" class="customer-testimonials-container product-zoom-modal-overlay">
+  <div data-id="zoomCloseButton" class="zoom-close-button" aria-label="Product Modal Close Button" aria-role="button">
+    {% render 'zoom-modal-close-icon', fill: '#fff' %}
+  </div>
+
+  <div class="video-zoom-container">
+    <video
+      id="video{{ forloop.index0 }}"
+      class="testimonial_video"
+      width=""
+      height=""
+      controlsList="nodownload"
+      muted="muted"
+      loop="loop"
+      playsinline="playsinline"
+      preload="metadata"
+      poster=""
+      src=""
+      controls
+    ></video>
+  </div>
+</div>

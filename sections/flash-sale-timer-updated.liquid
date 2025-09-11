@@ -1,0 +1,120 @@
+<style>
+  .Flash_Bar-{{ section.id }} {
+    font-family: "Montserrat";
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:5px;
+  }
+
+  .Flash_Bar-{{ section.id }} .Flash_Text {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .Flash_Bar-{{ section.id }} h1 {
+    color: #fff;
+    font-weight: 600;
+    font-size: 20px;
+    margin:0;
+  }
+
+  .Flash_Bar-{{ section.id }} #counter-{{ section.id }} {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  @media screen and (max-width: 768px) {
+
+    .Flash_Bar-{{ section.id }} .Flash_Text {
+    gap:5px;
+  }
+
+
+    .Flash_Bar-{{ section.id }} h1 {
+      font-family: "Jost", sans-serif;
+      font-size: 10px;
+    }
+
+    .Flash_Bar-{{ section.id }} #counter-{{ section.id }} {
+      font-size: 10px;
+    }
+  }
+</style>
+
+
+<section class="Flash_Bar-{{ section.id }}" style="background-color: {{ section.settings.Flash_Background }}">
+  <div class="Flash_Text">
+    <h1>{{ section.settings.Flash_Headline }}</h1>
+    <span id="counter-{{ section.id }}"></span>
+  </div>
+</section>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const counterEl = document.getElementById("counter-{{ section.id }}");
+    
+    const endDateString = "{{ section.settings.Count_Timer }}";
+    const endDate = new Date(endDateString).getTime();
+
+    if (!endDate || isNaN(endDate)) {
+      counterEl.innerHTML = "⚠ Invalid Date";
+      return;
+    }
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = endDate - now;
+
+      if (distance <= 0) {
+        counterEl.innerHTML = "Offer expired!";
+        clearInterval(timer);
+        return;
+      }
+
+      const hours = Math.floor((distance / (1000 * 60 * 60)));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      counterEl.innerHTML = 
+        hours + "hrs : " + minutes + "mins : " + seconds + "secs";
+    }
+
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 1000);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "New Flash Timer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "Flash_Headline",
+      "label": "Flash Text",
+      "default": "Score Big: It's Time to Shop 'till You Drop!"
+    },
+    {
+      "type": "text",
+      "id": "Count_Timer",
+      "label": "End Time (YYYY-MM-DDTHH:MM:SSZ)",
+      "default": "2025-08-28T00:00:00Z"
+    },
+    {
+      "type": "color",
+      "id": "Flash_Background",
+      "label": "Background Colour",
+      "default": "#DB763F"
+    }
+  ],
+  "presets": [
+    {
+      "name": "New Flash Timer"
+    }
+  ]
+}
+{% endschema %}

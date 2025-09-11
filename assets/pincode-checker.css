@@ -1,0 +1,61 @@
+.custom-product-info .pdp_pincode_heading {
+  margin-bottom: 15px;
+}
+.custom-product-info .pincode_div {
+  border: 1px solid rgba(226, 225, 226, 0.45);
+  box-shadow: 0 1px 4px #00000040;
+  border-radius: 3px;
+  display: flex;
+  max-width: 420px;
+  align-items: center;
+  justify-content: space-between;
+}
+.custom-product-info .pdp_pincode_container .pincode_loading,
+.custom-product-info .pdp_pincode_container .pinMsg {
+  margin-top: 1.2rem;
+}
+.custom-product-info .pdp_pincode_container .pincode_input {
+  border: none;
+  background: transparent;
+  padding: 15px 10px;
+  flex: 0 0 auto;
+  width: 70%;
+  margin: auto;
+}
+.custom-product-info .pdp_pincode_container .pincode_submit {
+  background: transparent;
+  border: none;
+  flex: 0 0 auto;
+  width: 30%;
+  text-align: right;
+  padding-right: 15px;
+}
+.custom-product-info .pinMsg {
+  margin-top: 15px;
+}
+
+/* Pin Code CSS Animation */
+.custom-product-info .pincode_loading::after {
+  content: ".";
+  animation: pincode_loading 1.5s infinite;
+}
+
+@keyframes pincode_loading {
+  0% {
+    opacity: 0;
+    content: ".";
+  }
+  33% {
+    opacity: 1;
+    content: "..";
+  }
+  66% {
+    opacity: 1;
+    content: "...";
+  }
+  100% {
+    opacity: 0;
+    content: ".";
+  }
+}
+/* Pin Code CSS Animation */

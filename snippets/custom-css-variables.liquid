@@ -1,0 +1,105 @@
+{% style %}
+  :root {
+    /* Desktop/Tablet/Mobile Padding Left and Right*/
+    --desktop-padding: {{ settings.desktop-padding | divided_by: 10.0 }}rem;
+    --tablet-padding: {{ settings.tablet-padding | divided_by: 10.0 }}rem;
+    --mobile-padding: {{ settings.mobile-padding | divided_by: 10.0 }}rem;
+    /* Desktop/Tablet/Mobile Padding Left and Right*/
+
+    /* Font Sizes Settings */
+    /* H1 */
+    --desktop-font-size-h1: {{ settings.desktop-font-size-h1 | divided_by: 10.0 }}rem;
+    --mobile-font-size-h1: {{ settings.mobile-font-size-h1 | divided_by: 10.0 }}rem;
+
+    /* H2 */
+    --desktop-font-size-h2: {{ settings.desktop-font-size-h2 | divided_by: 10.0 }}rem;
+    --mobile-font-size-h2: {{ settings.mobile-font-size-h2 | divided_by: 10.0 }}rem;
+
+    /* H3 */
+    --desktop-font-size-h3: {{ settings.desktop-font-size-h3 | divided_by: 10.0 }}rem;
+    --mobile-font-size-h3: {{ settings.mobile-font-size-h3 | divided_by: 10.0 }}rem;
+
+    /* H4 */
+    --desktop-font-size-h4: {{ settings.desktop-font-size-h4 | divided_by: 10.0 }}rem;
+    --mobile-font-size-h4: {{ settings.mobile-font-size-h4 | divided_by: 10.0 }}rem;
+
+    /* H5 */
+    --desktop-font-size-h5: {{ settings.desktop-font-size-h5 | divided_by: 10.0 }}rem;
+    --mobile-font-size-h5: {{ settings.mobile-font-size-h5 | divided_by: 10.0 }}rem;
+
+    /* H6 */
+    --desktop-font-size-h6: {{ settings.desktop-font-size-h6 | divided_by: 10.0 }}rem;
+    --mobile-font-size-h6: {{ settings.mobile-font-size-h6 | divided_by: 10.0 }}rem;
+
+    /* P */
+    --desktop-font-size-p: {{ settings.desktop-font-size-p | divided_by: 10.0 }}rem;
+    --mobile-font-size-p: {{ settings.mobile-font-size-p | divided_by: 10.0 }}rem;
+
+    /* a */
+    --desktop-font-size-a: {{ settings.desktop-font-size-a | divided_by: 10.0 }}rem;
+    --mobile-font-size-a: {{ settings.mobile-font-size-a | divided_by: 10.0 }}rem;
+    /* Font Sizes Settings */
+
+    /* Font Family For h1...h6, p , a */
+    --font-family-100:"{% if settings['font-file-weight-100'] != '' %}{{ settings['font-file-weight-100'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}{% else %}{{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }}{% endif %}";
+    --font-family-200: "{% if settings['font-file-weight-200'] != '' %}{{ settings['font-file-weight-200'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}{% else %}{{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }}{% endif %}";
+    --font-family-300: "{% if settings['font-file-weight-300'] != '' %}{{ settings['font-file-weight-300'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}{% else %}{{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }}{% endif %}";
+    --font-family-400: "{% if settings['font-file-weight-400'] != '' %}{{ settings['font-file-weight-400'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}{% else %}{{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }}{% endif %}";
+    --font-family-500: "{% if settings['font-file-weight-500'] != '' %}{{ settings['font-file-weight-500'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}{% else %}{{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }}{% endif %}";
+    --font-family-600: "{% if settings['font-file-weight-600'] != '' %}{{ settings['font-file-weight-600'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}{% else %}{{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }}{% endif %}";
+    --font-family-700: "{% if settings['font-file-weight-700'] != '' %}{{ settings['font-file-weight-700'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}{% else %}{{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }}{% endif %}";
+    --font-family-800: "{% if settings['font-file-weight-800'] != '' %}{{ settings['font-file-weight-800'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}{% else %}{{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }}{% endif %}";
+    --font-family-900: "{% if settings['font-file-weight-900'] != '' %}{{ settings['font-file-weight-900'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}{% else %}{{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }}{% endif %}";
+    /* Font Family For h1...h6, p , a */
+
+    /* Line Height Settings */
+    /* h1...h6, p , a */
+    {% assign desktop-line-height-h1 = 1.2 %}
+    {% assign mobile-line-height-h1 = 1.2 %}
+    --desktop-line-height-h1: {% if desktop-line-height-h1 == 0.00 %}normal{% elsif desktop-line-height-h1 < 1 or desktop-line-height-h1 > 2 %}1{% else %}{{ desktop-line-height-h1 }}{% endif %};
+    --mobile-line-height-h1: {% if mobile-line-height-h1 == 0.00 %}normal{% elsif mobile-line-height-h1 < 1 or mobile-line-height-h1 > 2 %}1{% else %}{{ mobile-line-height-h1 }}{% endif %};
+
+    {% assign desktop-line-height-h2 = 1.2 %}
+    {% assign mobile-line-height-h2 = 1.2 %}
+    --desktop-line-height-h2: {% if desktop-line-height-h2 == 0.00 %}normal{% elsif desktop-line-height-h2 < 1 or desktop-line-height-h2 > 2 %}1{% else %}{{ desktop-line-height-h2 }}{% endif %};
+    --mobile-line-height-h2: {% if mobile-line-height-h2 == 0.00 %}normal{% elsif mobile-line-height-h2 < 1 or mobile-line-height-h2 > 2 %}1{% else %}{{ mobile-line-height-h2 }}{% endif %};
+
+    {% assign desktop-line-height-h3 = 1.2 %}
+    {% assign mobile-line-height-h3 = 1.2 %}
+    --desktop-line-height-h3: {% if desktop-line-height-h3 == 0.00 %}normal{% elsif desktop-line-height-h3 < 1 or desktop-line-height-h3 > 2 %}1{% else %}{{ desktop-line-height-h3 }}{% endif %};
+    --mobile-line-height-h3: {% if mobile-line-height-h3 == 0.00 %}normal{% elsif mobile-line-height-h3 < 1 or mobile-line-height-h3 > 2 %}1{% else %}{{ mobile-line-height-h3 }}{% endif %};
+
+    {% assign desktop-line-height-h4 = 1.2 %}
+    {% assign mobile-line-height-h4 = 1.2 %}
+    --desktop-line-height-h4: {% if desktop-line-height-h4 == 0.00 %}normal{% elsif desktop-line-height-h4 < 1 or desktop-line-height-h4 > 2 %}1{% else %}{{ desktop-line-height-h4 }}{% endif %};
+    --mobile-line-height-h4: {% if mobile-line-height-h4 == 0.00 %}normal{% elsif mobile-line-height-h4 < 1 or mobile-line-height-h4 > 2 %}1{% else %}{{ mobile-line-height-h4 }}{% endif %};
+
+    {% assign desktop-line-height-h5 = 1.2 %}
+    {% assign mobile-line-height-h5 = 1.2 %}
+    --desktop-line-height-h5: {% if desktop-line-height-h5 == 0.00 %}normal{% elsif desktop-line-height-h5 < 1 or desktop-line-height-h5 > 2 %}1{% else %}{{ desktop-line-height-h5 }}{% endif %};
+    --mobile-line-height-h5: {% if mobile-line-height-h5 == 0.00 %}normal{% elsif mobile-line-height-h5 < 1 or mobile-line-height-h5 > 2 %}1{% else %}{{ mobile-line-height-h5 }}{% endif %};
+
+    {% assign desktop-line-height-h6 = 1.2 %}
+    {% assign mobile-line-height-h6 = 1.2 %}
+    --desktop-line-height-h6: {% if desktop-line-height-h6 == 0.00 %}normal{% elsif desktop-line-height-h6 < 1 or desktop-line-height-h6 > 2 %}1{% else %}{{ desktop-line-height-h6 }}{% endif %};
+    --mobile-line-height-h6: {% if mobile-line-height-h6 == 0.00 %}normal{% elsif mobile-line-height-h6 < 1 or mobile-line-height-h6 > 2 %}1{% else %}{{ mobile-line-height-h6 }}{% endif %};
+
+    {% assign desktop-line-height-p = 1.2 %}
+    {% assign mobile-line-height-p = 1.2 %}
+    --desktop-line-height-p: {% if desktop-line-height-p == 0.00 %}normal{% elsif desktop-line-height-p < 1 or desktop-line-height-p > 2 %}1{% else %}{{ desktop-line-height-p }}{% endif %};
+    --mobile-line-height-p: {% if mobile-line-height-p == 0.00 %}normal{% elsif mobile-line-height-p < 1 or mobile-line-height-p > 2 %}1{% else %}{{ mobile-line-height-p }}{% endif %};
+
+    {% assign desktop-line-height-a = 1.2 %}
+    {% assign mobile-line-height-a = 1.2 %}
+    --desktop-line-height-a: {% if desktop-line-height-a == 0.00 %}normal{% elsif desktop-line-height-a < 1 or desktop-line-height-a > 2 %}1{% else %}{{ desktop-line-height-a }}{% endif %};
+    --mobile-line-height-a: {% if mobile-line-height-a == 0.00 %}normal{% elsif mobile-line-height-a < 1 or mobile-line-height-a > 2 %}1{% else %}{{ mobile-line-height-a }}{% endif %};  
+  
+
+    /*  Custom CSS variables for Product Card */
+    --button-background-color : {{ settings.product_card_button_background_color }} ;
+    --button-text-color :{{ settings.product_card_button_text_color }};  
+    --menu-drawer-color: {{ settings.button }};
+    /*  Custom CSS variables for Product Card */
+
+  }
+{% endstyle %}

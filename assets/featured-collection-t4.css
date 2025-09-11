@@ -1,0 +1,278 @@
+.our_bestsellers .shop-button-div {
+    display: inline-flex;
+    align-items: center;
+    max-width: 215px;
+    max-height: 44px;
+    background: #000;
+    justify-content: center;
+    margin-top: 16px;
+  }
+  
+  .our_bestsellers .shop-button-div a {
+    text-decoration: none;
+    padding: 12px 0;
+  }
+  .our_bestsellers .shop-button {
+    color: #fff;
+    font-size: calc(16 * (100vw / 1600));
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: 0.8px;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  
+  .our_bestsellerSwiper .swiper-scrollbar-drag {
+    cursor: pointer;
+    background: #000;
+    display: block;
+  }
+  .our_bestsellers .right_div .swiper-wrapper {
+    padding-left: 0;
+  }
+  .our_bestsellerSwiper .button-prev-next .swiper-button-prev svg path {
+    fill-opacity: 1;
+  }
+  .our_bestsellers .card-wrapper:hover {
+    transform: scale(1.05);
+    transform-origin: center;
+  }
+  .our_bestsellerSwiper .swiper-slide {
+    width: calc(284 * (100vw / 1600));
+    margin-right: 20px;
+  }
+  .our_bestsellerSwiper {
+    /* padding: 30px 0px 10px 20px; */
+    padding: 40px 0px 10px 20px;
+  }
+  .our_bestsellers .main_div {
+    display: flex;
+  }
+  .our_bestsellers .left_div {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    padding-left: 108px;
+  }
+  .our_bestsellers .right_div {
+    width: 70%;
+  }
+  .our_bestsellers .swiper-horizontal > .swiper-scrollbar {
+    margin-top: 55px;
+    position: relative;
+    width: 88%;
+    margin-bottom: 0px;
+    left: 0px;
+  }
+  .our_bestsellers .heading1 {
+    width: 100%;
+    font-size: 2.125vw;
+    line-height: 2.813vw;
+    font-weight: 500;
+    color: #000000;
+    margin: 0;
+  }
+  .our_bestsellers .heading2 {
+    font-size: 1.5vw;
+    line-height: 2.188vw;
+    font-weight: 400;
+    color: #000000;
+    margin: 0;
+  }
+  .our_bestsellers [class^="swiper-button"] {
+    width: 5%;
+    padding-bottom: 20px;
+  }
+  .our_bestsellers .swiper-button-prev {
+    left: 90%;
+    top: 98%;
+  }
+  .our_bestsellers .swiper-button-next {
+    right: 1%;
+    top: 98%;
+  }
+  .our_bestsellers .swiper-button-next:after,
+  .swiper-rtl .swiper-button-prev:after {
+    content: "";
+  }
+  .our_bestsellers .swiper-button-prev:after {
+    color: black;
+    content: "";
+  }
+  .our_bestsellers.swiper-button-next:after,
+  .swiper-button-prev:after {
+    color: black;
+  }
+  .our_bestsellers .caption-with-letter-spacing {
+    display: none;
+  }
+  .our_bestsellerSwiper .grid__item {
+    width: 100%;
+    height: auto;
+  }
+  .our_bestsellerSwiper .swiper {
+    width: 100%;
+  }
+  .our_bestsellers
+    .card__content
+    .product-name-bie
+    .product-name-bie-custom
+    .product_card_title {
+    min-height: 3.7vw;
+  }
+  
+  @media only screen and (min-width: 1023px) and (max-width: 1300px) {
+    .our_bestsellers .swiper-button-prev {
+      left: 89%;
+      top: 98%;
+    }
+    .our_bestsellers .swiper-button-next {
+      right: 0%;
+      top: 98%;
+    }
+  }
+  
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    .our_bestsellers .swiper-button-prev {
+      left: 89%;
+      top: 98%;
+    }
+    .our_bestsellers .swiper-button-next {
+      right: 0%;
+      top: 98%;
+    }
+    .our_bestsellers .shop-button-div {
+      max-width: 130px;
+      max-height: 36px;
+    }
+    .our_bestsellers .shop-button {
+      font-size: calc(14 * (100vw / 1600));
+    }
+    .our_bestsellers .left_div{
+      padding-left: 50px;
+    }
+  }
+  
+  @media screen and (max-width: 767px) {
+    .our_bestsellers .shop-button-div {
+      max-width: 215px;
+      max-height: 44px;
+      margin-top: 6px;
+    }
+    .our_bestsellers .shop-button {
+      font-size: clamp(14px, calc(17 * (100vw / 428)), 17px);
+    }
+  
+    .our_bestsellers .right_div .swiper-wrapper {
+      padding-left: 0;
+    }
+    .our_bestsellerSwiper .swiper-slide {
+      width: 212px;
+      margin-right: 20px;
+    }
+    .our_bestsellers {
+      padding-right: 0px;
+      padding-left: 0px;
+    }
+    .our_bestsellers .heading1 {
+      width: 83%;
+      font-size: 26px;
+      line-height: 35px;
+      font-weight: 500;
+      color: #000000;
+      margin: 0;
+    }
+    .our_bestsellers .heading2 {
+      font-size: 22px;
+      line-height: 30px;
+      font-weight: 400;
+      color: #000000;
+      margin: 0;
+      width: 80%;
+    }
+    .our_bestsellers .main_div {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .our_bestsellers .right_div {
+      width: 100%;
+      /* padding-bottom: 20px; */
+    }
+  
+    .our_bestsellers .left_div {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 17px;
+    }
+    .our_bestsellers .swiper-button-next:after,
+    .swiper-rtl .swiper-button-prev:after {
+      content: "";
+    }
+    .our_bestsellers .swiper-horizontal > .swiper-scrollbar {
+      display: none;
+    }
+    .our_bestsellers .swiper-button-prev {
+      bottom: 0;
+    }
+    .our_bestsellers .swiper-button-next {
+      bottom: 0;
+    }
+    .our_bestsellers .swiper-button-prev:after {
+      color: black;
+      content: "";
+    }
+    .our_bestsellerSwiper .grid__item {
+      max-width: unset;
+      width: unset;
+    }
+    .our_bestsellers .caption-with-letter-spacing {
+      display: none;
+    }
+  
+    .our_bestsellerSwiper .swiper-slide.swiper-slide-active {
+      transform: scale(1.065);
+      /* width: 229px !important; */
+    }
+    .our_bestsellerSwiper {
+      padding-top: 30px;
+      padding-left: 20px;
+      /* display: flex; */
+      /* justify-content: center; */
+      /* align-items: center; */
+    }
+    .our_bestsellerSwiper {
+      padding-bottom: 40px;
+    }
+    .our_bestsellerSwiper .button-prev-next {
+      position: relative;
+      bottom: -30px;
+      display: flex;
+      gap: 9px;
+      align-items: baseline;
+      justify-content: center;
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+    .our_bestsellerSwiper .button-prev-next .swiper-button-prev {
+      display: block;
+      position: relative;
+      left: unset;
+      right: unset;
+      width: unset;
+    }
+    .our_bestsellerSwiper .button-prev-next .swiper-button-prev svg path {
+      fill-opacity: 1;
+    }
+    .our_bestsellerSwiper .button-prev-next .swiper-button-next,
+    .swiper-button-prev {
+      margin: 0;
+      width: 34px;
+      position: static;
+    }
+  }
+  

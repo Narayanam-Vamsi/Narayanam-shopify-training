@@ -1,0 +1,7 @@
+.custom-quick-add .usp_Images,
+.custom-quick-add .pdp_pincode_container,
+.custom-quick-add .product-overview-section,
+.custom-quick-add .offers_for_you_accordian,
+.custom-quick-add .custom-reviews-main {
+  display: none;
+}

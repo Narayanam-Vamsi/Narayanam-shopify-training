@@ -1,0 +1,60 @@
+.brand-slider .oec-head1 {
+  line-height: normal;  
+  margin-bottom: 25px;
+}
+.brand-slider .oec_desk img {
+  width: 100%;
+  height: auto;
+}
+.brand-slider .oec_mob {
+  display: none;
+}
+.brand-slider .oec-main-rd1 {
+  display: flex;
+  gap: 16px;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  user-select: none;
+  -ms-overflow-style: none; /* IE 11 */
+  scrollbar-width: none; /* Firefox 64 */
+}
+.brand-slider .oec-main-rd1::-webkit-scrollbar {
+  display: none;
+}
+
+.brand-slider .oec_desk img {
+  border-radius: 10px;
+  width: 100%;
+  height: auto;
+}
+
+.brand-slider .oec_img-main {
+  line-height: 0;
+}
+
+.brand-slider .oec_img-main {
+  width: 353px;
+}
+
+@media (max-width: 600px) {
+  .brand-slider .oec-head1 {
+    line-height: 1.1;
+  }
+  .brand-slider .oec_desk {
+    display: none;
+  }
+  .brand-slider .oec_mob {
+    display: block;
+  }
+  .brand-slider .oec_mob img {
+    border-radius: 5px;
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (min-width: 2200px) {
+  .brand-slider .oec_img-main {
+    width: 475px;
+  }
+}

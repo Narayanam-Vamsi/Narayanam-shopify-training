@@ -1,0 +1,29 @@
+.custom-product-info .custom-reviews-main {
+  display: inline-flex;
+  align-self: center;
+  padding: 4px 9px;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.custom-product-info .custom-reviews-main-svg.review-first {
+  border-right: 1px solid rgba(0, 0, 0, 0.4);
+  padding-right: 9px;
+  line-height: 1;
+}
+.custom-product-info .custom-reviews-main-svg {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.custom-product-info .custom-reviews-main .custom-average-number {
+  margin: 0;
+  color: #000;
+}
+
+@media screen and (max-width: 767px) {
+  .custom-product-info .custom-reviews-main {
+    align-self: flex-start;
+  }
+}

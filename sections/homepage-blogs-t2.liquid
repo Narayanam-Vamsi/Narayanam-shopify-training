@@ -1,0 +1,164 @@
+<style>
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  #{{ section.id }}.trending-blog-container-t2 {
+    background: {{ section.settings.about_background }};
+    padding-right: 0;
+    padding-top: {{ section.settings.padding_top}}px;
+    padding-bottom: {{ section.settings.padding_bottom}}px;
+  }
+
+  #{{ section.id }}.trending-blog-container-t2 .about-title h2,
+  #{{ section.id }}.trending-blog-container-t2 .about-title p {
+    text-align: {{ section.settings.about_alignment }};
+  }
+
+  .trending-blog-container-t2 .about-blog p, .trending-blog-container-t2 .about-blog h2 {
+    line-height: normal;
+    margin-bottom: 28px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+    .trending-blog-container-t2{
+      padding-right: 0;
+    }
+    .trending-blog-container-t2 .about-blog p, .trending-blog-container-t2 .about-blog h2 {
+      padding-top: 19px;
+      margin-bottom: 19px;
+    }
+  }
+</style>
+
+<section class="trending-blog-container-t2 page-width section-{{ section.id }}-margin" id="{{ section.id }}">
+  <div class="about-blog">
+    {% if section.settings.about_main_heading != blank %}
+      <h2 class="about-title">{{ section.settings.about_main_heading }}</h2>
+    {% endif %}
+    <div class="swiper trending_blogs_t2">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide" {{ block.shopify_attributes }}>
+            {%- render 'article-card', article: block.settings.article, show_image: true -%}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const customMainBanner{{- section.id | remove: "--" | remove: "__" | remove: "-" }} = new Swiper(`#{{ section.id }} .trending_blogs_t2`, {
+      breakpoints: {
+        0: {
+          slidesPerView: 1.5,
+          spaceBetween: 15,
+        },
+        750: {
+          slidesPerView: 2.5,
+          spaceBetween: 40,
+        },
+        1024: {
+          slidesPerView: 3.5,
+          spaceBetween: 40,
+        },
+      }
+    });
+  },{ once: true });
+</script>
+
+{% schema %}
+{
+  "name": "Trending Blogs T2",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "richtext",
+      "id": "about_main_heading",
+      "label": "About Main Heading"
+    },
+    {
+      "type": "text_alignment",
+      "id": "about_alignment",
+      "label": "About Alignment",
+      "default": "center"
+    },
+    {
+      "type": "color_background",
+      "id": "about_background",
+      "label": "About Background Color",
+      "default": "linear-gradient(#ffffff, #ffffff)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Article Slide",
+      "settings": [
+        {
+          "type": "article",
+          "id": "article",
+          "label": "Article"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trending Blogs T2"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,226 @@
+{{ 'featured-collection-t1.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+   #{{ section.id }} .collection-slider .swiper-slide {
+     width: calc(100% / {{ section.settings.slides_per_view_desktop }});
+     margin-right: 14px;
+   }
+
+   .section-{{ section.id }}-margin {
+     margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+   }
+   .section-{{ section.id }}-padding {
+     padding-top: {{ section.settings.padding_top }}px;
+   }
+   .section-{{ section.id }}-padding {
+     padding-bottom: {{ section.settings.padding_bottom }}px;
+   }
+
+   #{{ section.id }}.homepage-collection-swiper{
+     background: {{ section.settings.section_background }};
+   }
+
+  .homepage-collection-swiper .card__information .cardProduct_type {
+   display: none;
+  }
+
+   {% comment %} #{{ section.id }}.homepage-collection-swiper .section-head .text-container h2,
+   #{{ section.id }}.homepage-collection-swiper .section-head .text-container p {
+     text-align: {{ section.settings.section_text_alignment }};
+   } {% endcomment %}
+
+   @media screen and (max-width: 750px) {
+     #{{ section.id }} .collection-slider .swiper-slide {
+       width: calc(100% / {{ section.settings.slides_per_view_mobile }});
+       margin-right: 14px;
+     }
+     .section-{{ section.id }}-margin {
+       margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+     }
+     .homepage-collection-swiper{
+       padding-right: 0;
+     }
+   }
+</style>
+
+{% if section.settings.collection.products != blank %}
+  <section
+    class="homepage-collection-swiper section-{{ section.id }}-margin section-{{ section.id }}-padding page-width"
+    id="{{ section.id }}"
+  >
+    <div class="collection-slider">
+      <div class="swiper mySwiper ourBestSellerSwiper">
+        <div class="section-head">
+          <div class="text-container">
+            {% if section.settings.section_title != blank %}
+              <h2 class="slider-section-heading">{{ section.settings.section_title }}</h2>
+            {% endif %}
+            {% if section.settings.section_sub_title != blank %}
+              <p class="subheading">{{ section.settings.section_sub_title }}</p>
+            {% endif %}
+          </div>
+          {% if section.settings.collection.products.size > 4 %}
+            <div class="swiper-buttons">
+              <div class="swiper-prev">
+                <div class="icon">
+                  {% render 'arrow-icon-prev-fc-t2' %}
+                </div>
+              </div>
+              <div class="swiper-next">
+                <div class="icon">
+                  {% render 'arrow-icon-next-fc-t2' %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+        <ul class="swiper-wrapper">
+          {% for product in section.settings.collection.products limit: 6 %}
+            <li class="swiper-slide">
+              {% render 'card-product', card_product: product, show_quick_add: true %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+<script>
+    window.addEventListener(
+      'DOMContentLoaded',
+      () => {
+      const ourBestSellerSwiper{{- section.id | remove: "--" | remove: "__" | remove: "-" }} = new Swiper(`#{{ section.id }} .ourBestSellerSwiper`, {
+      slidesPerView: {{ section.settings.slides_per_view_mobile }},
+      spaceBetween: 10,
+      navigation: {
+        nextEl: '#{{ section.id }} .swiper-next',
+        prevEl: '#{{ section.id }} .swiper-prev',
+      },
+      breakpoints: {
+        600: {
+          slidesPerView: 2,
+          spaceBetween: 25,
+        },
+        890: {
+          slidesPerView: 3,
+          spaceBetween: 14,
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 14,
+        },
+        1280: {
+          slidesPerView: {{ section.settings.slides_per_view_desktop }},
+          spaceBetween: 25,
+        },
+      },
+    });
+  },
+  { once: true }
+  );
+</script>
+
+{% schema %}
+{
+  "name": "Featured Collection T1",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "placeholder": "Bestseller Collection",
+      "default": "Bestseller Collection"
+    },
+    {
+      "type": "text",
+      "id": "section_sub_title",
+      "label": "Section Sub Title",
+      "placeholder": "Bestseller Collection",
+      "default": "Bestseller Collection Description"
+    },
+    {
+      "type": "color_background",
+      "id": "section_background",
+      "label": "Section Background Color",
+      "default": "linear-gradient(#ffffff, #ffffff)"
+    },
+    {
+      "type": "range",
+      "id": "slides_per_view_desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Slides Per View Desktop",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "slides_per_view_mobile",
+      "min": 1,
+      "max": 6,
+      "step": 0.1,
+      "label": "Slides Per View Mobile",
+      "default": 1.5
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection T1"
+    }
+  ]
+}
+{% endschema %}

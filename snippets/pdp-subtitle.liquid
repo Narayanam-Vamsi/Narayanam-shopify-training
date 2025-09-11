@@ -1,0 +1,19 @@
+{{ 'pdp-subtitle.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+{% assign shortDescription = textSubtitle | split: ',' %}
+
+{% if shortDescription != blank %}
+  <div class="custom-product-description-wrapper scrollbar-hidden" {{ block.shopify_attributes }}>
+    <div class="custom-product-description" {{ block.shopify_attributes }}>
+      {% for item in shortDescription limit: 4 %}
+        <p>
+          {% unless forloop.last %}
+            {{ item }} |
+          {% else %}
+            {{ item | remove_last: ' and' }}
+          {% endunless %}
+        </p>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

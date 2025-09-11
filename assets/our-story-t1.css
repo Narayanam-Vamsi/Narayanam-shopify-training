@@ -1,0 +1,129 @@
+/* .our-story-t1-container-main {
+    padding-left: 0;
+  } */
+
+.our-story-t1-container{
+    padding: unset;
+  }
+  
+  .our-story-t1-container .our-story-t1 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    position: relative;
+  }
+  .our-story-t1-container .left-container{
+    width: 50%;
+  }
+  .our-story-t1-container .our-story-t1 .left-container .about-brand {
+    width: 100%;
+    height: auto;
+  }
+  .our-story-t1-container .our-story-t1 .right-container .right-main .our-story-t1-title {
+    color: #000;
+    /* font-family: "Outfit-Medium"; */
+    /* font-size: clamp(32.4px, calc(36 * (100vw / 1440)), 39.6px);
+    font-weight: 600; */
+    line-height: 1;
+    margin-bottom: 28px;
+  }
+  .our-story-t1-container .our-story-t1 .right-container .right-main p {
+    color: #555;
+    /* font-size: clamp(13.5px, calc(15 * (100vw / 1440)), 16.5px);
+    font-weight: 400; */
+    line-height: calc( 27 * (100vw / 1440));
+    margin-bottom: 28px;
+  }
+  .our-story-t1-container .our-story-t1 .right-container .brand-button-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .our-story-t1-container .our-story-t1 .right-container .first-button, .second-button{
+    /* color: #54C5D0; */
+    /* font-family: "Outfit-Regular"; */
+    /* font-size: clamp(14.4px, calc(16 * (100vw /  1440)), 17.6px); */
+    /* font-weight: 400; */
+    line-height: calc( 27 * (100vw / 1440));
+  }
+  .our-story-t1-container .our-story-t1 .right-container .brand-button-container .first-button, .second-button {
+    min-width: 156px;
+  }
+  .our-story-t1-container .our-story-t1 .right-container .brand-button-container .first-button a, .second-button a {
+    line-height: 0;
+    /* border: 1px solid #54C5D0; */
+    padding: 12px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 1px 3px 0px #00000040;
+    overflow: hidden;
+  }
+  .our-story-t1-container .first-button:hover a span, .our-story-t1-container .second-button:hover a span{
+    color: #fff !important;
+  }
+  .our-story-t1-container .first-button a:hover , .our-story-t1-container .second-button a:hover{
+    background: #54C5D0;
+    color:#fff !important
+  }
+  .our-story-t1-container .right-container{
+    right: 0;
+    margin: 0 auto;
+    /* position: absolute;; */
+    border-radius: 20px;
+    /* background: #F9FBFF; */
+    box-shadow: -50px 10px 19px 0px rgba(151, 179, 234, 0.07);
+    width: 56%;
+    padding: 54px 60px;
+  }
+  
+  @media only screen and (max-width: 1024px) {
+    .our-story-t1-container-main {
+        padding-right: 0;
+    }
+
+    .our-story-t1-container .our-story-t1{
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .our-story-t1-container .our-story-t1 .right-container .brand-button-container .first-button a, .second-button a {
+      padding: 12px 0px;
+      overflow: hidden;
+    }
+    .our-story-t1-container .right-container{
+      width: 80%;
+      padding: 35px 31px;
+      margin: 0 auto;
+      position: unset;
+      margin-top: -42px;
+    }
+    .our-story-t1-container .our-story-t1 .right-container .right-main .our-story-t1-title{
+      /* font-size: clamp(25.2px, calc(28 * (100vw / 428)), 30.8px);
+      font-weight: 600; */
+      margin-bottom: 18px;
+    }
+    .our-story-t1-container .our-story-t1 .right-container .right-main p{
+      /* font-size: clamp(12.6px, calc(14 * (100vw / 428)), 15.4px); */
+      line-height: calc( 24 * (100vw / 428));
+    }
+    .our-story-t1-container .our-story-t1 .right-container .first-button, .second-button{
+      /* font-size: clamp(14.4px,calc(16 * (100vw / 428)),17.6px); */
+      line-height: calc( 27 * (100vw / 428));
+    }
+    .our-story-t1-container .left-container{
+      width: 100%;
+    }
+    .our-story-t1-container .our-story-t1 .right-container .brand-button-container {
+      justify-content: space-between;
+      text-align: center;
+    }
+    .our-story-t1-container .our-story-t1 .right-container .brand-button-container .first-button, .second-button{
+      width: 100%;
+    }
+    .our-story-t1-container .our-story-t1 .right-container .brand-button-container .first-button, .second-button {
+      min-width: unset;
+    }
+  }
+  
+  

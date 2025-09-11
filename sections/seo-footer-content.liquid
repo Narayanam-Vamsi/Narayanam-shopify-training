@@ -1,0 +1,148 @@
+{% unless template.name == 'cart'
+  or template.name == '404'
+  or template.name == 'search'
+  or template.name == 'page'
+  or template.name == 'blog'
+  or template.name == 'article'
+%}
+  <style>
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+      padding-bottom: 16px;
+    }
+    .seo-main-container{
+      width: 100%;
+    }
+    .about-text-div p, .about-text-div a{
+      margin-bottom: 16px;
+    }
+    .about-text-div ul li {
+      font-weight: 400;
+      line-height: 1.8;
+    }
+    .about-text-div strong{
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .about-text-div ul{
+      list-style-type: disc;
+      margin-inline-start: 2rem;
+    }
+    .about-text-div h2{
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .about-text-div h3{
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .about-text-div a {
+      text-decoration: none;
+    }
+    .seo-main-heading {
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    @media screen and (min-width: 1600px) and (max-width: 2500px) {
+      .about-text-div strong{
+        font-size: 20px;
+      }
+    }
+
+    @media screen and (max-width: 750px) {
+      .section-{{ section.id }}-margin {
+        margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+        padding-bottom: 60px;
+      }
+      .about-text-div ul li {
+        font-size: 17px;
+        line-height: 1.1;
+      }
+      .about-text-div {
+        font-size: 10px;
+        line-height: 13px;
+      }
+      .about-text-div p, .about-text-div strong, .about-text-div a {
+        font-size: 17px;
+        line-height: 30px;
+      }
+      .about-text-div h2{
+        font-size: 20px;
+        line-height: 1.1;
+      }
+      .about-text-div h3{
+        font-size: 19px;
+        line-height: 1.1;
+      }
+      .seo-main-heading {
+        line-height: 1.1;
+        line-height: normal;
+        letter-spacing: 0.22px;
+        margin-bottom: 12px;
+      }
+    }
+  </style>
+
+  <section class="section-{{ section.id }}-margin page-width">
+    {% if template.name == 'index' %}
+      {% if section.settings.seo_main_heading != blank %}
+        <h3 class="seo-main-heading">{{ section.settings.seo_main_heading }}</h3>
+      {% endif %}
+    {% else %}
+      <h3 class="seo-main-heading">{{ collection.metafields.custom.seo_heading.value }}</h3>
+    {% endif %}
+    <div class="about-text-div">
+      {% if template.name == 'index' %}
+        {{ section.settings.seo_main_content }}
+      {% else %}
+        {{ collection.metafields.custom.seo_content | metafield_tag }}
+      {% endif %}
+    </div>
+  </section>
+{% endunless %}
+
+{% schema %}
+{
+  "name": "SEO Content",
+  "enabled_on": { "groups": ["footer"] },
+  "settings": [
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "text",
+      "id": "seo_main_heading",
+      "label": "SEO Main Heading",
+      "default": "Popular Searches"
+    },
+    {
+      "type": "richtext",
+      "id": "seo_main_content",
+      "label": "SEO Text Content"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SEO Content"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,36 @@
+{% comment %} {{ 'pdp-title.css' | asset_url | stylesheet_tag: media: 'screen' }} {% endcomment %}
+
+<style>
+  .custom-product-info .title-share-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 0px;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1110px) {
+    .custom-product-info .title-share-button-container {
+      gap: 1px;
+    }
+    .custom-product-info .share-button__button {
+      padding: 0;
+    }
+    .custom-product-info .share-button__button .icon-share {
+      margin: 0;
+    }
+  }
+</style>
+
+<div class="title-share-button-container" {{ block.shopify_attributes }}>
+  <div class="product__title">
+    <h1>{{ product.title | escape }}</h1>
+    <a href="{{ product.url }}" class="product__title">
+      <h2 class="h1">
+        {{ product.title | escape }}
+      </h2>
+    </a>
+  </div>
+  {% if enableShareButton %}
+    {% assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin %}
+    {% render 'share-button', block: block, share_link: share_url %}
+  {% endif %}
+</div>

@@ -1,0 +1,85 @@
+{{ 'pincode-checker.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+  .custom-product-info .pincode_div{
+    background: {{pincodeBgColor}};
+  }
+  .custom-product-info .pincode_input{
+    color: {{pincodeInputColor}};
+  }
+  .custom-product-info .pdp_pincode_container .pincode_submit{
+    color: {{pincodeButtonColor}};
+  }
+</style>
+
+<div class="pdp_pincode_container" {{ block.shopify_attributes }}>
+  <span class="pdp_pincode_heading">{{ block.settings.pincode_heading }}</span>
+  <p class="pincode_sheet_api_holder hidden">{{ block.settings.pincode_api }}</p>
+  <div class="pincode_div">
+    <input
+      class="pincode_input"
+      type="number"
+      oninput="limitPincodeLength();"
+      inputmode="numeric"
+      placeholder="{{ block.settings.pincode_placeholder }}"
+      minlength="6"
+      maxlength="6"
+      onkeypress="handleKeyPress(event);"
+    >
+    <button class="pincode_submit" onclick="checkPinCode();">
+      {{ block.settings.pincode_btn_text }}
+    </button>
+  </div>
+  <p class="pincode_loading" style="display: none;">Checking</p>
+  <p class="pinMsg" data-success-message="{{ block.settings.pincode_success_msg }}" data-failed-message="{{ block.settings.pincode_failed_msg }}"></p>
+</div>
+
+<script>
+  function limitPincodeLength() {
+    let pincodeInput = document.querySelector('.pincode_input');
+    if (pincodeInput.value.length > pincodeInput.maxLength) {
+      pincodeInput.value = pincodeInput.value.slice(0, pincodeInput.maxLength);
+    }
+  }
+
+  function handleKeyPress(event) {
+    if (event.keyCode === 13) {
+      checkPinCode();
+    }
+  }
+
+  async function checkPinCode() {
+    let pincodeApiUrl = document.querySelector('.pincode_sheet_api_holder').textContent.trim();
+    let pincodeInputValue = document.querySelector('.pincode_input').value.trim();
+    let pincodeLoading = document.querySelector('.pincode_loading');
+    let pincodeResult = document.querySelector('.pinMsg');
+
+    if (pincodeInputValue.length === 6) {
+      pincodeLoading.style.display = 'inline-block'; // Show loading indicator
+      pincodeLoading.style.marginTop = '12px';
+      pincodeResult.textContent = ''; // Clear previous result
+      try {
+        let response = await fetch(pincodeApiUrl);
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        let data = await response.json();
+        let locations = data.values;
+        displayPincodeResult(pincodeInputValue, locations);
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        pincodeLoading.style.display = 'none'; // Hide loading indicator after request completes
+      }
+    }
+  }
+
+  function displayPincodeResult(pincode, locations) {
+    let pincodeResult = document.querySelector('.pinMsg');
+    let successMessage = pincodeResult.getAttribute('data-success-message');
+    let failedMessage = pincodeResult.getAttribute('data-failed-message');
+    let isPincodeValid = locations.some((location) => location[0] === pincode);
+
+    pincodeResult.textContent = isPincodeValid ? successMessage : failedMessage;
+  }
+</script>

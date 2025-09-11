@@ -1,0 +1,350 @@
+{{ 'featured-collection-t2.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+{% liquid
+  assign block_count = 0
+%}
+
+<style>
+   .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+   }
+   .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+  }
+  .section-{{ section.id }}-padding {
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  .bestsellers-section-{{ section.id }} .swiper .swiper-slide {
+    width: calc(calc(100% / {{ section.settings.slides_per_view_mobile }}) - 48.73px);
+    margin-right:  13px;
+  }
+
+   #Banner-{{ section.id }}.collection-slider.bestSeller{
+    background: {{ section.settings.section_background }};
+   }
+
+  .collection-slider.bestSeller .card__information .cardProduct_type {
+    display: none;
+  }
+
+  .collection-slider.bestSeller .section-head .filters-container.bs .filter-btn {
+    border: 1px solid {{ section.settings.tab_background }};
+  }
+
+  .collection-slider.bestSeller .section-head .filters-container.bs .filter-btn.active {
+    background-color: {{ section.settings.tab_background }};
+  }
+
+   {% comment %} #Banner-{{ section.id }}.collection-slider.bestSeller .heading-filter-container .slider-section-heading,
+   #Banner-{{ section.id }}.collection-slider.bestSeller .heading-filter-container .slider-section-sub-heading {
+     text-align: {{ section.settings.section_text_alignment }};
+   } {% endcomment %}
+
+   @media screen and (max-width: 750px) {
+     .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+     }
+    .collection-slider.bestSeller .swiper-slide {
+      width: calc(calc(100% /  {{ section.settings.slides_per_view_mobile }}));
+      margin-right: 7px;
+    }
+   }
+</style>
+
+{% if section.settings.sectionTitle != blank %}
+  <div
+    id="Banner-{{ section.id }}"
+    class="collection-slider bestSeller page-width section-{{ section.id }}-margin section-{{ section.id }}-padding"
+  >
+    {% for block in section.blocks %}
+      {% if block.settings.bsCollection.products_count > 0 %}
+        <div
+          class="swiper mySwiper bestsellerSwiper bestsellerSwiper{{- forloop.index -}} {% if forloop.first %} active_swiper {% endif %}"
+          data-filter="{{- block.id -}}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="section-head positioned page-width">
+            <div class="heading-filter-container">
+              {% if section.settings.sectionTitle != blank %}
+                <div>
+                  <h2 class="h2 slider-section-heading">{{ section.settings.sectionTitle }}</h2>
+                  {% if section.settings.sectionsubTitle != blank %}
+                    <p class="p slider-section-sub-heading">{{ section.settings.sectionsubTitle }}</p>
+                  {% endif %}
+                </div>
+              {% endif %}
+              <div class="filters-container bs">
+                {% for block in section.blocks %}
+                  {% if block.settings.filter_text != blank and block.settings.bsCollection.products_count > 0 %}
+                    {% assign block_count = block_count | plus: 1 %}
+                    <button
+                      class="filter-btn {% if forloop.index == 1 -%}active{%- endif -%}"
+                      data-index="{{ forloop.index0 }}"
+                      data-filter="{{- block.id -}}"
+                      {{ block.shopify_attributes }}
+                    >
+                      <span>{{ block.settings.filter_text }}</span>
+                    </button>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="section-head swiper-buttons-container">
+              <div class="swiper-buttons">
+                {% if block.settings.bsCollection.products_count > 0 %}
+                  <div class="swiper-prev">
+                    <div class="icon-arrow-bestseller">
+                      {% render 'arrow-icon-prev-fc-t2' %}
+                    </div>
+                  </div>
+                  <div class="swiper-next">
+                    <div class="icon-arrow-bestseller">
+                      {% render 'arrow-icon-next-fc-t2' %}
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-wrapper">
+            {% for product in block.settings.bsCollection.products limit: 6 %}
+              <div class="swiper-slide" style="animation-delay: {{ forloop.index0 | divided_by: 12.0 | round: 2 }}s">
+                {% render 'card-product', card_product: product, show_quick_add: true %}
+              </div>
+            {% endfor %}
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% assign loopSlider = section.settings.loopSlider %}
+
+<script>
+  const LOOPSLIDER = {{ loopSlider -}};
+  const SWIPERS = {{ block_count -}};
+  const collectionSliders = [];
+  let loopSlider = false;
+
+
+  if(window.screen.width <= 768 && LOOPSLIDER) {
+    loopSlider = true;
+  }
+
+  window.addEventListener(
+    'DOMContentLoaded',
+    () => {
+        let slider{{- section.id | remove: "--" | remove: "__" | remove: "-" }} = new Swiper(`#Banner-{{ section.id }} .bestsellerSwiper`, {
+          slidesPerView: {{ section.settings.slides_per_view_mobile }},
+          spaceBetween: 7,
+          navigation: {
+            nextEl: `#Banner-{{ section.id }}.bestSeller .swiper-next`,
+            prevEl: `#Banner-{{ section.id }}.bestSeller .swiper-prev`,
+          },
+          pagination: {
+            el: `#Banner-{{ section.id }}.bestSeller .swiper-pagination`,
+            clickable: true,
+          },
+          breakpoints: {
+            768: {
+              slidesPerView: 3.5,
+              spaceBetween: 10,
+            },
+            1024: {
+              slidesPerView: 4.4,
+              spaceBetween: 12,
+            },
+            1201: {
+              slidesPerView: {{ section.settings.slides_per_view_desktop }},
+              spaceBetween: 13,
+            },
+          },
+        });
+
+        const filters = document.querySelectorAll('.collection-slider .bs.filters-container .filter-btn');
+        const sliders = document.querySelectorAll('.collection-slider .bestsellerSwiper');
+
+        filters.forEach(filter => {
+          filter.addEventListener('click', (e) => {
+            let filterData =  e.currentTarget.getAttribute("data-filter");
+
+            if(!e.currentTarget.classList.contains("active")) {
+              slider{{- section.id | remove: "--" | remove: "__" | remove: "-" }}[e.currentTarget.getAttribute('data-index')].slideTo(0);
+            }
+
+            filters.forEach(filter => {
+            if( filter.getAttribute("data-filter") == filterData) {
+              filter.classList.add('active');
+              } else {
+                filter.classList.remove('active');
+            }
+            })
+
+            sliders.forEach(slider => {
+              let sliderData = slider.getAttribute('data-filter')
+              if(filterData == slider.getAttribute('data-filter')) {
+                slider.classList.add('active_swiper');
+              } else {
+                slider.classList.remove('active_swiper');
+              }
+            });
+          });
+        });
+      },
+    { once: true }
+  );
+</script>
+
+{% schema %}
+{
+  "name": "Featured Collection T2",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 4,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "range",
+      "id": "slides_per_view_desktop",
+      "min": 3,
+      "max": 6,
+      "step": 0.1,
+      "label": "Slides Per View Desktop",
+      "default": 4.2
+    },
+    {
+      "type": "range",
+      "id": "slides_per_view_mobile",
+      "min": 2,
+      "max": 6,
+      "step": 0.1,
+      "label": "Slides Per View Mobile",
+      "default": 2.3
+    },
+    {
+      "type": "checkbox",
+      "id": "loopSlider",
+      "label": "Loop Through Slides",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section Headings"
+    },
+    {
+      "type": "text",
+      "id": "sectionTitle",
+      "label": "Section Title",
+      "placeholder": "Bestseller",
+      "default": "Bestseller"
+    },
+    {
+      "type": "text",
+      "id": "sectionsubTitle",
+      "label": "Section Sub Title",
+      "placeholder": "Bestseller Sub Title",
+      "default": "Bestseller Sub Title"
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color_background",
+      "id": "section_background",
+      "label": "Section Background Color",
+      "default": "linear-gradient(#ffffff, #ffffff)"
+    },
+    {
+      "type": "color",
+      "id": "tab_background",
+      "label": "Active Tab Border Color",
+      "default": "#fff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Collection",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "filter_text",
+          "label": "Filter Text",
+          "placeholder": "Women",
+          "default": "Women"
+        },
+        {
+          "type": "collection",
+          "id": "bsCollection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection T2"
+    }
+  ]
+}
+{% endschema %}

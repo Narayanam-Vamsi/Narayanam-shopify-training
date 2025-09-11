@@ -1,0 +1,161 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "offer_flash_sale_timer_eF4763": {
+      "type": "offer-flash-sale-timer",
+      "settings": {
+        "margin_bottom_desktop": 36,
+        "margin_bottom_mobile": 36,
+        "saleEnd": "2024-03-27 16:30:00",
+        "timer_alignment": "",
+        "timer_bg": "#54c5d0"
+      }
+    },
+    "exclusive_deal_bgTFCT": {
+      "type": "exclusive-deal",
+      "blocks": {
+        "image_6N6TCB": {
+          "type": "image",
+          "settings": {
+            "exclusive_url": "",
+            "exclusive_image": "shopify:\/\/shop_images\/Image1_7_b0e81411-1fcf-44dd-b873-2ea0c2048290.jpg",
+            "buynow_title": "Buy Now",
+            "sub_title": "<p><strong>30% Off<\/strong> on Premium Shampoos<\/p>"
+          }
+        },
+        "image_MJUi43": {
+          "type": "image",
+          "settings": {
+            "exclusive_url": "",
+            "exclusive_image": "shopify:\/\/shop_images\/Image1_7_b0e81411-1fcf-44dd-b873-2ea0c2048290.jpg",
+            "buynow_title": "Buy Now",
+            "sub_title": "<p><strong>30% Off<\/strong> on Premium Shampoos<\/p>"
+          }
+        },
+        "image_bmUdni": {
+          "type": "image",
+          "settings": {
+            "exclusive_url": "",
+            "exclusive_image": "shopify:\/\/shop_images\/Image1_7_b0e81411-1fcf-44dd-b873-2ea0c2048290.jpg",
+            "buynow_title": "Buy Now",
+            "sub_title": "<p><strong>30% Off<\/strong> on Premium Shampoos<\/p>"
+          }
+        },
+        "image_jRbaaM": {
+          "type": "image",
+          "settings": {
+            "exclusive_url": "",
+            "exclusive_image": "shopify:\/\/shop_images\/Image1_7_b0e81411-1fcf-44dd-b873-2ea0c2048290.jpg",
+            "buynow_title": "Buy Now",
+            "sub_title": "<p><strong>30% Off<\/strong> on Premium Shampoos<\/p>"
+          }
+        },
+        "image_VXWeU6": {
+          "type": "image",
+          "settings": {
+            "exclusive_url": "",
+            "exclusive_image": "shopify:\/\/shop_images\/Image1_7_b0e81411-1fcf-44dd-b873-2ea0c2048290.jpg",
+            "buynow_title": "Buy Now",
+            "sub_title": "<p><strong>30% Off<\/strong> on Premium Shampoos<\/p>"
+          }
+        },
+        "image_fRVrj6": {
+          "type": "image",
+          "settings": {
+            "exclusive_url": "",
+            "exclusive_image": "shopify:\/\/shop_images\/Image1_7_b0e81411-1fcf-44dd-b873-2ea0c2048290.jpg",
+            "buynow_title": "Buy Now",
+            "sub_title": "<p><strong>30% Off<\/strong> on Premium Shampoos<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "image_6N6TCB",
+        "image_MJUi43",
+        "image_bmUdni",
+        "image_jRbaaM",
+        "image_VXWeU6",
+        "image_fRVrj6"
+      ],
+      "settings": {
+        "margin_bottom_desktop": 36,
+        "margin_bottom_mobile": 36,
+        "exclusive_title": "Exclusive Deals of the Day"
+      }
+    },
+    "exclusive_deal_p98FYN": {
+      "type": "exclusive-deal",
+      "blocks": {
+        "image_cdxYVF": {
+          "type": "image",
+          "settings": {
+            "exclusive_url": "",
+            "exclusive_image": "shopify:\/\/shop_images\/Image1_7_b0e81411-1fcf-44dd-b873-2ea0c2048290.jpg",
+            "buynow_title": "Buy Now",
+            "sub_title": "<p><strong>30% Off <\/strong>on Premium Shampoos<\/p>"
+          }
+        },
+        "image_9VmQ9Q": {
+          "type": "image",
+          "settings": {
+            "exclusive_url": "",
+            "exclusive_image": "shopify:\/\/shop_images\/Image1_7_b0e81411-1fcf-44dd-b873-2ea0c2048290.jpg",
+            "buynow_title": "Buy Now",
+            "sub_title": "<p><strong>30% Off<\/strong> on Premium Shampoos<\/p>"
+          }
+        },
+        "image_wEGPNe": {
+          "type": "image",
+          "settings": {
+            "exclusive_url": "",
+            "exclusive_image": "shopify:\/\/shop_images\/Image1_7_b0e81411-1fcf-44dd-b873-2ea0c2048290.jpg",
+            "buynow_title": "Buy Now",
+            "sub_title": "<p><strong>30% Off<\/strong> on Premium Shampoos<\/p>"
+          }
+        },
+        "image_pbjg4J": {
+          "type": "image",
+          "settings": {
+            "exclusive_url": "",
+            "exclusive_image": "shopify:\/\/shop_images\/Image1_7_b0e81411-1fcf-44dd-b873-2ea0c2048290.jpg",
+            "buynow_title": "Buy Now",
+            "sub_title": "<p><strong>30% Off<\/strong> on Premium Shampoos<\/p>"
+          }
+        },
+        "image_LdLWHx": {
+          "type": "image",
+          "settings": {
+            "exclusive_url": "",
+            "exclusive_image": "shopify:\/\/shop_images\/Image1_7_b0e81411-1fcf-44dd-b873-2ea0c2048290.jpg",
+            "buynow_title": "Buy Now",
+            "sub_title": "<p><strong>30% Off <\/strong>on Premium Shampoos<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "image_cdxYVF",
+        "image_9VmQ9Q",
+        "image_wEGPNe",
+        "image_pbjg4J",
+        "image_LdLWHx"
+      ],
+      "settings": {
+        "margin_bottom_desktop": 36,
+        "margin_bottom_mobile": 36,
+        "exclusive_title": "Offers on New Arrivals of the Day"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "offer_flash_sale_timer_eF4763",
+    "exclusive_deal_bgTFCT",
+    "exclusive_deal_p98FYN"
+  ]
+}

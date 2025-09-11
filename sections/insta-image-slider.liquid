@@ -1,0 +1,268 @@
+{{ 'insta-image-slider.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+    padding-top: {{ section.settings.padding_top}}px;
+    padding-bottom: {{ section.settings.padding_bottom}}px;
+  }
+
+  #{{ section.id }}.main-flexthefit-container{
+    background: {{ section.settings.section_background }};
+  }
+
+  #{{ section.id }}.main-flexthefit-container .text-conatiner .main-heading ,
+  #{{ section.id }}.main-flexthefit-container .text-conatiner .main-paragraph {
+    text-align: {{ section.settings.section_text_alignment }};
+  }
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+</style>
+
+<div class="main-flexthefit-container section-{{ section.id }}-margin" id="{{ section.id }}">
+  <div class="page-width">
+    <div class="flexthefit-subcontainer">
+      <div class="text-conatiner">
+        {% if section.settings.flexthefit_heading != blank %}
+          <h2 class="main-heading">{{ section.settings.flexthefit_heading }}</h2>
+        {% endif %}
+        {% if section.settings.flexthefit_para != blank %}
+          <p class="main-paragraph">{{ section.settings.flexthefit_para }}</p>
+        {% endif %}
+      </div>
+      <div class="flexfit-image-container">
+        <div class="left-image-container">
+          <div class="left-image-contains-container relative-img ">
+            {% for block in section.blocks limit: 1 %}
+              {% if block.settings.left_image_section != blank %}
+                {% if forloop.index0 == 0 %}
+                  {% assign lazy = 'eager' %}
+                {% else %}
+                  {% assign lazy = 'lazy' %}
+                {% endif %}
+                {% assign alt = block.settings.left_image_section.alt | default: 'insta-images' %}
+                {{
+                  block.settings.left_image_section
+                  | image_url: width: 2000
+                  | image_tag: class: 'main-image-class', loading: lazy, alt: alt
+                }}
+                <div class="name-left">
+                  <h5 class="name-of-pic">{{ block.settings.name_of_pic }}</h5>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="right-image-container">
+          <div class="right-up relative-img">
+            {% for block in section.blocks limit: 3 %}
+              {% if forloop.first %}
+                {% continue %}
+              {% endif %}
+              {% if block.settings.left_image_section != blank %}
+                <div class="relative-img ">
+                  {% if forloop.index0 == 0 %}
+                    {% assign lazy = 'eager' %}
+                  {% else %}
+                    {% assign lazy = 'lazy' %}
+                  {% endif %}
+                  {% assign alt = block.settings.left_image_section.alt | default: 'insta-images' %}
+                  {{
+                    block.settings.left_image_section
+                    | image_url: width: 2000
+                    | image_tag: class: 'main-image-class', loading: lazy, alt: alt
+                  }}
+                  <div class="right-up-text">
+                    <h5 class="name-of-pic">{{ block.settings.name_of_pic }}</h5>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="right-down relative-img">
+            {% for block in section.blocks limit: 6 %}
+              {% if forloop.index0 < 3 %}
+                {% continue %}
+              {% endif %}
+              {% if block.settings.left_image_section != blank %}
+                <div class="relative-img">
+                  {% if forloop.index0 == 0 %}
+                    {% assign lazy = 'eager' %}
+                  {% else %}
+                    {% assign lazy = 'lazy' %}
+                  {% endif %}
+                  {% assign alt = block.settings.left_image_section.alt | default: 'insta-images' %}
+                  {{
+                    block.settings.left_image_section
+                    | image_url: width: 2000
+                    | image_tag: class: 'main-image-class', loading: lazy, alt: alt
+                  }}
+                  <div class="right-text-down">
+                    <h5 class="font-size-fixed name-of-pic">{{ block.settings.name_of_pic }}</h5>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let imgCount1 = 0;
+window.imgArray = [];
+
+{% for block in section.blocks %}
+  imgArray.push({
+    img: "{{ block.settings.left_image_section | image_url: width: 600, format: 'webp' }}",
+    name: "{{ block.settings.name_of_pic }}",
+    designation: "{{ block.settings.designation_of_pic }}"
+  });
+{% endfor %}
+
+function shiftImage() {
+  const mainImageElems = document.querySelectorAll('.main-image-class');
+
+  for (let i = 0; i < mainImageElems.length; i++) {
+    if (window.innerWidth < 768 && (i == 1 || i == 2)) {
+      continue;
+    }
+
+    mainImageElems[i].classList.add('fade-out');
+    setTimeout(() => {
+      mainImageElems[i].removeAttribute('srcset');
+      mainImageElems[i].src = `${imgArray[(imgCount1 + i) % imgArray.length].img}`;
+      //mainImageElems[i].closest('.relative-img').querySelector("h5").innerText = `${imgArray[(imgCount1 + i) % imgArray.length].name}`;
+      //mainImageElems[i].closest('.relative-img').querySelector("span").innerText = `${imgArray[(imgCount1 + i) % imgArray.length].designation}`;
+      mainImageElems[i].classList.remove('fade-out');
+    }, 500);
+  }
+  
+  imgCount1 = (imgCount1 + 1) % imgArray.length;
+}
+
+setInterval(() => {
+  shiftImage();
+}, 4000);
+</script>
+
+{% schema %}
+{
+  "name": "Insta Slider",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "flexthefit_heading",
+      "label": "Insta Heading",
+      "default": "Brand Heading"
+    },
+    {
+      "type": "text",
+      "id": "flexthefit_para",
+      "label": "Insta Paragraph",
+      "default": "Brand Paragraph"
+    },
+    {
+      "type": "text_alignment",
+      "id": "section_text_alignment",
+      "label": "Section Text Alignment",
+      "default": "center"
+    },
+    {
+      "type": "color_background",
+      "id": "section_background",
+      "label": "Section Background Color",
+      "default": "linear-gradient(#ffffff, #ffffff)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Image",
+      "name": "Image Section",
+      "settings": [
+        {
+          "type": "header",
+          "content": "At least 6 images are required to show the slider."
+        },
+        {
+          "type": "image_picker",
+          "id": "left_image_section",
+          "label": "Left Image",
+          "info": "Recommended Image Size : 800X734px"
+        },
+        {
+          "type": "text",
+          "id": "name_of_pic",
+          "label": "Enter Name",
+          "default": "Your Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Insta Slider"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

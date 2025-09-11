@@ -1,0 +1,398 @@
+ {% comment %} {{ 'BestSellerUpdated.css' | asset_url | stylesheet_tag: media: 'screen' }} {% endcomment %}
+
+<style>
+
+.bestsellers-{{ section.id }} .bestsellers-container {
+  display: flex;
+  gap: 100px;
+  align-items: center;
+  margin-right:50px;
+  margin-left:50px;
+}
+
+.bestsellers-{{ section.id }} .bestsellers-left {
+  width:30%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items:left;
+}
+
+.bestsellers-{{ section.id }} .bestsellers-heading {
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.bestsellers-{{ section.id }} .bestsellers-subheading {
+  font-size: 24px;
+  color: #555;
+  font-weight:400;
+  margin: 0;
+}
+
+.bestsellers-{{ section.id }} .shop-all-btn {
+  width:50%;
+  padding:10px 15px;
+  border-radius: 24px;
+  background:#DB763F;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  display: inline-block;
+  transition: background 0.3s ease;
+}
+
+.bestsellers-{{ section.id }} .shop-all-btn:hover {
+  background: #d66b40;
+}
+
+
+.bestsellers-{{ section.id }} .bestsellers-right {
+width:70%;
+}
+
+.bestsellers-{{ section.id }} .product-card {
+  background: #fff;
+  border-radius: 12px;
+  text-align: left;
+  padding: 16px;
+}
+
+.bestsellers-{{ section.id }} .product-card img {
+  border-radius: 12px;
+  margin-bottom: 12px;
+  height:250px;
+}
+
+
+.bestsellers-{{ section.id }} .prod-type {
+  font-size: 12px;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.bestsellers-{{ section.id }} .prod-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.bestsellers-{{ section.id }} .price {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.bestsellers-{{ section.id }} .add-to-bag {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 1px solid  #d66b40;
+  border-radius: 24px;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight:600;
+  transition: all 0.3s;
+  color:black;
+}
+
+.bestsellers-{{ section.id }} .add-to-bag:hover {
+ background: #d66b40;
+  color: white;
+}
+
+.bestsellers-{{ section.id }} .swiper-controls {
+  position: relative;           
+  margin: 20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+}
+
+.bestsellers-{{ section.id }} .nav-buttons{
+  display: flex;
+  position:relative;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;     
+  width:15%;    
+}
+
+.bestsellers-{{ section.id }} .swiper-pagination {
+  position: relative !important;
+  width:85% !important;
+  height: 4px;
+  background: #eee;
+  border-radius: 2px;
+}
+
+.bestsellers-section .swiper-pagination-progressbar-fill {
+  background: #000;
+  border-radius: 2px;
+}
+
+.bestsellers-{{ section.id }} .nav-buttons .swiper-button-next{
+right:35%;
+}
+@media screen and (max-width:1150px){
+
+
+.bestsellers-{{ section.id }} .bestsellers-heading {
+  font-size: 27px;
+
+}
+
+.bestsellers-{{ section.id }} .bestsellers-subheading {
+  font-size: 20px;
+
+}
+
+.bestsellers-{{ section.id }} .bestsellers-left {
+  width:40%;
+  
+}
+
+.bestsellers-{{ section.id }} .bestsellers-right {
+  width:60%;
+}
+
+.bestsellers-{{ section.id }} .nav-buttons{
+
+  width:20%;    
+}
+
+.bestsellers-{{ section.id }} .swiper-pagination {
+
+  width:80% !important;
+}
+}
+
+
+@media screen and (max-width:1050px){
+
+.bestsellers-{{ section.id }} .nav-buttons{
+
+  width:25%;    
+}
+
+.bestsellers-{{ section.id }} .swiper-pagination {
+
+  width:75% !important;
+
+}
+}
+
+
+@media screen and (max-width:900px){
+
+.bestsellers-{{ section.id }} .nav-buttons{
+  width:30%;    
+}
+
+.bestsellers-{{ section.id }} .swiper-pagination {
+
+  width:70% !important;
+
+}
+}
+
+@media screen and (max-width:768px){
+
+.bestsellers-{{ section.id }} .bestsellers-container {
+  gap: 25px;
+  flex-direction:column;
+}
+.bestsellers-{{ section.id }} .bestsellers-left {
+  width:100%;
+  align-items:left;
+  padding-left:20px;
+}
+
+.bestsellers-{{ section.id }} .bestsellers-right {
+  width:100%;
+}
+
+.bestsellers-{{ section.id }} .bestsellers-heading {
+  font-size: 22px;
+  font-weight: 500;
+
+}
+
+.bestsellers-{{ section.id }} .bestsellers-subheading {
+  font-size: 18px;
+  font-weight:400;
+
+}
+
+.bestsellers-{{ section.id }} .swiper-controls {
+    display: flex;
+    flex-direction: column;
+    gap:25px; 
+    align-items: center;
+    justify-content: center;
+    
+  } 
+
+  .bestsellers-{{ section.id }} .nav-buttons{
+
+  width:28%;    
+}
+
+.add-to-bag .bag-price {
+    display: none;
+  }
+
+}
+
+
+@media screen and (max-width:500px){
+
+
+.bestsellers-{{ section.id }} .nav-buttons{
+
+  width:36%;    
+}
+
+.bestsellers-{{ section.id }} .swiper-pagination {
+
+  width:64% !important;
+
+}
+
+}
+  
+ </style>
+
+<section class="bestsellers-section bestsellers-{{ section.id }}" style="margin-bottom:{{ section.settings.margin_bottom }}px">
+  <div class="bestsellers-container">
+
+    <div class="bestsellers-left">
+      {% if section.settings.heading != blank %}
+        <h2 class="bestsellers-heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p class="bestsellers-subheading">{{ section.settings.subheading }}</p>
+      {% endif %}
+      {% if section.settings.shop_all_url != blank %}
+        <a href="{{ section.settings.shop_all_url }}" class="shop-all-btn">
+          {{ section.settings.shop_all_text }}
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="bestsellers-right">
+      {% assign collection = collections[section.settings.collection] %}
+      {% if collection != blank and collection.products_count > 0 %}
+        <div class="swiper bestsellers-swiper-{{ section.id }}">
+          <div class="swiper-wrapper">
+            {% for product in collection.products %}
+              <div class="swiper-slide product-card">
+                <a href="{{ product.url }}">
+                  {% if product.featured_image %}
+                    {{ product.featured_image | image_url: width: 400 | image_tag: alt: product.title }}
+                  {% endif %}
+                </a>
+                <div class="product-info">
+                  {% if product.type != blank %}
+                    <p class="prod-type">{{ product.type }}</p>
+                  {% endif %}
+                  <h3 class="prod-title">{{ product.title }}</h3>
+                  <p class="price">{{ product.price | money }}</p>
+                  <button class="add-to-bag">
+                    ADD TO BAG <span class="bag-price">- {{ product.price | money }}</span>
+                  </button>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          <div class="swiper-controls">
+       
+          <div class="swiper-pagination bestsellers-pagination-{{ section.id }}"></div>
+          <div class="nav-buttons">
+          <div class="swiper-button-prev bestsellers-prev-{{ section.id }}">{% render 'testimonial-nav-left' %}</div>
+          <div class="swiper-button-next bestsellers-next-{{ section.id }}">{% render 'testimonial-nav-right' %}</div>
+          </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  new Swiper('.bestsellers-swiper-{{ section.id }}', {
+    slidesPerView: 1.5,
+    spaceBetween: 10,
+    navigation: {
+      nextEl: '.bestsellers-next-{{ section.id }}',
+      prevEl: '.bestsellers-prev-{{ section.id }}'
+    },
+    pagination: {
+      el: '.bestsellers-pagination-{{ section.id }}',
+      type: 'progressbar'
+    },
+    breakpoints: {
+      768: { slidesPerView: 1.5, spaceBetween: 10 },
+      1024: { slidesPerView: 3, spaceBetween: 10 }
+    }
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Best Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Love Your Skin With Our Bestsellers"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "A skincare line crafted to perfection for 50 years"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Collection"
+    },
+    {
+      "type": "text",
+      "id": "shop_all_text",
+      "label": "Shop All Button Text",
+      "default": "SHOP ALL"
+    },
+    {
+      "type": "url",
+      "id": "shop_all_url",
+      "label": "Shop All Button Link",
+      "default": "/collections/all"
+    },
+    {
+      "type":"range",
+      "id": "margin_bottom",
+      "min": 10,
+      "max":50,
+      "unit": "px",
+      "label": "Set bottom margin",
+      "step": 10,
+      "default":30
+    }
+  ],
+  "presets": [
+    {
+      "name": "Best Products",
+      "category": "Products"
+    }
+  ]
+}
+{% endschema %} 

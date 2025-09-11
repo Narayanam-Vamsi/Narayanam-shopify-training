@@ -1,0 +1,233 @@
+{{ 'breadcrumb.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+  .breadcrumbs .breadcrumbs__list{
+    margin-top: {{ section.settings.margin_top_desktop }}px;
+  }
+
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  {% if template.name == "collection" %}
+    .breadcrumbs .breadcrumbs__list{
+      margin-bottom: unset;
+    }
+    .breadcrumbs-center-collection{
+      justify-content:center;
+    }
+  {% endif %}
+
+  {% if template.name == "product" %}
+    .breadcrumbs-center-product{
+      justify-content:center;
+    }
+  {% endif %}
+
+  @media screen and (max-width: 600px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+</style>
+
+{%- unless template == 'index'
+  or template == 'cart'
+  or template == 'list-collections'
+  or template == '404'
+  or template == 'search'
+  or template == 'page'
+  or template == 'blog'
+  or template == 'article'
+-%}
+  {%- assign t = template | split: '.' | first -%}
+
+  <section
+    id="breadcrumb-container {{ section.id }}"
+    class="section-{{ section.id }}-margin section-{{ section.id }}-padding {% if template.name == 'product' or template.name == 'collection' %}page-width{% endif %} {% case t %} {% when blank %} blank-template {% when 'page' %} page-template {% when 'blog-template' %} blog-template {% when 'blog' %} blog-template {% when 'product'%} product-template {% when 'collection' %} collection-template {% when 'article' %} article-template {% endcase %}"
+  >
+    <nav
+      class="
+        breadcrumbs {% if t == 'product' %}Product {% elsif t == 'collection' %} Collection{% endif %}
+        {% if section.settings.breadcrumbsCenter_collection %}breadcrumbs-center-collection{% endif %}
+        {% if section.settings.breadcrumbsCenter_product %}breadcrumbs-center-product{% endif %}
+      "
+      role="navigation"
+      aria-label="breadcrumbs"
+    >
+      <ol class="breadcrumbs__list">
+        <li class="breadcrumbs__item">
+          <a class="no-underline breadcrumbs__link breadcrumbs__link_home" href="/">Home</a>
+        </li>
+        {%- case t -%}
+          {%- when 'page' -%}
+            <li class="breadcrumbs__item">
+              {% if handle == 'story' %}
+                <a class="no-underline breadcrumbs__link storypagifybread" href="{{ page.url }}" aria-current="page">
+                  <h1>{{ page.title }}</h1>
+                </a>
+              {% else %}
+                <a class="no-underline breadcrumbs__link" href="{{ page.url }}" aria-current="page">{{ page.title }}</a>
+              {% endif %}
+            </li>
+          {%- when 'product' -%}
+            {%- if collection.url -%}
+              <li class="breadcrumbs__item cu">{{ collection.title | link_to: collection.url }}</li>
+            {%- endif -%}
+            <li class="breadcrumbs__item pb">
+              <a class="no-underline breadcrumbs__link" href="{{ product.url }}" aria-current="page">
+                {{- product.title -}}
+              </a>
+            </li>
+          {%- when 'collection' and collection.handle -%}
+            {%- if current_tags -%}
+              <li class="breadcrumbs__item cb">{{ collection.title | link_to: collection.url }}</li>
+              <li class="breadcrumbs__item pb">
+                {%- capture tag_url -%}{{ collection.url }}/{{ current_tags | join: "+" }}{%- endcapture -%}
+                <a class="no-underline tagss breadcrumbs__link" href="{{ tag_url }}" aria-current="page">
+                  {{- current_tags | join: ' + ' | remove: 'label_' -}}
+                </a>
+              </li>
+            {%- else -%}
+              <li class="breadcrumbs__item dcb">
+                <a
+                  class="no-underline breadcrumbs__link breadcrumbs__link-collecction"
+                  href="{{ collection.url }}"
+                  aria-current="page"
+                >
+                  {{- collection.title -}}
+                </a>
+              </li>
+            {%- endif -%}
+
+          {%- when 'blog' -%}
+            {%- if current_tags -%}
+              <li class="breadcrumbs__item">{{ blog.title | link_to: blog.url }}</li>
+              <li class="breadcrumbs__item">
+                {%- capture tag_url -%}{{ blog.url }}/tagged/{{ current_tags | join: "+" }}{%- endcapture -%}
+                <a class="no-underline breadcrumbs__link" href="{{ tag_url }}" aria-current="page">
+                  {{- current_tags | join: ' + ' -}}
+                </a>
+              </li>
+            {%- else -%}
+              <li class="breadcrumbs__item">
+                <a class="no-underline breadcrumbs__link" href="{{ blog.url }}" aria-current="page">{{ blog.title }}</a>
+              </li>
+            {%- endif -%}
+
+          {%- when 'article' -%}
+            {% assign blogName = request.path | split: '/blogs/' %}
+            {% assign blogHanlde = blogName[1] | split: '/' %}
+            {% assign bHandle = blogHanlde[0] %}
+            {% assign blog = blogs[bHandle] %}
+            <li class="breadcrumbs__item">
+              <a class="no-underline breadcrumbs__link" href="{{ blog.url }}" aria-current="page">{{ blog.title }}</a>
+            </li>
+            <li class="breadcrumbs__item">
+              <a class="no-underline breadcrumbs__link" href="{{ request.path }}" aria-current="page">
+                {{- page_title -}}
+              </a>
+            </li>
+          {%- when blank -%}
+            <li class="breadcrumbs__item">
+              <a class="no-underline breadcrumbs__link" href="{{ request.path }}" aria-current="page">
+                {{- page_title -}}
+              </a>
+            </li>
+        {%- endcase -%}
+      </ol>
+    </nav>
+  </section>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "BreadCrumb",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Top Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Breadcrumbs Center Align Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "breadcrumbsCenter_collection",
+      "label": "Center Align Breadcrumbs on Collection",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "breadcrumbsCenter_product",
+      "label": "Center Align Breadcrumbs on Product",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "BreadCrumb"
+    }
+  ]
+}
+{% endschema %}

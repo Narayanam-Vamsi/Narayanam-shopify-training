@@ -1,0 +1,269 @@
+{{ 'press-and-media.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #{{ section.id }}.press-media-container{
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  #{{ section.id }}.press-media-container{
+    background: {{ section.settings.section_background }};
+    padding-top: {{ section.settings.padding_top}}px;
+    padding-bottom: {{ section.settings.padding_bottom}}px;
+  }
+
+  #{{ section.id }}.press-media-container .top-up-container .main-heading,
+  #{{ section.id }}.press-media-container .top-up-container .subheading {
+    text-align: {{ section.settings.testimonial_alignment }};
+  }
+  @media screen and (max-width: 750px) {
+    #{{ section.id }}.press-media-container {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+</style>
+
+<section class="press-media-container page-width section-{{ section.id }}-padding" id="{{ section.id }}">
+  {% if section.settings.press_media_heading != blank %}
+    <div class="top-up-container">
+      <h2 class="main-heading">{{ section.settings.press_media_heading }}</h2>
+      <p class="subheading">{{ section.settings.press_media_subheading }}</p>
+    </div>
+  {% endif %}
+  <!-- main div starts -->
+  <!-- Slider main container -->
+  <!-- thunb slider -->
+  <div thumbsSlider="" class="swiper mySwiper3">
+    <div class="swiper-hover swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide">
+          {% if forloop.index0 == 0 %}
+            {% assign lazy = 'eager' %}
+          {% else %}
+            {% assign lazy = 'lazy' %}
+          {% endif %}
+          {% if block.settings.press_media_image != blank %}
+            {% assign alt = block.settings.press_media_image.alt | default: 'brand-image' %}
+            {{
+              block.settings.press_media_image
+              | image_url: width: 1600
+              | image_tag: class: 'Brands_testimonial_image', loading: lazy, alt: alt
+            }}
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- bottom text with link -->
+  <div style="swiper-hover --swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide">
+          <p class="center_text">{{ block.settings.press_media_content }}</p>
+          {% if block.settings.readmore_button_link != blank %}
+            <div class="bottom_line1">
+              <a href="{{ block.settings.readmore_button_link }}" class="animated_link">
+                <p class="button_style">{{ block.settings.readmore_button }}</p>
+                <div class="bottom_line2"></div>
+              </a>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</section>
+
+<script>
+  window.addEventListener(
+    'DOMContentLoaded',
+    () => {
+      var swiper = new Swiper('.mySwiper3', {
+        slidesPerView: 3,
+        grabCursor: true,
+        centeredSlides: true,
+        pauseOnMouseEnter: true,
+        loop: true,
+        // autoplay: {
+        //   delay: 2000,
+        // },
+        breakpoints: {
+          480: {
+            enteredSlides: true,
+            slidesPerView: 3,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 5,
+            spaceBetween: 10,
+          },
+        },
+      });
+      var swiper2 = new Swiper('.mySwiper2', {
+        spaceBetween: 10,
+        slidesPerView: 1,
+        grabCursor: true,
+        centeredSlides: true,
+        pauseOnMouseEnter: true,
+        // autoplay: {
+        //   delay: 2000,
+        // },
+        loop: true,
+        breakpoints: {
+          480: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          768: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        thumbs: {
+          swiper: swiper,
+        },
+      });
+
+      function handleMouseEnter() {
+        swiper.autoplay.stop();
+        swiper2.autoplay.stop();
+      }
+
+      function handleMouseLeave() {
+        swiper.autoplay.start();
+        swiper2.autoplay.start();
+      }
+
+      document.querySelector('.mySwiper3').addEventListener('mouseenter', handleMouseEnter);
+      document.querySelector('.mySwiper3').addEventListener('mouseleave', handleMouseLeave);
+
+      document.querySelector('.mySwiper2').addEventListener('mouseenter', handleMouseEnter);
+      document.querySelector('.mySwiper2').addEventListener('mouseleave', handleMouseLeave);
+    },
+    { once: true }
+  );
+</script>
+
+{% schema %}
+{
+  "name": "Press and Media",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "press_media_heading",
+      "label": "Press and Media Heading",
+      "default": "Press and Media"
+    },
+    {
+      "type": "text",
+      "id": "press_media_subheading",
+      "label": "Press and Media Subheading",
+      "default": "Press and Media Des"
+    },
+    {
+      "type": "text_alignment",
+      "id": "testimonial_alignment",
+      "label": "Text alignment",
+      "default": "left"
+    },
+    {
+      "type": "color_background",
+      "id": "section_background",
+      "label": "Section Background Color",
+      "default": "linear-gradient(#ffffff, #ffffff)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Select",
+      "name": "Press & Media",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "press_media_image",
+          "label": "Press and Media Image",
+          "info": "Dimensions 250px X 61px"
+        },
+
+        {
+          "type": "text",
+          "id": "press_media_content",
+          "label": "Press and Media Content",
+          "default": "Brands Content"
+        },
+        {
+          "type": "text",
+          "id": "readmore_button",
+          "label": "Read More Button",
+          "default": "Read More"
+        },
+
+        {
+          "type": "url",
+          "id": "readmore_button_link",
+          "label": "Read More Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Press and Media"
+    }
+  ]
+}
+{% endschema %}

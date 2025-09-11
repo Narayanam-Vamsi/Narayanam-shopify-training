@@ -1,0 +1,238 @@
+{{ 'press-and-media-t2.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #{{ section.id }}.press-media-container-t2{
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  #{{ section.id }}.press-media-container-t2{
+    background: {{ section.settings.section_background }};
+    padding-top: {{ section.settings.padding_top}}px;
+    padding-bottom: {{ section.settings.padding_bottom}}px;
+  }
+
+  #{{ section.id }}.press-media-container-t2 .top-up-container .main-heading,
+  #{{ section.id }}.press-media-container-t2 .top-up-container .subheading {
+    text-align: {{ section.settings.testimonial_alignment }};
+  }
+  #{{ section.id }}.press-media-container-t2 mediaSwiper .center_text {
+    display: none;
+  }
+  #{{ section.id }}.press-media-container-t2 mediaSwiper .swiper-slide-active .center_text {
+    display: block;
+    width: 100%;
+  }
+  #{{ section.id }}.press-media-container-t2 mediaSwiper .swiper-slide-active .Brands_testimonial_image {
+    filter: grayscale(0);
+  }
+  #{{ section.id }}.press-media-container-t2 mediaSwiper .swiper-slide-active .custom-border{
+    display: block !important;
+  }
+  .my-text {
+    width: 100%;
+    height: 50%;
+    /* text-align: center;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%); */
+  }
+  .image-div {
+    width: 100%;
+    height: 50%;
+  }
+  .custom-border{
+    height: 2px;
+    width: 30%;
+    background-color: black;
+  }
+  @media screen and (max-width: 750px) {
+    #{{ section.id }}.press-media-container-t2 {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+</style>
+
+<section class="press-media-container-t2 page-width section-{{ section.id }}-padding" id="{{ section.id }}">
+  {% if section.settings.press_media_heading != blank %}
+    <div class="top-up-container">
+      <h2 class="main-heading">{{ section.settings.press_media_heading }}</h2>
+      <p class="subheading">{{ section.settings.press_media_subheading }}</p>
+    </div>
+  {% endif %}
+  <div thumbsSlider="" class="swiper mediaSwiper">
+    <div class="swiper-hover swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide">
+          {% if forloop.index0 == 0 %}
+            {% assign lazy = 'eager' %}
+          {% else %}
+            {% assign lazy = 'lazy' %}
+          {% endif %}
+          {% if block.settings.press_media_image != blank %}
+            <div class="image-div">
+              {% assign alt = block.settings.press_media_image.alt | default: 'brand-image' %}
+              {{
+                block.settings.press_media_image
+                | image_url: width: 1600
+                | image_tag: class: 'Brands_testimonial_image', loading: lazy, alt: alt
+              }}
+            </div>
+            <div class="custom-border"></div>
+            <div class="my-text">
+              <p class="center_text">{{ block.settings.press_media_content }}</p>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+  window.addEventListener(
+    'DOMContentLoaded',
+    () => {
+      var thumbSwiper = new Swiper('.mediaSwiper', {
+        slidesPerView: 3,
+        slideToClickedSlide: true,
+        grabCursor: true,
+        centeredSlides: true,
+        loop: true,
+        autoplay: {
+          delay: 2000,
+          pauseOnMouseEnter: true,
+          // disableOnInteraction: true,
+        },
+        breakpoints: {
+          480: {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 5,
+            spaceBetween: 10,
+          },
+        },
+      });
+    },
+    { once: true }
+  );
+</script>
+
+{% schema %}
+{
+  "name": "Press and Media T2",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "press_media_heading",
+      "label": "Press and Media T2 Heading",
+      "default": "Press and Media T2"
+    },
+    {
+      "type": "text",
+      "id": "press_media_subheading",
+      "label": "Press and Media T2 Subheading",
+      "default": "Press and Media T2 Des"
+    },
+    {
+      "type": "text_alignment",
+      "id": "testimonial_alignment",
+      "label": "Text alignment",
+      "default": "left"
+    },
+    {
+      "type": "color_background",
+      "id": "section_background",
+      "label": "Section Background Color",
+      "default": "linear-gradient(#ffffff, #ffffff)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Select",
+      "name": "Press & Media",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "press_media_image",
+          "label": "Press and Media T2 Image",
+          "info": "Dimensions 250px X 61px"
+        },
+
+        {
+          "type": "text",
+          "id": "press_media_content",
+          "label": "Press and Media T2 Content",
+          "default": "Brands Content"
+        },
+        {
+          "type": "text",
+          "id": "readmore_button",
+          "label": "Read More Button",
+          "default": "Read More"
+        },
+
+        {
+          "type": "url",
+          "id": "readmore_button_link",
+          "label": "Read More Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Press and Media T2"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,160 @@
+{{ 'my-custom-product-card.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+  .custom-cart-productCard .second-row{
+      background: {{settings.you_may_like_bg}};
+  }
+</style>
+
+{%- liquid
+  assign show_secondary_image = settings.show_secondary_image
+  assign media_aspect_ratio = settings.image_ratio
+  assign show_quick_add = settings.enable_quick_add
+  assign icon_atc = settings.icon_atc
+  assign image_shape = settings.image_shape
+  assign show_rating = settings.show_rating
+  assign rating_design = settings.rating_design
+  assign enable_sale_tag = settings.enable_sale_tag
+
+  assign ratio = 1
+  if card_product.featured_media and media_aspect_ratio == 'portrait'
+    assign ratio = 0.8
+  elsif card_product.featured_media and media_aspect_ratio == 'adapt'
+    assign ratio = card_product.featured_media.aspect_ratio
+  endif
+  if ratio == 0 or ratio == null
+    assign ratio = 1
+  endif
+
+  if lazy_load == true
+    assign lazy = 'lazy'
+  else
+    assign lazy = 'eager'
+  endif
+
+  assign hasBestSellersTag = false
+  assign hasNewTag = false
+  assign hasOnSaleTag = false
+  assign soldOut = false
+  assign labelTag = false
+
+  if card_product.available == false
+    assign soldOut = true
+  endif
+
+  if card_product.tags contains 'Best Sellers'
+    assign hasBestSellersTag = true
+  endif
+
+  if card_product.tags contains 'lebel:new' or card_product.tags contains 'label:new'
+    assign hasNewTag = true
+  endif
+
+  if card_product.compare_at_price > card_product.price and card_product.available
+    assign hasOnSaleTag = true
+  endif
+
+  for tag in card_product.tags
+    if tag contains 'label_'
+      assign labelTag = true
+      break
+    endif
+  endfor
+-%}
+
+<div class="custom-cart-productCard main-card-wrapper">
+  <div class="card-content-container">
+    {%- if card_product.featured_media -%}
+      <div class="card-image-container">
+        {% assign cardProductAlt = card_product.featured_media.alt | default: 'card image' %}
+        {{
+          card_product.featured_media
+          | image_url: width: 360
+          | image_tag: loading: 'lazy', alt: cardProductAlt, class: 'motion-reduce fr-image'
+        }}
+      </div>
+    {%- endif -%}
+
+    <div class="second-row">
+      <div class="card-productInfo-Container">
+        <div class="card-productTitle-container">
+          <h3 class="card-productTitle">
+            <a href="{{ card_product.url }}">
+              {{ card_product.title | escape }}
+            </a>
+          </h3>
+        </div>
+        <div class="card-productPrice-container">
+          {% render 'card_product_price', product: card_product, price_class: '', show_compare_at_price: true %}
+        </div>
+      </div>
+
+      {%- if show_quick_add -%}
+        <div class="quick-add no-js-hidden">
+          {%- liquid
+            assign product_form_id = 'quick-add-' | append: section_id | append: card_product.id
+            assign qty_rules = false
+            if card_product.selected_or_first_available_variant.quantity_rule.min > 1 or card_product.selected_or_first_available_variant.quantity_rule.max != null or card_product.selected_or_first_available_variant.quantity_rule.increment > 1
+              assign qty_rules = true
+            endif
+          -%}
+          <product-form data-section-id="{{ section.id }}">
+            {%- form 'product',
+              card_product,
+              id: product_form_id,
+              class: 'form',
+              novalidate: 'novalidate',
+              data-type: 'add-to-cart-form'
+            -%}
+              <input
+                type="hidden"
+                name="id"
+                value="{{ card_product.selected_or_first_available_variant.id }}"
+                class="product-variant-id"
+                {% if card_product.selected_or_first_available_variant.available == false %}
+                  disabled
+                {% endif %}
+              >
+              <button
+                id="{{ product_form_id }}-submit"
+                type="submit"
+                name="add"
+                class="quick-add__submit button button--full-width button--secondary{% if horizontal_quick_add %} card--horizontal__quick-add{% endif %}"
+                aria-haspopup="dialog"
+                aria-labelledby="{{ product_form_id }}-submit title-{{ section_id }}-{{ card_product.id }}"
+                aria-live="polite"
+                data-sold-out-message="true"
+                {% if card_product.selected_or_first_available_variant.available == false %}
+                  disabled
+                {% endif %}
+              >
+                <span>
+                  {%- if card_product.selected_or_first_available_variant.available -%}
+                    {{ 'products.product.add_to_cart' | t }}
+                  {%- else -%}
+                    {{ 'products.product.sold_out' | t }}
+                  {%- endif -%}
+                </span>
+
+                {% if settings.enable_atc_price %}
+                  <span class="hyphen-remove">&nbsp-&nbsp</span>
+                  <span class="card_product_atc_price">
+                    {{ card_product.selected_or_first_available_variant.price | money_without_trailing_zeros }}
+                  </span>
+                {% endif %}
+
+                <span class="sold-out-message hidden">
+                  {{ 'products.product.sold_out' | t }}
+                </span>
+                {%- if horizontal_quick_add -%}
+                  <span class="icon-wrap">{% render 'icon-plus' %}</span>
+                {%- endif -%}
+                {%- render 'loading-spinner' -%}
+              </button>
+            {%- endform -%}
+          </product-form>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

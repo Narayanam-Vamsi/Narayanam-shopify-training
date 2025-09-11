@@ -1,0 +1,187 @@
+{{ 'featured-collection-t4.css' | asset_url | stylesheet_tag }}
+
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  .read_button {
+    background: #000000;
+    color: white;
+    display: flex;
+    justify-content: center;
+    padding: 5px 45px 5px 45px;
+    align-items: center;
+    width: 80%;
+    font-size: 1vw;
+    line-height: 2.125vw;
+    font-family: "Jost-SemiBold";
+  }
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-padding {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+{%- endstyle -%}
+
+{% if collections[section.settings.collection].products != blank %}
+  <section class="our_bestsellers section-{{ section.id }}-padding" id="{{ section.id }}">
+    <!-- main div starts -->
+    <div class="main_div ">
+      <div class="left_div ">
+        <p class="heading1">{{ section.settings.Heading1 }}</p>
+        <p class="heading2">{{ section.settings.Heading2 }}</p>
+        <div class="shop-button-div">
+          <a href="{{ section.settings.shop_button_link }}">
+            <p class="shop-button">{{ section.settings.button_link_shop_all }}</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="right_div">
+        <!-- slider div -->
+        <div class="swiper our_bestsellerSwiper">
+          <ul class="swiper-wrapper">
+            {% for product in collections[section.settings.collection].products limit: 6 %}
+              <li class="swiper-slide">
+                <a href="{{ product.url }}">
+                  {% render 'card-product',
+                    card_product: product,
+                    card_product: product, show_quick_add: true
+                  %}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        <div class="button-prev-next {% if section.settings.show_navigation == false %}hidden{% endif %}">
+            <div class="swiper-button-prev">
+              {% render 'left-button-featured-t4' %}
+            </div>
+            <div class="swiper-button-next">
+              {% render 'right-button-featured-t4' %}
+            </div>
+          </div>
+          <div class="swiper-scrollbar {% if section.settings.show_navigation == false %}hidden{% endif %}"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+<script>
+  window.addEventListener(
+    'DOMContentLoaded',
+    () => {
+  const our_bestsellerSwiper{{- section.id | remove: "--" | remove: "__" | remove: "-" }} = new Swiper(`#{{ section.id }} .our_bestsellerSwiper`, {
+    slidesPerView: 1.85,
+    spaceBetween: 20,
+    freeMode: false,
+    watchSlidesProgress: true,
+    scrollbar: {
+      el: '.swiper-scrollbar',
+      hide: false,
+      draggable: true,
+    },
+    navigation: {
+      nextEl: '#{{ section.id }} .swiper-button-next',
+      prevEl: '#{{ section.id }} .swiper-button-prev',
+    },
+    breakpoints: {
+      640: {
+        slidesPerView: 2.5,
+        spaceBetween: 20,
+      },
+      768: {
+        slidesPerView: 2.1,
+        spaceBetween: 10,
+      },
+      1024: {
+        slidesPerView: 2.7,
+        spaceBetween: 10,
+      },
+      1250: {
+        slidesPerView: 3.5,
+        spaceBetween: 20,
+      },
+    },
+  });
+},
+{ once: true }
+);
+</script>
+
+{% schema %}
+{
+  "name": "Featured Collection T4",
+  "settings": [
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "html",
+      "id": "Heading1",
+      "label": "Main Heading",
+      "default": "Main Heading"
+    },
+    {
+      "type": "text",
+      "id": "Heading2",
+      "label": "Sub Heading",
+      "default": "Sub Heading"
+    },
+    {
+      "type": "text",
+      "id": "button_link_shop_all",
+      "label": "Shop Button Name",
+      "default": "SHOP ALL"
+    },
+    {
+      "type": "url",
+      "id": "shop_button_link",
+      "label": "Shop Button Link"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Choose Collection"
+    },
+    {
+    "type": "checkbox",
+    "id": "show_navigation",
+    "label": "Show Slider Navigation",
+    "default": true
+    }
+
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection T4"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

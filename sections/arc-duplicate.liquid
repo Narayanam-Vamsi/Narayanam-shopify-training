@@ -1,0 +1,333 @@
+<style>
+    .circular-swiper{
+        padding-bottom: 12rem;
+    }
+    .swiper .circular-swiper{
+        position: relative;
+    }
+    .image-wrapper img.Desktop-Banner-Image {
+      display:block;
+    }
+    .image-wrapper img.Mobile-Banner-Image {
+      display:none;
+    }
+    .image-wrapper img.Desktop-Banner-Image ,
+    .image-wrapper img.Mobile-Banner-Image{
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        aspect-ratio: 289 / 373;
+    }
+    img.Desktop-Banner-Image:hover ,
+    img.Mobile-Banner-Image:hover{
+        filter: brightness(.4);
+    }
+    .swiper-both-buttons{
+        position: absolute;
+        display: flex;
+        gap: 30px;
+        left: 50%;
+        top: 80%;
+        width:100px;
+        height: 50px;
+        flex-direction: row;
+        align-items: center;
+        transform: translate(-50%);        
+    }
+
+    .swiper-button-prev{
+        display: block ;
+        width: unset;
+
+
+    }
+    .swiper-button-next{
+        display: block ;
+        width: unset;
+    
+    }
+    .overlay-container{
+        position: absolute;
+        display: block;
+        z-index: 99;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        left: 50%;
+    }
+
+    .swiper-button-prev svg,
+.swiper-button-next svg {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+    .overlay-text-container{
+        display:none;
+    }
+
+.main-title {
+  margin-bottom: 30px;
+}
+    .overlay-text-container p{
+      font-size: larger;
+      font-weight: 400;
+       margin-bottom:30px;
+    }
+    .image-wrapper:hover .overlay-text-container{
+        display:block ;   
+        color: #fff;
+        margin: 0;
+        text-align: center;
+    }
+    .swiper-slide-active .overlay-text-container{
+      display:block  
+      color: #fff;
+      margin: 0;
+      text-align: center;
+    }
+    .swiper-slide-active img.Desktop-Banner-Image,
+    .swiper-slide-active img.Mobile-Banner-Image{
+      filter: brightness(.4);
+    }
+
+
+
+    @media screen and (max-width: 767px) {
+  .circular-swiper {
+    padding-bottom: 6rem;
+  }
+
+
+  .image-wrapper img.Desktop-Banner-Image {
+    display: none;
+  }
+
+  .image-wrapper img.Mobile-Banner-Image {
+    display: block;
+  }
+
+  .swiper-both-buttons {
+    width: 50px;
+    gap: 5px;
+    top: 90%;
+  }
+
+   .swiper-button-prev,
+  .swiper-button-next {
+    width: 20px;
+    height: 20px;
+  }
+  .swiper-button-prev svg,
+  .swiper-button-next svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .main-title {
+
+    margin-bottom: 20px;
+  }
+
+}
+
+    @media screen and (max-width:1100px){
+      .swiper-both-buttons{
+        width:100px;
+        height:auto;
+      }
+    }
+</style>
+
+<section class="circular-swiper-section" style="margin-bottom: {{ section.settings.margin_bottom_desktop }}px;">
+    <div class="container">
+      <h2 class="main-title" style="text-align:center">{{ section.settings.main_title }}</h2>
+      <p class="sub-title" style="text-align:center">{{ section.settings.main_sub_title }}</p>
+  
+      <div class="swiper circular-swiper">
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+            <div class="swiper-slide">
+              <a href="{{ block.settings.image-url }}">
+                <div class="image-wrapper">
+                  {% if block.settings.desktop_image != blank %}
+                    <img
+                      class="Desktop-Banner-Image"
+                      srcset="
+                        {%- if block.settings.desktop_image.width >= 550 -%}{{ block.settings.desktop_image | image_url: width: 550, format: 'webp' }} 550w,{%- endif -%}
+                        {%- if block.settings.desktop_image.width >= 1100 -%}{{ block.settings.desktop_image | image_url: width: 1100, format: 'webp' }} 1100w,{%- endif -%}
+                        {%- if block.settings.desktop_image.width >= 1445 -%}{{ block.settings.desktop_image | image_url: width: 1445, format: 'webp' }} 1445w,{%- endif -%}
+                        {%- if block.settings.desktop_image.width >= 1680 -%}{{ block.settings.desktop_image | image_url: width: 1680, format: 'webp' }} 1680w,{%- endif -%}
+                        {%- if block.settings.desktop_image.width >= 2048 -%}{{ block.settings.desktop_image | image_url: width: 2048, format: 'webp' }} 2048w,{%- endif -%}
+                        {{ block.settings.desktop_image | image_url }} {{ block.settings.desktop_image.width }}w
+                "
+                      src="{{ block.settings.desktop_image | image_url: width: block.settings.desktop_image.width, format: 'webp' }}"
+                      {% if forloop.index0 == 0 %} loading="eager" {% else %} loading="lazy" {% endif %}
+                      sizes="100vw"
+                      alt="{% if block.settings.desktop_image.alt %}{{ block.settings.desktop_image.alt | escape }}{% else %}banner-image{% endif %}"
+                      width="{{ block.settings.desktop_image.width }}"
+                      height="{{ block.settings.desktop_image.height }}"
+                    >
+                  {% endif %}
+                  {% if block.settings.mobile_image != blank %}
+                    <img
+                      class="Mobile-Banner-Image"
+                      srcset="
+                        {%- if block.settings.mobile_image.width >= 550 -%}{{ block.settings.mobile_image | image_url: width: 550, format: 'webp' }} 550w,{%- endif -%}
+                        {%- if block.settings.mobile_image.width >= 1100 -%}{{ block.settings.mobile_image | image_url: width: 1100, format: 'webp' }} 1100w,{%- endif -%}
+                        {%- if block.settings.mobile_image.width >= 1445 -%}{{ block.settings.mobile_image | image_url: width: 1445, format: 'webp' }} 1445w,{%- endif -%}
+                        {%- if block.settings.mobile_image.width >= 1680 -%}{{ block.settings.mobile_image | image_url: width: 1680, format: 'webp' }} 1680w,{%- endif -%}
+                        {%- if block.settings.mobile_image.width >= 2048 -%}{{ block.settings.mobile_image | image_url: width: 2048, format: 'webp' }} 2048w,{%- endif -%}
+                        {{ block.settings.mobile_image | image_url }} {{ block.settings.mobile_image.width }}w
+                      "
+                      src="{{ block.settings.mobile_image | image_url: width: block.settings.mobile_image.width, format: 'webp' }}"
+                      {% if forloop.index0 == 0 %} loading="eager" {% else %} loading="lazy" {% endif %}
+                      sizes="100vw"
+                      alt="{% if block.settings.mobile_image.alt %}{{ block.settings.mobile_image.alt | escape }}{% else %}banner-image{% endif %}"
+                      width="{{ block.settings.mobile_image.width }}"
+                      height="{{ block.settings.mobile_image.height }}"
+                    >
+                  {% endif %}
+                  <div class="overlay-container">
+                      <div class="overlay-text-container">
+                          <p>{{ block.settings.image-title }}</p>
+                      </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="swiper-both-buttons">
+            <div class="swiper-button-prev">{% render 'slider-left-arrow' %}</div>
+            <div class="swiper-button-next">{% render 'slider-right-arrow' %} </div>
+        </div>
+
+        
+      </div>
+    </div>
+</section>
+
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      let arcSwiper = new Swiper('.circular-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 38,
+        centeredSlides: true,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        loop: true,
+        effect: 'creative',
+        creativeEffect: {
+            perspective: true,
+            limitProgress: 5,
+            prev: {
+              translate: ['-65%', '3%', 0],
+              rotate: [0, 0, -7],
+              origin: 'center 500%',
+            },
+            next: {
+              translate: ['65%', '3%', 0],
+              rotate: [0, 0, 7],
+              origin: 'center 500%',
+            },
+        },
+        breakpoints: {
+            320: { slidesPerView: 2 },
+            500: { slidesPerView: 3 },
+            768: { slidesPerView: 4 },
+            1024: { slidesPerView: 4 },
+            1250: { slidesPerView: 5 },
+        }
+      });
+    });
+</script>
+  
+{% schema %}
+{
+    "name": "Circular slider",
+    "settings":[
+        {
+            "type": "range",
+            "id": "margin_bottom_desktop",
+            "min": 0,
+            "max": 100,
+            "step": 4,
+            "unit": "px",
+            "label": "Margin Bottom Desktop",
+            "default": 36
+        },
+        {
+            "type": "range",
+            "id": "margin_bottom_mobile",
+            "min": 0,
+            "max": 100,
+            "step": 4,
+            "unit": "px",
+            "label": "Margin Bottom Mobile",
+            "default": 36
+        },
+        {
+            "type": "text",
+            "id": "main_title",
+            "label": "Heading Title",
+            "default": "Arc Slider"
+        },
+        {
+            "type": "text",
+            "id": "main_sub_title",
+            "label": "Heading Sub Title",
+            "default": "The product that everybody need"
+        },
+        {
+            "type": "color",
+            "id": "tab_bgcolor",
+            "label": "Tab Background Color",
+            "default": "#fff"
+        }    
+    ],
+    "presets": [{ "name": "Circular arc"}],
+    "blocks": [{
+        "type": "Image-Slider",
+        "name": "Image",
+        "settings": [
+            {
+               "type": "header",
+               "content": "Minimum 6 slide is required"
+            },
+            {
+                "type": "image_picker",
+                "id": "desktop_image",
+                "label": "Card Image Desktop",
+                "info": "Recommended Size : 400x534px"
+            },
+            {
+                "type": "image_picker",
+                "id": "mobile_image",
+                "label": "Card Image Mobile",
+                "info": "Recommended Size : 180X245px"
+            },
+            {
+                "type": "text",
+                "id": "image-title",
+                "label": "Shop By Concern Title",
+                "default": "Product Title"
+            },
+            {
+                "type": "url",
+                "id": "image-url",
+                "label": "Shop Link"
+            }
+        ]
+    }]
+}
+{% endschema %}
+

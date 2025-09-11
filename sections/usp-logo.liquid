@@ -1,0 +1,275 @@
+{{ 'usp-logo.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #{{ section.id }}.homepage-usp{
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+    background-color: {{ section.settings.background_color}};
+    padding-top: {{ section.settings.padding_top}}px;
+    padding-bottom: {{ section.settings.padding_bottom}}px;
+  }
+
+  #{{ section.id }}.homepage-usp .section_title_shop_by_concern,
+  #{{ section.id }}.homepage-usp .section_sub_title_shop_by_concern {
+    text-align: {{ section.settings.section_text_alignment }};
+  }
+
+  {% for block in section.blocks %}
+    .homepage-usp .Below_image_text.img-text-{{ block.id }}{
+      color: {{ block.settings.text_color }};
+      margin-top: 10px;
+    }
+  {% endfor %}
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+</style>
+
+<section
+  class="homepage-usp {% if section.settings.show_content == 'grid' %}page-width{% endif %} section-{{ section.id }}-margin"
+  id="{{ section.id }}"
+>
+  <!-- main div starts -->
+  {% if section.settings.main_title != blank %}
+    <h2 class="section_title_shop_by_concern {% if section.settings.show_content == 'swiper' %}page-width{% endif %}">
+      {{ section.settings.main_title }}
+    </h2>
+  {% endif %}
+  {% if section.settings.main_sub_title != blank %}
+    <p class="section_sub_title_shop_by_concern {% if section.settings.show_content == 'swiper' %}page-width{% endif %}">
+      {{ section.settings.main_sub_title }}
+    </p>
+  {% endif %}
+
+  {% if section.settings.show_content == 'grid' %}
+    <div class="grid_container">
+      {% for block in section.blocks %}
+        <div class="div_blocks">
+          {% if block.settings.image != blank %}
+            <div class="image_center">
+              {% if forloop.index0 == 0 %}
+                {% assign lazy = 'eager' %}
+              {% else %}
+                {% assign lazy = 'lazy' %}
+              {% endif %}
+              {% assign alt = block.settings.image.alt | default: 'usp-logo' %}
+              {{
+                block.settings.image
+                | image_url: width: 1200
+                | image_tag: class: 'image', loading: lazy, alt: alt, sizes: '(max-width: 600px) 600vw, 1600px'
+              }}
+            </div>
+          {% endif %}
+          <div class="text-container">
+            <h3 class="Below_image_text img-text-{{ block.id }}">{{ block.settings.text }}</h3>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  {% elsif section.settings.show_content == 'swiper' %}
+    {% comment %}-------- Swiper --------{% endcomment %}
+    <div class="swiper homepage_usp">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide">
+            <div class="div_blocks">
+              {% if block.settings.image != blank %}
+                <div class="image_center">
+                  {% if forloop.index0 == 0 %}
+                    {% assign lazy = 'eager' %}
+                  {% else %}
+                    {% assign lazy = 'lazy' %}
+                  {% endif %}
+                  {% assign alt = block.settings.image.alt | default: 'main-desktop-banner' %}
+                  {{
+                    block.settings.image
+                    | image_url: width: 1600
+                    | image_tag: class: 'image', loading: lazy, alt: alt, sizes: '(max-width: 600px) 600vw, 1600px'
+                  }}
+                </div>
+              {% endif %}
+              <div class="text-container">
+                <h3 class="Below_image_text">{{ block.settings.text }}</h3>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+    {% comment %}-------- Swiper Ends --------{% endcomment %}
+  {% endif %}
+</section>
+
+{% if section.blocks.size > 1 %}
+  <script>
+    window.addEventListener(
+      'DOMContentLoaded',
+      () => {
+        (async () => {
+          const uspLogo = new Swiper(`#{{ section.id }} .homepage_usp`, {
+            slidesPerView: 4.5,
+            spaceBetween: 20,
+            breakpoints: {
+              320: {
+                // centeredSlides: true,
+                slidesPerView: 2.5,
+                spaceBetween: 15,
+              },
+              500: {
+                // centeredSlides: true,
+                slidesPerView: 3.5,
+                spaceBetween: 15,
+              },
+              1000: {
+                slidesPerView: {{ section.settings.slides_per_view }},
+                spaceBetween: 20,
+              },
+            },
+          });
+        })();
+      },
+      { once: true }
+    );
+  </script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "USP Logo",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color_background",
+      "id": "background_color",
+      "label": "Section Background Color",
+      "default": "rgba(251, 225, 206, 0.2)"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "main_title",
+      "label": "Heading Title",
+      "default": "USP One"
+    },
+    {
+      "type": "text",
+      "id": "main_sub_title",
+      "label": "Heading Sub Title",
+      "default": "USP One Des"
+    },
+    {
+      "type": "text_alignment",
+      "id": "section_text_alignment",
+      "label": "Section Text Alignment",
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "show_content",
+      "label": "Display",
+      "options": [
+        {
+          "value": "grid",
+          "label": "Grid"
+        },
+        {
+          "value": "swiper",
+          "label": "Swiper"
+        }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "number",
+      "id": "slides_per_view",
+      "label": "Slides per view",
+      "default": 4
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Select",
+      "name": "Image",
+      "settings": [
+        {
+          "id": "image",
+          "type": "image_picker",
+          "label": "USP Image",
+          "info": "Image size should be 150X150px"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Enter Icon Heading",
+          "default": "USP Heading"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Icon Heading Color",
+          "default": "#000"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "USP Logo"
+    }
+  ]
+}
+{% endschema %}

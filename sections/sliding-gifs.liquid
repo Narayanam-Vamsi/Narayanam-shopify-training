@@ -1,0 +1,225 @@
+{{ 'sliding-gifs.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #{{ section.id }}.sliding-gif{
+    background: {{ section.settings.section_background }};
+    padding-top: {{ section.settings.padding_top}}px;
+    padding-bottom: {{ section.settings.padding_bottom}}px;
+  }
+  .sliding-gif .main-section {
+    padding-right: 0px;
+  }
+
+  #{{ section.id }}.sliding-gif a[aria-disabled='true'] {
+    cursor: default;
+  }
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  {% if section.settings.scrub_formula_title == blank %}
+    .sliding-gif .better-swiper-section {
+      width: 100%;
+    }
+  {% endif %}
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+</style>
+
+<div class="sliding-gif first-div section-{{ section.id }}-margin" id="{{ section.id }}">
+  <div class="page-width main-section">
+    <div class="main-scrub-section">
+      {% if section.settings.scrub_formula_title != blank %}
+        <div class="better-scrub-section">
+          <div class="scrub-heading ">
+            <h2 class="scrub-main-heading">
+              {{ section.settings.scrub_formula_title }}
+            </h2>
+          </div>
+        </div>
+      {% endif %}
+      <div class="better-swiper-section">
+        <div class="swiper test-swiper mySwiperScrub">
+          <div class="swiper-wrapper">
+            {%- for block in section.blocks -%}
+              <div class="swiper-slide" data-swiper-autoplay="2000">
+                <div class="image-container-scrub">
+                  <div class="image-div-container">
+                    <video
+                      id="homevideo"
+                      width="100%"
+                      controlsList="nodownload"
+                      autoplay="autoplay"
+                      muted="muted"
+                      loop="loop"
+                      playsinline=""
+                      preload="metadata"
+                      data-aos="fade-up"
+                      allowfullscreen
+                    >
+                      <source src="{{ block.settings.scrub_formula_video.sources[1].url }}" id="videoId">
+                    </video>
+                  </div>
+                  <div>
+                    <a
+                      {% if block.settings.scrub_link == blank %}
+                        role="link" aria-disabled="true"
+                      {% else %}
+                        href="{{ block.settings.scrub_link}}"
+                      {% endif %}
+                      class="anchor-link"
+                    >
+                      <p class="link-name">{{ block.settings.link_name }}</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.addEventListener(
+    'DOMContentLoaded',
+    () => {
+      const swipergif{{- section.id | remove: "--" | remove: "__" | remove: "-" }} = new Swiper(`#{{ section.id }} .mySwiperScrub`, {
+        slidesPerView: 2.7,
+        spaceBetween: 15,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        autoplay: {
+          delay: 1000,
+        },
+        pagination: {
+          el: '#{{ section.id }} .swiper-pagination',
+          clickable: true,
+        },
+        breakpoints: {
+          0: {
+            slidesPerView: 1.5,
+          },
+          640: {
+            slidesPerView: 2.7,
+          },
+        },
+      });
+    },
+    { once: true }
+  );
+</script>
+
+{% schema %}
+{
+  "name": "Sliding Gifs",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "scrub_formula_title",
+      "label": "Gifs Heading",
+      "default": "Heading"
+    },
+    {
+      "type": "color_background",
+      "id": "section_background",
+      "label": "Section Background Color",
+      "default": "linear-gradient(#ffffff, #ffffff)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Gifs Image",
+      "settings": [
+        {
+          "type": "video",
+          "id": "scrub_formula_video",
+          "label": "Video"
+        },
+        {
+          "type": "image_picker",
+          "id": "gif_for_section",
+          "label": "Gif For Section"
+        },
+        {
+          "type": "text",
+          "id": "scrub_link",
+          "label": "Product Link"
+        },
+        {
+          "type": "text",
+          "id": "link_name",
+          "label": "Provide Link Name",
+          "default": "Lorem Ipsum"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sliding Gifs"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

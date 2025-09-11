@@ -1,0 +1,202 @@
+{{ 'exclusive-deals.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  #{{ section.id }}.exclusive-deal-container .slider-section-heading {
+    text-align: {{section.settings.heading_alignment}};
+  }
+
+  #{{ section.id }}.exclusive-deal-container  .swiper.exclusive-deals .swiper-pagination {
+    position: static;
+  }
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+      padding-right: 0;
+    }
+  }
+{%- endstyle -%}
+
+<section class="exclusive-deal-container page-width section-{{ section.id }}-margin" id="{{ section.id }}">
+  <div class="exclusive-deal">
+    <div class="swiper exclusive-deals">
+      <div class="section-head">
+        <h2 class="slider-section-heading">{{ section.settings.exclusive_title }}</h2>
+      </div>
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          {% if block.settings.exclusive_image != blank %}
+            <div class="swiper-slide">
+              <a class="no-underline" href="{{ block.settings.exclusive_url }}">
+                <div class="collection-image-container">
+                  {% if block.settings.exclusive_image != blank %}
+                    <div class="exclusive-image-container">
+                      {% if forloop.index0 == 0 %}
+                        {% assign lazy = 'eager' %}
+                      {% else %}
+                        {% assign lazy = 'lazy' %}
+                      {% endif %}
+                      {{
+                        block.settings.exclusive_image
+                        | image_url: width: 1600
+                        | image_tag: class: 'collection-image', loading: lazy
+                      }}
+                    </div>
+                  {% endif %}
+                  {% if block.settings.buynow_title != blank %}
+                    <div class="exclusive-button-container {% if block.settings.exclusive_image != blank %}absoluteCenter{% endif %}">
+                      <span class="buynow-button">{{ block.settings.buynow_title }}</span>
+                    </div>
+                  {% endif %}
+                </div>
+                {% if block.settings.sub_title != blank %}
+                  <div class="exclusive-bottom-container">
+                    <h4 class="button-block">{{ block.settings.sub_title }}</h4>
+                  </div>
+                {% endif %}
+              </a>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+    window.addEventListener(
+      'DOMContentLoaded',
+      () => {
+      const shopByCollection{{- section.id | remove: "--" | remove: "__" | remove: "-" }} = new Swiper(`#{{ section.id }} .exclusive-deals`, {
+      navigation: {
+        nextEl: '#{{ section.id }} .swiper-next',
+        prevEl: '#{{ section.id }} .swiper-prev',
+      },
+      pagination: {
+        el: ".swiper-pagination",
+      },
+      breakpoints: {
+        0: {
+          slidesPerView: 1.646,
+          spaceBetween: 11,
+        },
+        749: {
+          slidesPerView: 2,
+          spaceBetween: 25,
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 14,
+        },
+        1280: {
+          slidesPerView: 5,
+          spaceBetween: 29,
+        },
+      },
+    });
+  },
+  { once: true }
+  );
+</script>
+
+{% schema %}
+{
+  "name": "Exclusive Deals",
+  "settings": [
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "text",
+      "id": "exclusive_title",
+      "label": "Exclusive Title",
+      "placeholder": "Exclusive Deals",
+      "default": "Exclusive Deals of the Day"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "right"
+        }
+      ],
+      "default": "left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Exclusive Slides",
+      "settings": [
+        {
+          "type": "url",
+          "id": "exclusive_url",
+          "label": "Exclusive URL"
+        },
+        {
+          "type": "image_picker",
+          "id": "exclusive_image",
+          "label": "Exclusive Image",
+          "info": "Image size should be 245px X 245px "
+        },
+        {
+          "type": "text",
+          "id": "buynow_title",
+          "label": "Buy Now Button Title",
+          "placeholder": "Buy Now",
+          "default": "Buy Now"
+        },
+        {
+          "type": "richtext",
+          "id": "sub_title",
+          "label": "Card Sub Title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Exclusive Deals"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

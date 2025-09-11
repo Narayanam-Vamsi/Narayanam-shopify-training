@@ -1,0 +1,300 @@
+{{ 'testimonial-t3.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  #{{ section.id }}.testimonials-container-t3{
+    background: {{ section.settings.section_background }};
+    padding-top: {{ section.settings.padding_top}}px;
+    padding-bottom: {{ section.settings.padding_bottom}}px;
+  }
+
+  #{{ section.id }}.testimonials-container-t3 .title_container .main_title,
+  #{{ section.id }}.testimonials-container-t3 .title_container .main_sub_title {
+    text-align: {{ section.settings.testimonial_alignment_t3 }};
+  }
+
+  #{{ section.id }}.testimonials-container-t3 .swiper-container {
+    background: {{ section.settings.swiper_background }};
+  }
+
+  {% for block in section.blocks %}
+    .testimonials-container-t3 .lower_section-image.image-{{ block.id }} {
+      border-top-left-radius: {{ block.settings.border_top_left_radius }}px;
+      border-top-right-radius: {{ block.settings.border_top_right_radius }}px;
+      border-bottom-left-radius: {{ block.settings.border_bottom_left_radius }}px;
+      border-bottom-right-radius: {{ block.settings.border_bottom_right_radius }}px;
+      overflow: hidden;
+      line-height: 0;
+    }
+  {% endfor %}
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+</style>
+
+{% if section.settings.main_title != blank %}
+  <section class="testimonials-container-t3 section-{{ section.id }}-margin" id="{{ section.id }}">
+    <div class="testimonial_main_container">
+      <div class="title_container page-width">
+        {% if section.settings.main_title != blank %}
+          <h2 class="main_title">{{ section.settings.main_title }}</h2>
+        {% endif %}
+        {% if section.settings.main_sub_title != blank %}
+          <p class="main_sub_title">{{ section.settings.main_sub_title }}</p>
+        {% endif %}
+      </div>
+      <div class="swiper-container">
+        <div class="swiper testimonial_mySwiper">
+          <div class="swiper-wrapper" style="transition-timing-function: linear;">
+            {% for block in section.blocks %}
+              {% if block.settings.comment != blank %}
+                <div class="swiper-slide">
+                  <div class="cardbg {% if block.settings.testimonial_slide_layout %}border-radius{% endif %}">
+                    <div class="slider_card">
+                      <div class="upper_section">{{ block.settings.comment }}</div>
+                      <div class="lower_section">
+                        {% if block.settings.Smallimg != blank %}
+                          <div class="lower_section-image image-{{ block.id }}">
+                            {% if forloop.index0 == 0 %}
+                              {% assign lazy = 'eager' %}
+                            {% else %}
+                              {% assign lazy = 'lazy' %}
+                            {% endif %}
+                            {% assign alt = block.settings.Smallimg.alt | default: 'testimonial-icon' %}
+                            {{
+                              block.settings.Smallimg
+                              | image_url: width: 60
+                              | image_tag: class: 'Smallimg', loading: lazy, alt: alt
+                            }}
+                          </div>
+                        {% endif %}
+                        <div class="lowersub_section">
+                          {% if block.settings.name != blank %}
+                            <div class="name_styling">{{ block.settings.name }}</div>
+                          {% endif %}
+                          {% if block.settings.Designation != blank %}
+                            <div class="designation_styling">{{ block.settings.Designation }}</div>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+<script>
+  window.addEventListener(
+    'DOMContentLoaded',
+    () => {
+      const swiperseens{{- section.id | remove: "--" | remove: "__" | remove: "-" }} = new Swiper(`#{{ section.id }} .testimonial_mySwiper`, {
+        slidesPerView: 1.2,
+        spaceBetween: 20,
+        loop: true,
+        speed: 10000,
+        allowTouchMove: false,
+        autoplay: {
+          delay: 0,
+          reverseDirection: false,
+        },
+        breakpoints: {
+          480: {
+            slidesPerView: 1.2,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 40,
+          },
+        },
+      });
+    },
+    { once: true }
+  );
+</script>
+
+{% schema %}
+{
+  "name": "Testimonial T3",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Auto Slide",
+      "info": "Automatic swiper required minimum 4 slides"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "main_title",
+      "label": "Testimonial Main Heading",
+      "default": "Testimonial Two"
+    },
+    {
+      "type": "text",
+      "id": "main_sub_title",
+      "label": "Testimonial Main Heading",
+      "default": "Testimonial Two Subtitle"
+    },
+    {
+      "type": "text_alignment",
+      "id": "testimonial_alignment_t3",
+      "label": "Text alignment",
+      "default": "left"
+    },
+    {
+      "type": "color_background",
+      "id": "section_background",
+      "label": "Section Background Color",
+      "default": "linear-gradient(#ffffff, #ffffff)"
+    },
+    {
+      "type": "color_background",
+      "id": "swiper_background",
+      "label": "Slider Background Color",
+      "default": "rgba(251, 225, 206, 0.2)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Testimonial Slides",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "testimonial_slide_layout",
+          "label": "Enable Curved Layout",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "comment",
+          "label": "Testimonial Comment",
+          "default": "Testimonial Comment"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Testimonial Name",
+          "default": "Testimonial Name"
+        },
+        {
+          "type": "text",
+          "id": "Designation",
+          "label": "Testimonial Designation",
+          "default": "Testimonial Designation"
+        },
+        {
+          "type": "image_picker",
+          "id": "Smallimg",
+          "label": "Testimonial Image",
+          "info": "Image size should be 60x60px"
+        },
+        {
+          "type": "range",
+          "id": "border_top_left_radius",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Image Border Top Left Radius",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "border_top_right_radius",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Image Border Top Right Radius",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "border_bottom_left_radius",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Image Border Bottom Left Radius",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "border_bottom_right_radius",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Image Border Bottom Right Radius",
+          "default": 20
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonial T3"
+    }
+  ]
+}
+{% endschema %}

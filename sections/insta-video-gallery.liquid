@@ -1,0 +1,297 @@
+{{ 'insta-video-gallery.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+  .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+    }
+    
+    #{{ section.id }}.insta_video_gallery{
+      background: {{ section.settings.background_color }};
+      padding-top: {{ section.settings.padding_top}}px;
+      padding-bottom: {{ section.settings.padding_bottom}}px;
+    }
+
+    #{{ section.id }}.insta_video_gallery .start_div .title,
+    #{{ section.id }}.insta_video_gallery .start_div .sub_heading {
+      text-align: {{ section.settings.testimonial_alignment_t3 }};
+    }
+
+    @media screen and (max-width: 750px) {
+      .section-{{ section.id }}-margin {
+        margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+      }
+    }
+</style>
+
+<section class="insta_video_gallery section-{{ section.id }}-margin" data-id="{{ section.id }}" id="{{ section.id }}">
+  {% assign blocks = section.blocks | size %}
+  <div class="start_div">
+    <div class="heading-subheading-container page-width">
+      {% if section.settings.trending_campaign_heading != blank %}
+        <h2 class="title">{{ section.settings.trending_campaign_heading }}</h2>
+      {% endif %}
+      {% if section.settings.trending_campaign_subheading != blank %}
+        <p class="sub_heading">{{ section.settings.trending_campaign_subheading }}</p>
+      {% endif %}
+    </div>
+    <div class="swiper myTrendingCampaignSwiper">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide" {{ block.shopify_attributes }}>
+            {% if block.settings.insta_video_gallery_image != blank
+              and block.settings.insta_video_gallery_video != blank
+            %}
+              <div class="insta_video_gallery_video">
+                <video
+                  id="video{{ forloop.index0 }}"
+                  class="insta_video_gallery_video"
+                  width="{{ block.settings.insta_video_gallery_video.sources[0].width }}"
+                  height="{{ block.settings.insta_video_gallery_video.sources[0].height }}"
+                  controlsList="nodownload"
+                  muted="muted"
+                  loop="loop"
+                  playsinline="playsinline"
+                  preload="metadata"
+                  poster="{{ block.settings.insta_video_gallery_video.preview_image.src | image_url: width: block.settings.insta_video_gallery_video.preview_image.width, format: 'webp' }}"
+                >
+                  {% for source in block.settings.insta_video_gallery_video.sources %}
+                    {% case source.format %}
+                      {% when 'mp4' %}
+                        <source data-src="{{ source.url }}" type="{{ source.mime_type }}">
+                    {% endcase %}
+                  {% endfor %}
+                </video>
+                <div id="play-button-{{ forloop.index0 }}" class="play-button">
+                  {% render 'play_btn_insta_video_gallery' %}
+                </div>
+              </div>
+
+            {% elsif block.settings.insta_video_gallery_image != blank %}
+              <div class="insta_video_gallery_img">
+                {% if forloop.index != 1 %}
+                  {% assign lazy = 'eager' %}
+                {% else %}
+                  {% assign lazy = 'lazy' %}
+                {% endif %}
+                {{ block.settings.insta_video_gallery_image | image_url: width: 580 | image_tag: loading: lazy }}
+              </div>
+
+            {% elsif block.settings.insta_video_gallery_video != blank %}
+              <div class="insta_video_gallery_video">
+                <video
+                  id="video{{ forloop.index0 }}"
+                  class="insta_video_gallery_video"
+                  width="{{ block.settings.insta_video_gallery_video.sources[0].width }}"
+                  height="{{ block.settings.insta_video_gallery_video.sources[0].height }}"
+                  controlsList="nodownload"
+                  muted="muted"
+                  loop="loop"
+                  playsinline="playsinline"
+                  preload="metadata"
+                  poster="{{ block.settings.insta_video_gallery_video.preview_image.src | image_url: width: block.settings.insta_video_gallery_video.preview_image.width, format: 'webp' }}"
+                >
+                  {% for source in block.settings.insta_video_gallery_video.sources %}
+                    {% case source.format %}
+                      {% when 'mp4' %}
+                        <source data-src="{{ source.url }}" type="{{ source.mime_type }}">
+                    {% endcase %}
+                  {% endfor %}
+                </video>
+                <div id="play-button-{{ forloop.index0 }}" class="play-button">
+                  {% render 'play_btn_insta_video_gallery' %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+
+<script>
+  window.addEventListener( 'DOMContentLoaded', () => {
+    let myTrendingCampaignSwiper{{- section.id | remove: "--" | remove: "__" | remove: "-" }} = new Swiper(`[data-id="{{section.id}}"] .swiper`, {
+      loop: {% if blocks >= 6 %}true{% else %}false{% endif %},
+      slidesPerView: 'auto',
+      pagination: {
+        el: `[data-id="{{ section.id }}"] .swiper-pagination`,
+        clickable: true,
+      },
+      breakpoints: {
+        300: {
+          slidesPerView: 1.2,
+          centeredSlides: false,
+          spaceBetween: 6.5,
+          slidesOffsetAfter: 50,
+        },
+        600: {
+          slidesPerView: 'auto',
+          spaceBetween: 6.5,
+        },
+        1200: {
+          slidesPerView: 'auto',
+          spaceBetween: 6.5,
+        },
+      },
+    });
+  }, {once: true});
+
+  var videos = document.querySelectorAll('.insta_video_gallery_video video');
+  var playButtons = document.querySelectorAll('.insta_video_gallery_video .play-button');
+
+  function togglePlay(video, playButton) {
+    if (video.paused) {
+      video.play();
+      playButton.style.display = 'none';
+    } else {
+      video.pause();
+      playButton.style.display = 'block';
+    }
+    
+  }
+  videos.forEach((video, index) => {
+    var playButton = playButtons[index];
+    playButton.addEventListener('click', function () {
+      togglePlay(video, playButton);
+    });
+    video.addEventListener('click', function () {
+      togglePlay(video, playButton);
+    });
+  });
+
+  // Lazy Load Video
+  document.addEventListener("DOMContentLoaded", function() {
+    var lazyVideos = [].slice.call(document.querySelectorAll(".insta_video_gallery video.insta_video_gallery_video"));
+
+    if ("IntersectionObserver" in window) {
+      var lazyVideoObserver = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(function(video) {
+          if (video.isIntersecting) {
+            for (var source in video.target.children) {
+              var videoSource = video.target.children[source];
+              if (typeof videoSource.tagName === "string" && videoSource.tagName === "SOURCE") {
+                videoSource.src = videoSource.dataset.src;
+              }
+            }
+
+            video.target.load();
+            video.target.classList.remove("lazy");
+            lazyVideoObserver.unobserve(video.target);
+          }
+        });
+      });
+
+      lazyVideos.forEach(function(lazyVideo) {
+        lazyVideoObserver.observe(lazyVideo);
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Insta Video Gallery",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "trending_campaign_heading",
+      "label": "Heading",
+      "default": "KNOW JOCKEY"
+    },
+    {
+      "type": "text",
+      "id": "trending_campaign_subheading",
+      "label": "Sub-Heading",
+      "default": "Trending Campaigns"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#252A35"
+    },
+    {
+      "type": "text_alignment",
+      "id": "testimonial_alignment_t3",
+      "label": "Text alignment",
+      "default": "left"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Insta Video Gallery",
+      "type": "slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "insta_video_gallery_image",
+          "label": "Trending Campaigns Image",
+          "info": "Recommended size is: 578px x 330px"
+        },
+        {
+          "type": "video",
+          "id": "insta_video_gallery_video",
+          "label": "Trending Campaigns Video",
+          "info": "Recommended size is: 578px x 330px"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Insta Video Gallery"
+    }
+  ]
+}
+{% endschema %}

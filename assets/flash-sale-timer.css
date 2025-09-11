@@ -1,0 +1,78 @@
+.flash-sale-timer-container .countdown-timer-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flash-sale-timer-container .countdown-timer-announce {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 9px 2px;
+}
+.flash-sale-timer-container .saleStartParent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  width: max-content;
+}
+.flash-sale-timer-container .countdown-timer-announce .expire-text {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  margin-right: 15px;
+}
+.flash-sale-timer-container .countdown-timer-announce .salesCount,
+.time {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+}
+.flash-sale-timer-container .countdown-timer-announce .salesCount span {
+  padding: 0 4px;
+}
+.flash-sale-timer-container .salesCount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flash-sale-timer-container .saleStart {
+  justify-content: end;
+  display: flex;
+  width: max-content;
+}
+.flash-sale-timer-container .countdown-timer-announce {
+  justify-content: start;
+  width: max-content;
+}
+
+@media only screen and (max-width: 767px) {
+  .flash-sale-timer-container .saleStart {
+    width: 100%;
+    justify-content: center;
+  }
+  .flash-sale-timer-container .countdown-timer-announce {
+    width: 100%;
+    justify-content: center;
+  }
+  .flash-sale-timer-container .saleStartParent {
+    flex-direction: column;
+    gap: 0;
+  }
+  .flash-sale-timer-container .saleStart p {
+    padding: 9px 2px;
+    text-align: center;
+  }
+  .flash-sale-timer-container .countdown-timer-announce .expire-text {
+    font-size: 18px;
+  }
+  .flash-sale-timer-container .countdown-timer-announce .salesCount,
+  .time {
+    font-size: 18px;
+  }
+  .flash-sale-timer-container .countdown-timer-announce {
+    /* padding-top: 0; */
+  }
+}

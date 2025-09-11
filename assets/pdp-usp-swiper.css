@@ -1,0 +1,40 @@
+.custom-product-info .usp-content-container-scroll-container {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.custom-product-info .usp-content-container {
+  display: flex;
+  flex-direction: row;
+  gap: 3.5rem;
+  align-items: baseline;
+}
+.custom-product-info .usp-image-content {
+  width: 100%;
+  max-width: 75px;
+  flex-shrink: 0;
+}
+
+.custom-product-info .usp-content-container p {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.custom-product-info .usp-title {
+  text-align: center;
+}
+.custom-product-info .usp_Images .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@media screen and (max-width: 768px) {
+  .custom-product-info .usp-image-content {
+    max-width: 90px;
+  }
+}

@@ -1,0 +1,91 @@
+<style>
+  .media-logo-slider-{{ section.id }} {
+    padding: 30px 0;
+    background: #fff;
+  }
+
+  .media-logo-slider-{{ section.id }} .media-logo-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .media-logo-slider-{{ section.id }} .logo-wrapper svg{
+    width: 120px; 
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit:contain;
+  }
+
+</style>
+
+<section class="media-logo-slider-{{ section.id }}">
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide media-logo-item">
+          <a href="{{ block.settings.logo_url }}">
+            <div class="logo-wrapper">
+              {{ block.settings.logo_svg }}
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Swiper(".media-logo-slider-{{ section.id }} .swiper", {
+      slidesPerView: 3,       
+      loop: true,               
+      spaceBetween: 50,         
+      speed: 4000,              
+      allowTouchMove: false,     
+      freeMode: true,
+      autoplay: {
+        delay: 0,               
+        disableOnInteraction: false
+      },
+      breakpoints: {
+         1024: { slidesPerView: 6 }, 
+      }
+    });
+  });
+</script>
+
+
+
+{% schema %}
+{
+  "name": "Media Logo Slider",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "media_logo",
+      "name": "Media Logo",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "logo_svg",
+          "label": "SVG Code"
+        },
+        {
+          "type": "url",
+          "id": "logo_url",
+          "label": "Article URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Media Logo Slider",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,382 @@
+.hotspot-main-container .hotspot-main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.hotspot-main-container .slider-section-heading {
+  margin-bottom: 28px;
+}
+
+.hotspot-main-container .image-container .desktop-background-image {
+  display: block;
+}
+
+.hotspot-main-container .image-container .mobile-background-image {
+  display: none;
+}
+
+.hotspot-main-container .hotspot {
+  position: absolute;
+  cursor: pointer;
+}
+
+.hotspot-main-container .hotspot .hotspot-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  line-height: 0px;
+  z-index: 1;
+  position: relative;
+}
+
+/* Hotspot Animation */
+.hotspot-main-container .hotspot.animate::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: inherit;
+  height: inherit;
+  background-color: rgba(255, 255, 255);
+  border-radius: 50%;
+  transform-origin: center;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  animation: blink 0.95s ease-in-out infinite forwards;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.55);
+  }
+}
+/* Hotspot Animation */
+
+/* Card CSS */
+.hotspot-main-container .main-product-info-container,
+.hotspot-main-container .main-product-info-container .product-info-container .card-price-container {
+  display: flex;
+  align-items: stretch;
+}
+
+.hotspot-main-container .info-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.hotspot-main-container .main-product-info-container .product-info-container .card-price-container {
+  gap: 9px;
+  margin-bottom: 12px;
+}
+
+.hotspot-main-container .size-tool-tip-container {
+  z-index: 1;
+  position: absolute;
+  display: flex;
+  text-align: left;
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.5, 0.15, 0, 1);
+  width: 100%;
+  opacity: 0;
+  border-radius: 6px;
+  background: #fff;
+  gap: 25px;
+  padding: 20px;
+  max-width: 500px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  align-items: center;
+}
+
+.hotspot-main-container #tooltip {
+  display: block;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.hotspot-main-container #tooltip.left.top {
+  border-top: 17px solid transparent;
+  border-bottom: 17px solid transparent;
+  border-right: 17px solid #fff;
+  border-left: 0px solid transparent;
+  left: -16px;
+  top: 15px;
+  bottom: unset;
+  right: unset;
+}
+
+.hotspot-main-container #tooltip.left.bottom {
+  border-top: 17px solid transparent;
+  border-bottom: 17px solid transparent;
+  border-right: 17px solid #fff;
+  border-left: 0px solid transparent;
+  left: -16px;
+  right: unset;
+  top: unset;
+  bottom: 15px;
+}
+
+.hotspot-main-container #tooltip.right.top {
+  border-top: 17px solid transparent;
+  border-bottom: 17px solid transparent;
+  border-right: 0px solid transparent;
+  border-left: 17px solid #fff;
+  left: unset;
+  right: -16px;
+  top: 15px;
+  bottom: unset;
+}
+
+.hotspot-main-container #tooltip.right.bottom {
+  border-top: 17px solid transparent;
+  border-bottom: 17px solid transparent;
+  border-right: 0px solid transparent;
+  border-left: 17px solid #fff;
+  left: unset;
+  right: -16px;
+  top: unset;
+  bottom: 15px;
+}
+
+.hotspot-main-container .size-tool-tip-container.show {
+  opacity: 1;
+  pointer-events: unset;
+}
+
+/* .hotspot-main-container .main-product-info-container.show {
+  opacity: 1;
+  pointer-events: unset;
+} */
+.hotspot-main-container .main-product-info-container .hotspot-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.hotspot-main-container .main-product-info-container .hotspot-close-button:hover {
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.hotspot-main-container .main-product-info-container .featured-image {
+  max-width: 180px;
+  width: 100%;
+  line-height: 0;
+}
+
+.hotspot-main-container .main-product-info-container .featured-image a {
+  line-height: 0;
+  display: block;
+}
+
+.hotspot-main-container .main-product-info-container .featured-image .featured-img {
+  border-radius: 6px;
+  width: 100%;
+  height: auto;
+}
+
+.hotspot-main-container .main-product-info-container .product-info-container .product-title {
+  color: #000;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 24px;
+  letter-spacing: 0.17px;
+  margin-bottom: 3px;
+}
+
+.hotspot-main-container .main-product-info-container .product-info-container .product-sub-title {
+  color: #000;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.14px;
+  margin-bottom: 5px;
+}
+
+/* Price CSS */
+.hotspot-main-container .main-product-info-container .product-info-container .card-price-container .price {
+  color: #000;
+  font-weight: 500;
+  font-size: 21px;
+  line-height: 26px;
+  letter-spacing: 0.21px;
+}
+
+.hotspot-main-container .main-product-info-container .product-info-container .card-price-container .compare-price {
+  color: rgba(0, 0, 0, 0.4);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 26px;
+  text-decoration: line-through;
+}
+
+.hotspot-main-container .main-product-info-container .product-info-container .card-price-container .discount {
+  color: #1e22aa;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: 0.2px;
+}
+
+/* Price CSS */
+
+/* Button CSS */
+.hotspot-main-container .main-product-info-container .product-info-container .card-button {
+  border-radius: 4px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.25);
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 34px;
+  padding: 0 38px;
+  text-transform: uppercase;
+}
+
+/* Button CSS */
+
+/* Card CSS */
+.hotspot-main-container .mobile-modal {
+  display: none;
+}
+
+/* .main-title-tabs::before{
+  content: "";
+  width: var(--before-width);
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom: 2px solid #e5e5e5;
+  padding-bottom: 23px;
+  z-index: -1;
+} */
+
+@media only screen and (max-width: 767px) {
+  .hotspot-main-container .image-container .desktop-background-image {
+    display: none;
+  }
+
+  .hotspot-main-container .image-container .mobile-background-image {
+    display: block;
+  }
+
+  .hotspot-main-container .main-product-info-container {
+    gap: 10px;
+    padding: 10px;
+    max-width: 100%;
+  }
+
+  .hotspot-main-container .main-product-info-container .product-info-container .card-price-container {
+    gap: 5px;
+  }
+
+  .hotspot-main-container .main-product-info-container .product-info-container .product-title {
+    line-height: 24px;
+    font-size: 18px;
+  }
+
+  .hotspot-main-container .main-product-info-container .product-info-container .product-sub-title {
+    line-height: 20px;
+    font-size: 15px;
+  }
+
+  .hotspot-main-container .main-product-info-container .product-info-container .card-price-container .price {
+    line-height: 26px;
+    font-size: 20px;
+  }
+
+  .hotspot-main-container .main-product-info-container .product-info-container .card-price-container .compare-price {
+    line-height: 26px;
+    font-size: 17px;
+  }
+
+  .hotspot-main-container .main-product-info-container .product-info-container .card-price-container .discount {
+    line-height: 26px;
+    font-size: 19px;
+  }
+
+  .hotspot-main-container .main-product-info-container .product-info-container .card-button {
+    line-height: 34px;
+    font-size: 14px;
+  }
+
+  .hotspot-main-container .mobile-modal {
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    left: 0;
+    bottom: 0;
+    z-index: 3;
+    pointer-events: none;
+    backdrop-filter: unset;
+  }
+
+  .hotspot-main-container .mobile-modal.show {
+    backdrop-filter: blur(2px);
+    background-color: rgba(0, 0, 0, 0.4);
+    pointer-events: unset;
+  }
+
+  .hotspot-main-container .mobile-modal .size-tool-tip-container {
+    bottom: 0px;
+    top: unset;
+  }
+
+  .hotspot-main-container .mobile-modal.show .size-tool-tip-container {
+    opacity: 1;
+    pointer-events: unset;
+  }
+
+  .hotspot-main-container .mobile-modal .main-product-info-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-top: 35px;
+  }
+
+  .hotspot-main-container .mobile-modal .main-product-info-container .featured-image .featured-img {
+    width: 100%;
+    height: auto;
+  }
+
+  .hotspot-main-container .mobile-modal .main-product-info-container .featured-image {
+    max-width: unset;
+    width: 35%;
+  }
+
+  .hotspot-main-container .mobile-modal .main-product-info-container .product-info-container {
+    width: 65%;
+  }
+
+  .hotspot-main-container .mobile-modal .main-product-info-container .product-info-container .card-price-container .discount {
+    color: #e22626;
+  }
+}

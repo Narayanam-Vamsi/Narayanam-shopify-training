@@ -1,0 +1,47 @@
+{% comment %}
+  name: name of icon
+  stroke-color:
+  storke-width
+  fill:
+  width:
+  height:
+{% endcomment %}
+
+{% if name == 'email' %}
+  <svg
+    width="{{-width-}}"
+    height="{{-height-}}"
+    viewBox="0 0 18 18"
+    fill="{{-fill-}}"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M12.75 15.375H5.25C3 15.375 1.5 14.25 1.5 11.625V6.375C1.5 3.75 3 2.625 5.25 2.625H12.75C15 2.625 16.5 3.75 16.5 6.375V11.625C16.5 14.25 15 15.375 12.75 15.375Z"
+      stroke="{{- stroke-color -}}" stroke-width="{{ stroke-width }}" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M12.75 6.75L10.4025 8.625C9.63 9.24 8.3625 9.24 7.59 8.625L5.25 6.75" stroke="{{- stroke-color -}}" stroke-width="{{stroke-width}}" stroke-miterlimit="10"
+        stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+{% elsif name == 'tel' %}
+  <svg width="{{width}}" height="{{height}}" viewBox="0 0 19 19" fill="{{fill}}" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_14817_113406)">
+      <g clip-path="url(#clip1_14817_113406)">
+        <path d="M11.0827 4.35286H7.91602M15.8327 5.54036V13.457C15.8327 16.6237 15.041 17.4154 11.8743 17.4154H7.12435C3.95768 17.4154 3.16602 16.6237 3.16602 13.457V5.54036C3.16602 2.3737 3.95768 1.58203 7.12435 1.58203H11.8743C15.041 1.58203 15.8327 2.3737 15.8327 5.54036Z"
+          stroke="{{ stroke-color }}" stroke-width="{{stroke-width}}" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M9.49857 15.1202C9.82401 15.1202 10.1361 14.9909 10.3662 14.7608C10.5964 14.5307 10.7257 14.2185 10.7257 13.8931C10.7257 13.5677 10.5964 13.2555 10.3662 13.0254C10.1361 12.7953 9.82401 12.666 9.49857 12.666C9.17313 12.666 8.86101 12.7953 8.63089 13.0254C8.40077 13.2555 8.27148 13.5677 8.27148 13.8931C8.27148 14.2185 8.40077 14.5307 8.63089 14.7608C8.86101 14.9909 9.17313 15.1202 9.49857 15.1202V15.1202Z"
+              stroke="{{ stroke-color }}" stroke-width="{{stroke-width}}" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+          </g>
+          <defs>
+      <clipPath id="clip0_14817_113406">
+        <rect width="{{width}}" height="{{height}}" fill="{{fill}}" />
+        </clipPath>
+        <clipPath id="clip1_14817_113406">
+          <rect width="{{width}}" height="{{height}}" fill="{{fill}}" transform="translate(2.375 0.791016)" />
+          </clipPath>
+        </defs>
+  </svg>
+{% elsif name == 'location' %}
+  <svg width="{{width}}" height="{{height}}" viewBox="0 0 18 18" fill="{{fill}}" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9.00016 10.0726C9.30745 10.0726 9.61173 10.0121 9.89564 9.89446C10.1795 9.77686 10.4375 9.6045 10.6548 9.38721C10.8721 9.16992 11.0444 8.91196 11.162 8.62806C11.2796 8.34416 11.3402 8.03987 11.3402 7.73258C11.3402 7.42529 11.2796 7.121 11.162 6.8371C11.0444 6.5532 10.8721 6.29524 10.6548 6.07795C10.4375 5.86066 10.1795 5.6883 9.89564 5.5707C9.61173 5.4531 9.30745 5.39258 9.00016 5.39258C8.37955 5.39258 7.78436 5.63911 7.34553 6.07795C6.90669 6.51678 6.66016 7.11197 6.66016 7.73258C6.66016 8.35318 6.90669 8.94837 7.34553 9.38721C7.78436 9.82604 8.37955 10.0726 9.00016 10.0726V10.0726Z" stroke="{{stroke-color}}" stroke-width="{{stroke-width}}"/>
+    <path d="M2.71332 6.3675C4.19082 -0.127498 13.8133 -0.119998 15.2833 6.375C16.1458 10.185 13.7758 13.41 11.6983 15.405C10.9724 16.1052 10.0031 16.4964 8.99457 16.4964C7.986 16.4964 7.01676 16.1052 6.29082 15.405C4.22082 13.41 1.85082 10.1775 2.71332 6.3675V6.3675Z" stroke="{{stroke-color}}" stroke-width="{{stroke-width}}"/>
+  </svg>
+{% endif %}

@@ -1,0 +1,50 @@
+{% comment %} {% schema %}
+{
+  "name": "Date & Time Picker Example",
+  "settings": [
+    {
+      "type": "date",
+      "id": "event_date",
+      "label": "Select Date"
+    },
+    {
+      "type": "text",
+      "id": "event_time",
+      "label": "Enter Time (e.g. 2:00 PM)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Date & Time Block"
+    }
+  ]
+}
+{% endschema %} {% endcomment %}
+
+
+{% schema %}
+{
+  "name": "Booking Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "default_date",
+      "label": "Default Date (type manually in Customizer, e.g. 2025-08-25)"
+    }
+  ],
+  "presets": [
+    {
+        "name":"Booking Section"
+    }
+  ]
+}
+{% endschema %}
+
+<form>
+  <label for="date">Select Date:</label>
+  <input type="date" 
+         id="date" 
+         name="date" 
+         value="{{ section.settings.default_date }}">
+</form>
+

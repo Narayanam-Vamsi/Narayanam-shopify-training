@@ -1,0 +1,164 @@
+<style>
+  #announcement-swiper-{{ section.id }} {
+    width: 100%;
+    height: 46px;
+    background-color: black;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Montserrat";
+  }
+
+  #announcement-swiper-{{ section.id }} .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  {% for block in section.blocks %}
+    #announcement-swiper-{{ section.id }} .slide-{{ forloop.index }} {
+      color: {{ block.settings.text_color }};
+      font-size: {{ block.settings.font_size }}px;
+      font-weight: 600;
+    }
+  {% endfor %}
+
+  @media screen and (max-width:768px){
+    {% for block in section.blocks %}
+      #announcement-swiper-{{ section.id }} .slide-{{ forloop.index }} {
+        color: {{ block.settings.text_color }};
+        font-size: {{ block.settings.font_size_mobile }}px;
+        font-weight: 600;
+      }
+    {% endfor %}
+  }
+</style>
+
+<section id="announcement-swiper-{{ section.id }}">
+  <div class="swiper-wrapper">
+    {% for block in section.blocks %}
+      <div class="swiper-slide slide-{{ forloop.index }}">
+        {{ block.settings.Anouncement_Text }}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    let swiperEl = document.querySelector('#announcement-swiper-{{ section.id }}');
+    let sliderType = '{{ section.settings.Sliders }}';
+    let loopSlides = {{ section.settings.loop }};
+    let delayTime = {{ section.settings.Slider_Time }} * 1000;
+    let direction = 'horizontal';
+    let autoplay = false;
+
+    if (sliderType === 'vertical') {
+      direction = 'vertical';
+      autoplay = { delay: delayTime, disableOnInteraction: false };
+    } else if (sliderType === 'horizontal') {
+      direction = 'horizontal';
+      autoplay = { delay: delayTime, disableOnInteraction: false };
+    }
+
+    new Swiper(swiperEl, {
+      direction: direction,
+      loop: loopSlides,
+      slidesPerView: 1,
+      autoplay: autoplay,
+      allowTouchMove: false,
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "New Anouncement Bar",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Loop the anouncement",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "Sliders",
+      "label": "Select Slider",
+      "options": [
+        {
+          "label": "vertical_slider",
+          "value": "vertical"
+        },
+        {
+          "label": "horizontal_slider",
+          "value": "horizontal"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "Slider_Time",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "unit": "sec",
+      "label": "Change every...",
+      "default": 3
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Anouncementt",
+      "name": "Anouncement Blocks",
+      "settings": [
+        {
+          "type": "text",
+          "id": "Anouncement_Text",
+          "label": "Anouncement Text",
+          "default": "Announce your latest text"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default":"#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Font Size",
+          "min": 12,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        }
+,
+               {
+          "type": "range",
+          "id": "font_size_mobile",
+          "label": "Font Size(mobile)",
+          "min": 12,
+          "max": 25,
+          "step": 1,
+          "unit": "px",
+          "default": 12
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "New Anouncement Bar",
+      "blocks": [
+        {
+          "type": "Anouncementt"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

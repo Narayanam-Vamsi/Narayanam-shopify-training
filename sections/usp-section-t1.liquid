@@ -1,0 +1,131 @@
+{{ 'usp-section-t1.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  #{{ section.id }}.usp-section-container .usp-section-title, 
+  #{{ section.id }}.usp-section-container .usp-section-sub-title{
+    text-align: {{ section.settings.alignment }};
+  }
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+{%- endstyle -%}
+
+{% if section.settings.usp_section_title != blank %}
+  <section class="usp-section-container section-{{ section.id }}-margin page-width" id="{{ section.id }}">
+    <div class="usp-section">
+      <div class="usp-section-heading">
+        {% if section.settings.usp_section_title != blank %}
+          <h2 class="usp-section-title">
+            {{ section.settings.usp_section_title }}
+          </h2>
+        {% endif %}
+        {% if section.settings.usp_section_sub_title != blank %}
+          <p class="usp-section-sub-title">
+            {{ section.settings.usp_section_sub_title }}
+          </p>
+        {% endif %}
+      </div>
+      <div class="usp-section-image-container">
+        {% for block in section.blocks %}
+          <div class="usp-section-image">
+            {% if block.settings.usp_section_image != blank %}
+              <div class="usp-section-only-image">
+                {{
+                  block.settings.usp_section_image
+                  | image_url: width: 200
+                  | image_tag: class: 'usp-image', loading: 'lazy', alt: 'usp-section-image'
+                }}
+              </div>
+            {% endif %}
+            {% if block.settings.usp_section_title_paragraph != blank %}
+              {{ block.settings.usp_section_title_paragraph }}
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "USP Section T1",
+  "settings": [
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "text",
+      "id": "usp_section_title",
+      "label": "USP Section Main Title",
+      "default": "USP Two"
+    },
+    {
+      "type": "text",
+      "id": "usp_section_sub_title",
+      "label": "USP Section Sub Title",
+      "default": "USP Two Des"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Text alignment",
+      "default": "left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "usp_section_image",
+          "label": "USP Section Image",
+          "info": "Image size should be 80px X 80px"
+        },
+        {
+          "type": "richtext",
+          "id": "usp_section_title_paragraph",
+          "label": "USP Section Paragraph"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "USP Section T1"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

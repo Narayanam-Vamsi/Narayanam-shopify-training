@@ -1,0 +1,272 @@
+{{ 'custom-main-banner.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+</style>
+
+<section class="custom-main-banner-container section-{{ section.id }}-margin" id="{{ section.id }}">
+  <div class="single-desktop-mobile-banner-container swiper-container custom_main_banner">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        {%- case block.type -%}
+          {%- when 'image_block' -%}
+            <div class="swiper-slide" {{ block.shopify_attributes }}>
+              <a href="{{ block.settings.image_link }}">
+                {% if block.settings.desktop_banner_image != blank %}
+                  {% if forloop.index0 == 0 %}
+                    {% assign lazy = 'eager' %}
+                  {% else %}
+                    {% assign lazy = 'lazy' %}
+                  {% endif %}
+                  {% assign alt = block.settings.desktop_banner_image.alt | default: 'main-desktop-banner' %}
+                  {{
+                    block.settings.desktop_banner_image
+                    | image_url: width: 1600
+                    | image_tag: class: 'desktop-main-banner', loading: lazy, alt: alt
+                  }}
+                {% endif %}
+                {% if block.settings.mobile_banner_image != blank %}
+                  {% if forloop.index0 == 0 %}
+                    {% assign lazy = 'eager' %}
+                  {% else %}
+                    {% assign lazy = 'lazy' %}
+                  {% endif %}
+                  {% assign alt = block.settings.mobile_banner_image.alt | default: 'main-mobile-banner' %}
+                  {{
+                    block.settings.mobile_banner_image
+                    | image_url: width: 600
+                    | image_tag: class: 'mobile-main-banner', loading: lazy, alt: alt
+                  }}
+                {% endif %}
+              </a>
+            </div>
+          {%- when 'video_block' -%}
+            <div class="swiper-slide" {{ block.shopify_attributes }}>
+              {% if block.settings.desktop_banner_video != blank %}
+                {% render 'video',
+                  videoObj: block.settings.desktop_banner_video,
+                  lazy: true,
+                  mutedOnLoad: true,
+                  muteButtons: true,
+                  loop: true,
+                  controlsList: 'nodownload',
+                  forloopIndex: forloop.index0,
+                  class: 'video-play-desktop-button-container'
+                %}
+              {% endif %}
+              {% if block.settings.mobile_banner_video != blank %}
+                {% render 'video',
+                  videoObj: block.settings.mobile_banner_video,
+                  lazy: true,
+                  mutedOnLoad: true,
+                  muteButtons: true,
+                  loop: true,
+                  controlsList: 'nodownload',
+                  forloopIndex: forloop.index0,
+                  class: 'video-play-mobile-button-container'
+                %}
+              {% endif %}
+            </div>
+        {%- endcase -%}
+      {% endfor %}
+    </div>
+    {% if section.settings.pagination == true %}
+      <div class="swiper-pagination"></div>
+    {% endif %}
+    {% if section.blocks.size > 1 %}
+      {% if section.settings.navigation == true %}
+        <div class="swiper-button-next">
+          {% render 'slider-right-arrow' %}
+        </div>
+        <div class="swiper-button-prev">
+          {% render 'slider-left-arrow' %}
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+{% if section.blocks.size > 1 %}
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    (async () => {
+      const customMainBanner = new Swiper(`#{{ section.id }} .custom_main_banner`, {
+        {% if section.settings.pagination == true %}
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+        {% endif %}
+        {% if section.settings.autoplay == true %}
+          autoplay: {
+            delay  : {{- section.settings.change_slides_speed | times: 1000 -}},
+            loop: {{- section.settings.loop -}},
+            stopOnLastSlide: {{- section.settings.stopon_last_slide -}},
+          },
+        {% endif %}
+        {% if section.settings.navigation == true %}
+          navigation: {
+            nextEl: '#{{ section.id }} .swiper-button-next',
+            prevEl: '#{{ section.id }} .swiper-button-prev',
+          },
+        {% endif %}
+      });
+    })();
+  },{ once: true });
+  </script>
+{% endif %}
+
+<script>
+  window.addEventListener(
+    'DOMContentLoaded',
+    () => {
+      (async () => {
+        if (document.querySelectorAll('#{{- section.id }} video-element').length > 0) {
+          document.querySelectorAll('#{{- section.id }} video-element').forEach((videoElement) => {
+            new VideoPlayer(videoElement);
+          });
+        }
+      })();
+    },
+    { once: true }
+  );
+</script>
+
+{% schema %}
+{
+  "name": "Custom Main Banner",
+  "settings": [
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Autoplay Swiper Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay Enable/Disable"
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Loop the Announcements",
+      "default": false,
+      "info": "If enabled, unchecked the stop on last slide option"
+    },
+    {
+      "type": "checkbox",
+      "id": "stopon_last_slide",
+      "label": "Stop on Last Slide",
+      "default": false,
+      "info": "If enabled, unchecked the loop option"
+    },
+    {
+      "type": "range",
+      "id": "change_slides_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "sec",
+      "label": "Change Slides Every..",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Navigation/Pagination Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "navigation",
+      "label": "Navigation Enable/Disable"
+    },
+    {
+      "type": "checkbox",
+      "id": "pagination",
+      "label": "Pagination Enable/Disable"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_block",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "desktop_banner_image",
+          "label": "Desktop Banner Image",
+          "info": "Image size should be 1920px X 710px"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_banner_image",
+          "label": "Mobile Banner Image",
+          "info": "Image size should be 770px X 900px"
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Banner Image Link"
+        }
+      ]
+    },
+    {
+      "type": "video_block",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "desktop_banner_video",
+          "label": "Desktop Banner Video",
+          "info": "Video Ratio should be 1920px X 710px, Format:mp4, Size:10mb"
+        },
+        {
+          "type": "video",
+          "id": "mobile_banner_video",
+          "label": "Mobile Banner Video",
+          "info": "Video Ratio should be 768px X 900px, Format:mp4, Size:10mb"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Main Banner",
+      "blocks": [
+        {
+          "type": "image_block"
+        },
+        {
+          "type": "video_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

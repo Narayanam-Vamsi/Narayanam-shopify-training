@@ -1,0 +1,250 @@
+{{ 'circular-slider.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+{% comment %} This Section Need Swiper's Version - 8.1.3 {% endcomment %}
+
+<script src="{{ 'swiper-bundle-8.1.3.min.js' | asset_url }}" defer></script>
+
+{% comment %} This Circular Slider is a great way to display your products in a unique way. It is fully responsive and works on all devices. It is also very easy to setup and customize. And it works on Swiper Version 8.1.3 {% endcomment %}
+
+{%- style -%}
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  #{{ section.id }}.homepage-shop-by-concern-section{
+    background: {{ section.settings.section_background }};
+  }
+
+  #{{ section.id }}.homepage-shop-by-concern-section .section_title_shop_by_concern,
+  #{{ section.id }}.homepage-shop-by-concern-section .section_sub_title_shop_by_concern {
+    text-align: {{ section.settings.section_text_alignment }};
+  }
+
+  {% for block in section.blocks %}
+    {% if block.settings.shop_by_concern_title == blank %}
+      .homepage-shop-by-concern-section .swiper-slide-active .no-filter-{{ block.id }} img {
+        filter: brightness(1);
+      }
+    {% endif %}
+  {% endfor %}
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="homepage-shop-by-concern-section section-{{ section.id }}-margin" id="{{ section.id }}">
+  <div class="page-width">
+    {% if section.settings.main_title != blank %}
+      <h2 class="section_title_shop_by_concern">{{ section.settings.main_title }}</h2>
+    {% endif %}
+    {% if section.settings.main_sub_title != blank %}
+      <p class="section_sub_title_shop_by_concern">{{ section.settings.main_sub_title }}</p>
+    {% endif %}
+  </div>
+  <!-- Slider main container -->
+  <div class="swiper shop-by-concern-slider-section">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide slide_shop_by_concern">
+          <!-- card -->
+          <a href="{{ block.settings.shop_by_concern_link }}">
+            <div class="card_image_wrapper no-filter-{{ block.id }}">
+              {% if forloop.index0 == 0 %}
+                {% assign lazy = 'eager' %}
+              {% else %}
+                {% assign lazy = 'lazy' %}
+              {% endif %}
+              {% assign alt = block.settings.desktop_card_image.alt | default: 'desktop-card-image' %}
+              {% if block.settings.desktop_card_image %}
+                {{
+                  block.settings.desktop_card_image
+                  | image_url: width: 2000
+                  | image_tag: class: 'desktop_card_image', loading: lazy, alt: alt
+                }}
+              {% endif %}
+              {% if forloop.index0 == 0 %}
+                {% assign lazy = 'eager' %}
+              {% else %}
+                {% assign lazy = 'lazy' %}
+              {% endif %}
+              {% assign alt = block.settings.mobile_card_image.alt | default: 'mobile-card-image' %}
+              {% if block.settings.mobile_card_image %}
+                {{
+                  block.settings.mobile_card_image
+                  | image_url: width: 600
+                  | image_tag: class: 'mobile_card_image', loading: lazy, alt: alt
+                }}
+              {% endif %}
+              <div class="overlay-text-container">
+                <div class="overlay-text">
+                  <p>{{ block.settings.shop_by_concern_title }}</p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- If we need navigation buttons -->
+    {% if section.blocks.size > 1 %}
+      <div class="both-concern-button">
+        <div class="swiper-button-next swiper-custom-btn">
+          {% render 'slider-left-arrow' %}
+        </div>
+        <div class="swiper-button-prev swiper-custom-btn">
+          {% render 'slider-right-arrow' %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  window.addEventListener(
+    'DOMContentLoaded',
+    () => {
+    const swiper2{{- section.id | remove: "--" | remove: "__" | remove: "-" }} = new Swiper8(`#{{ section.id }} .shop-by-concern-slider-section`, {
+    centeredSlides: true,
+    // centeredSlidesBounds: true,
+    spaceBetween: 38,
+    effect: 'creative',
+    slidesPerView: 1,
+    //initialSlide: 2.5,
+    loop: true,
+    creativeEffect: {
+      perspective: true,
+      limitProgress: 6,
+      prev: {
+        translate: ['-65%', '3%', 0],
+        rotate: [0, 0, -7],
+        origin: 'center 410%',
+      },
+      next: {
+        translate: ['65%', '3%', 0],
+        rotate: [0, 0, 7],
+        origin: 'center 410%',
+      },
+    },
+    navigation: {
+      nextEl: '#{{ section.id }} .swiper-button-next',
+      prevEl: '#{{ section.id }} .swiper-button-prev',
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 2,
+      },
+      500: {
+        slidesPerView: 3,
+      },
+      768: {
+        slidesPerView: 4,
+      },
+      1024: {
+        slidesPerView: 4,
+      },
+      1250: {
+        slidesPerView: 5,
+      },
+    },
+  });
+},
+{ once: true }
+);
+</script>
+
+{% schema %}
+{
+  "name": "Circular Image Slider",
+  "settings": [
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "text",
+      "id": "main_title",
+      "label": "Heading Title",
+      "default": "Shop by Concerns"
+    },
+    {
+      "type": "text",
+      "id": "main_sub_title",
+      "label": "Heading Sub Title",
+      "default": "Shop by Concerns Des"
+    },
+    {
+      "type": "text_alignment",
+      "id": "section_text_alignment",
+      "label": "Section Text Alignment",
+      "default": "center"
+    },
+    {
+      "type": "color_background",
+      "id": "section_background",
+      "label": "Section Background Color",
+      "default": "linear-gradient(#ffffff, #ffffff)"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Slide",
+      "type": "slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Minimum 6 slide is required"
+        },
+        {
+          "type": "image_picker",
+          "id": "desktop_card_image",
+          "label": "Card Image Desktop",
+          "info": "Recommended Size : 400x534px"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_card_image",
+          "label": "Card Image Mobile",
+          "info": "Recommended Size : 180X245px"
+        },
+        {
+          "type": "text",
+          "id": "shop_by_concern_title",
+          "label": "Shop By Concern Title",
+          "default": "Shop By Concern Title"
+        },
+        {
+          "type": "url",
+          "id": "shop_by_concern_link",
+          "label": "Shop By Concern Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Circular Image Slider"
+    }
+  ]
+}
+{% endschema %}

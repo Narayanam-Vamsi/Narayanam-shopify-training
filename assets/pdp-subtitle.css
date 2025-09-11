@@ -1,0 +1,14 @@
+.custom-product-info .custom-product-description-wrapper {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+}
+
+.custom-product-info .custom-product-description {
+  display: flex;
+  align-items: center;
+  gap: 1rem 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  flex-direction: row;
+}

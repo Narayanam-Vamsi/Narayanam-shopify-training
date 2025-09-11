@@ -1,0 +1,184 @@
+.main-flexthefit-container .text-conatiner .main-heading {
+  line-height: normal;
+  margin-bottom: 5px;
+}
+.main-flexthefit-container .name-of-pic {
+  font-size: 14px;
+}
+.main-flexthefit-container .font-size-fixed.name-of-pic {
+  font-size: 12px;
+}
+
+.main-flexthefit-container .text-conatiner .main-paragraph {
+  margin-bottom: 28px;
+}
+
+.main-flexthefit-container .flexfit-image-container {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+}
+.main-flexthefit-container .left-image-container {
+  position: relative;
+  width: 50%;
+  line-height: 0;
+}
+.main-flexthefit-container .name-left {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-top-right-radius: 44px;
+  width: 18.359vw;
+  padding: 13px 19px;
+  display: flex;
+  background: #7ea7d6;
+  flex-direction: column;
+  gap: 9px;
+}
+.main-flexthefit-container .left-image-contains-container {
+  width: 100%;
+  height: auto;
+}
+.main-flexthefit-container .flexfit-left-image {
+  width: 100%;
+  height: auto;
+}
+.main-flexthefit-container .right-image-container {
+  width: 61%;
+}
+.main-flexthefit-container .right-image-container img {
+  width: 100%;
+  object-fit: cover;
+}
+.main-flexthefit-container .right-up-text {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  border-top-right-radius: 44px;
+  width: 13.984vw;
+  height: auto;
+  padding: 11px 10px;
+  display: flex;
+  background: #7ea7d6;
+  align-items: center;
+}
+.main-flexthefit-container .hide {
+  display: none;
+}
+.main-flexthefit-container .right-text-down {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  border-top-right-radius: 44px;
+  width: 11vw;
+  height: auto;
+  padding: 8px 6px;
+  display: flex;
+  background: #7ea7d6;
+  align-items: center;
+}
+.main-flexthefit-container .main-image-class {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.main-flexthefit-container .right-up {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+}
+.main-flexthefit-container .span-sub-class {
+  letter-spacing: 0.1em;
+  text-decoration-line: underline;
+  text-transform: uppercase;
+  color: #f4ecd0;
+}
+.main-flexthefit-container .relative-img {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+  margin-bottom: 1%;
+}
+.main-flexthefit-container .right-down {
+  position: relative;
+  display: flex;
+  width: 100%;
+  gap: 23px;
+}
+@media screen and (max-width: 650px) {
+  .main-flexthefit-container .right-down {
+    gap: 8px !important;
+  }
+  .main-flexthefit-container .name-left {
+    bottom: 0px;
+    width: 156px !important;
+    padding: 13px 10px !important;
+  }
+
+  .main-flexthefit-container .right-text-down {
+    bottom: 0;
+    width: 100%;
+    padding: 3px 6px !important;
+  }
+  .main-flexthefit-container {
+    max-width: 100%;
+  }
+  .main-flexthefit-container .flexfit-image-container {
+    width: 100%;
+    display: flex;
+    gap: 0px;
+    flex-flow: column;
+    line-height: 3;
+  }
+  .main-flexthefit-container .left-image-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .main-flexthefit-container .right-image-container {
+    width: 100%;
+  }
+  .main-flexthefit-container .right-up {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    display: none;
+  }
+  .main-flexthefit-container .right-up {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    display: none;
+  }
+}
+
+@media screen and (min-width: 650px) and (max-width: 1024px) {
+  .main-flexthefit-container .right-up-text {
+    width: 134px;
+    height: 3vh;
+  }
+  .main-flexthefit-container .right-text-down {
+    width: 80px;
+    height: 3vh;
+  }
+  .main-flexthefit-container .text-conatiner .main-heading {
+    line-height: 1.1;
+    font-size: 28px;
+  }
+  .main-flexthefit-container .text-conatiner .main-paragraph {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .main-flexthefit-container .flexfit-image-container .right-image-container .right-text-down h5 {
+    line-height: 1.15;
+    font-size: 10px;
+  }
+  .main-flexthefit-container .name-of-pic {
+    font-size: 12px;
+  }
+  .main-flexthefit-container .flexfit-image-container .right-image-container .right-text-down {
+    height: 9vw;
+  }
+}

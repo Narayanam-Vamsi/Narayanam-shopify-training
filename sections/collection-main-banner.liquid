@@ -1,0 +1,282 @@
+{% comment %} {{ 'collection-main-banner.css' | asset_url | stylesheet_tag: media: 'screen' }} {% endcomment %}
+
+<style>
+    .collection-main-banner .Desktop-Banner-Image {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .collection-main-banner .Mobile-Banner-Image {
+        display: none;
+      }
+      .collection-main-banner .Desktop_video {
+        display: block;
+      }
+      .collection-main-banner .mobile_video {
+        display: none;
+      }
+      .collection-main-banner .swiper-button-next:after,
+      .collection-main-banner .swiper-button-prev:after {
+        color: black;
+        content: "";
+      }
+      .collection-main-banner .swiper-button-next:after {
+        content: "" !important;
+      }
+      .collection-main-banner .swiper-pagination-bullet-active {
+        background: white;
+      }
+      
+      @media screen and (max-width: 768px) {
+        .collection-main-banner .swiper-pagination-bullet-active {
+          background: white;
+        }
+        .collection-main-banner .Desktop_video {
+          display: none;
+        }
+        .collection-main-banner .Mobile-Banner-Image {
+          display: block;
+          width: 100%;
+          height: auto;
+        }
+        .collection-main-banner .Desktop-Banner-Image {
+          display: none;
+        }
+        .collection-main-banner .mobile_video {
+          display: block;
+        }
+        .collection-main-banner .swiper-button-next:after,
+        .collection-main-banner .swiper-button-prev:after {
+          color: black;
+          content: "";
+        }
+        .collection-main-banner .swiper-button-next,
+        .collection-main-banner .swiper-button-prev {
+          display: none;
+        }
+      }
+      
+
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+</style>
+
+<section class="collection-main-banner section-{{ section.id }}-margin" id="{{ section.id }}">
+  <!-- main div starts -->
+  <div class="collection-main-banner">
+    <!-- Swiper -->
+    <div class="swiper main_banner_video">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide">
+            <div class="video-image-container">
+              {% if block.settings.choose_option == 'video' %}
+                {% if block.settings.video_url != blank %}
+                  {% for source in block.settings.video_url.sources %}
+                    {% case source.format %}
+                      {% when 'mp4' %}
+                        <div class="video_div">
+                          <video
+                            class="Desktop_video"
+                            src="{{ source.url }}"
+                            width="100%"
+                            controlsList="nodownload"
+                            autoplay="autoplay"
+                            muted="muted"
+                            loop="loop"
+                            playsinline="playsinline"
+                            preload="metadata"
+                            data-aos="fade-up"
+                            allowfullscreen
+                            poster="{{ block.settings.video_url | image_url }}"
+                            controls
+                          ></video>
+                        </div>
+                    {% endcase %}
+                  {% endfor %}
+                {% endif %}
+                {% if block.settings.mobile_video_url != blank %}
+                  {% for source in block.settings.mobile_video_url.sources %}
+                    {% case source.format %}
+                      {% when 'mp4' %}
+                        <div class="video_div">
+                          <video
+                            class="mobile_video"
+                            src="{{ source.url }}"
+                            width="100%"
+                            controlsList="nodownload"
+                            autoplay="autoplay"
+                            muted="muted"
+                            loop="loop"
+                            playsinline="playsinline"
+                            preload="metadata"
+                            data-aos="fade-up"
+                            allowfullscreen
+                            poster="{{ block.settings.mobile_video_url | image_url }}"
+                            controls
+                          ></video>
+                        </div>
+                    {% endcase %}
+                  {% endfor %}
+                {% endif %}
+              {% else %}
+                  {% if block.settings['Desktop-Banner-Image'] != blank %}
+                    {% if forloop.index0 == 0 %}
+                      {% assign lazy = 'eager' %}
+                    {% else %}
+                      {% assign lazy = 'lazy' %}
+                    {% endif %}
+                    {% assign alt = block.settings['Desktop-Banner-Image'].alt | default: 'main-desktop-banner' %}
+                    {{
+                      block.settings['Desktop-Banner-Image']
+                      | image_url: width: 2000
+                      | image_tag: class: 'Desktop-Banner-Image', loading: lazy, alt: alt
+                    }}
+                  {% endif %}
+                  {% if block.settings['Mobile-Banner-Image'] != blank %}
+                    {% if forloop.index0 == 0 %}
+                      {% assign lazy = 'eager' %}
+                    {% else %}
+                      {% assign lazy = 'lazy' %}
+                    {% endif %}
+                    {% assign alt = block.settings['Mobile-Banner-Image'].alt | default: 'main-mobile-banner' %}
+                    {{
+                      block.settings['Mobile-Banner-Image']
+                      | image_url: width: 600
+                      | image_tag: class: 'Mobile-Banner-Image', loading: lazy, alt: alt
+                    }}
+                  {% endif %}
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-pagination"></div>
+      {% if section.blocks.size > 1 %}
+        <div class="swiper-button-next">
+          {% render 'slider-right-arrow' %}
+        </div>
+        <div class="swiper-button-prev">
+          {% render 'slider-left-arrow' %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<script>
+  window.addEventListener(
+    'DOMContentLoaded',
+    () => {
+  const mainBannerVideo{{- section.id | remove: "--" | remove: "__" | remove: "-" }} = new Swiper(`#{{ section.id }} .main_banner_video`, {
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    {% if section.settings.autoplay == true %}
+      autoplay: {
+        delay: 3000,
+      },
+    {% endif %}
+    navigation: {
+      nextEl: '#{{ section.id }} .swiper-button-next',
+      prevEl: '#{{ section.id }} .swiper-button-prev',
+    },
+  });
+},
+{ once: true }
+);
+</script>
+
+{% schema %}
+{
+  "name": "Collection Main Banner",
+  "settings": [
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay Enable/Disable"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "radio",
+          "id": "choose_option",
+          "label": "Choose Image/Video",
+          "options": [
+            {
+              "value": "image",
+              "label": "Image"
+            },
+            {
+              "value": "video",
+              "label": "Video"
+            }
+          ],
+          "default": "image"
+        },
+        {
+          "type": "image_picker",
+          "id": "Desktop-Banner-Image",
+          "label": "Desktop Image",
+          "info": "Image size should be 1920px X 710px"
+        },
+        {
+          "type": "image_picker",
+          "id": "Mobile-Banner-Image",
+          "label": "Mobile Image",
+          "info": "Image size should be 770px X 900px"
+        },
+        {
+          "type": "video",
+          "id": "video_url",
+          "label": "Desktop Video",
+          "info": "Video Ratio should be 1920px X 710px, Format:mp4, Size:10mb"
+        },
+        {
+          "type": "video",
+          "id": "mobile_video_url",
+          "label": "Mobile Video",
+          "info": "Video Ratio should be 768px X 900px, Format:mp4, Size:10mb"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Main Banner"
+    }
+  ]
+}
+{% endschema %}

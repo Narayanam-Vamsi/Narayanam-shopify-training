@@ -1,0 +1,49 @@
+.offer-flash-sale-timer-container .saleStartParent {
+    display: flex;
+}
+
+.offer-flash-sale-timer-container .countdown-timer-announce {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    /* background: #54c5d0; */
+    width: 245px;
+    min-height: 45px;
+    padding: 9px 2px;
+  }
+  .offer-flash-sale-timer-container .countdown-timer-announce .expire-text {
+    color: #fff;
+    /* font-family: "Outfit-Regular";
+    font-size: clamp(16.2px, calc(18 * (100vw / 1440)), 19.8px);
+    font-weight: 400; */
+    line-height: 1;
+    margin-right: 15px;
+  }
+  .offer-flash-sale-timer-container .countdown-timer-announce .offerSalesCount,
+  .time {
+    color: #fff;
+    /* font-family: "Outfit-Regular";
+    font-size: clamp(16.2px, calc(18 * (100vw / 1440)), 19.8px);
+    font-weight: 400; */
+    line-height: 1;
+  }
+  .offer-flash-sale-timer-container .countdown-timer-announce .offerSalesCount span {
+    padding: 0 4px;
+  }
+  .offer-flash-sale-timer-container .offerSalesCount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  @media only screen and (max-width: 767px) {
+    .offer-flash-sale-timer-container .countdown-timer-announce .expire-text {
+      /* font-size: clamp(16.2px, calc(18 * (100vw / 428)), 19.8px); */
+    }
+    .offer-flash-sale-timer-container .countdown-timer-announce .offerSalesCount,
+    .time {
+      /* font-size: clamp(16.2px, calc(18 * (100vw / 428)), 19.8px); */
+    }
+  }
+  

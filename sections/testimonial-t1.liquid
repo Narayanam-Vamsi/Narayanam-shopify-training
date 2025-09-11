@@ -1,0 +1,263 @@
+{{ 'testimonial-t1.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+  }
+  .section-{{ section.id }}-padding {
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #{{ section.id }}.homepage-testimonials-container{
+    background: {{ section.settings.section_background }};
+  }
+
+  #{{ section.id }}.homepage-testimonials-container .top-up-container h2,
+  #{{ section.id }}.homepage-testimonials-container .top-up-container p {
+    text-align: {{ section.settings.testimonial_alignment }};
+  }
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+</style>
+
+{% if section.settings.main_client_testimonials_heading != blank %}
+  <section
+    class="homepage-testimonials-container page-width section-{{ section.id }}-margin section-{{ section.id }}-padding "
+    id="{{ section.id }}"
+  >
+    <div class="homepage-testimonials">
+      {% if section.settings.main_client_testimonials_heading != blank %}
+        <div class="top-up-container">
+          <h2 class="main-heading">{{ section.settings.main_client_testimonials_heading }}</h2>
+          <p class="subheading">{{ section.settings.main_client_testimonials_subheading }}</p>
+        </div>
+      {% endif %}
+      <div class="bottom-container">
+        <div class="swiper client-swiper">
+          <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+              <div class="swiper-slide">
+                <div class="left-right-container">
+                  <div class="left-container">
+                    <div class="image-container">
+                      {% if block.settings.testimonial_image != blank %}
+                        {% if forloop.index0 == 0 %}
+                          {% assign lazy = 'eager' %}
+                        {% else %}
+                          {% assign lazy = 'lazy' %}
+                        {% endif %}
+                        {{
+                          block.settings.testimonial_image
+                          | image_url: width: 1600
+                          | image_tag: class: 'testimonial-image', loading: lazy
+                        }}
+                      {% endif %}
+                    </div>
+                    {% if block.settings.testimonial_rating != blank %}
+                      <div class="svg-main-container">
+                        {% assign stars = block.settings.testimonial_rating | times: 1 %}
+                        {% assign full_stars = stars | floor %}
+                        {% assign half_star = stars | modulo: 1 %}
+                        <div class="svg-container">
+                          {% for i in (1..full_stars) %}
+                            {%- render 'review-star-t1' -%}
+                          {% endfor %}
+                          {% if half_star != 0 %}
+                            {%- render 'half-review-star-t1' -%}
+                          {% endif %}
+                        </div>
+                      </div>
+                    {% endif %}
+                  </div>
+                  {% if block.settings.right_text != blank %}
+                    <div class="right-container">
+                      <div class="right-text">
+                        <div class="right-text-main-content">
+                          {% render 'quotation-mark-up-t1' -%}
+                          <div>
+                            <span class="main-right-text">{{- block.settings.right_text -}}</span>
+                            {% render 'quotation-mark-down-t1' %}
+                          </div>
+                        </div>
+                      </div>
+                      {% if block.settings.right_name != blank %}
+                        <div class="right-name">{{ block.settings.right_name }}</div>
+                      {% endif %}
+                      {% if block.settings.right_designation != blank %}
+                        <div class="right-designation">{{ block.settings.right_designation }}</div>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+<script>
+  window.addEventListener(
+    'DOMContentLoaded',
+    () => {
+  const clientTestimonials{{- section.id | remove: "--" | remove: "__" | remove: "-" }} = new Swiper(`#{{ section.id }} .client-swiper`, {
+    pagination: {
+        el: "#{{ section.id }} .swiper-pagination",
+        clickable: true,
+    },
+    breakpoints: {
+      0: {
+        slidesPerView: 1,
+        spaceBetween: 40,
+      },
+      750: {
+        slidesPerView: 1,
+        spaceBetween: 17,
+      },
+      1200: {
+        slidesPerView: 2,
+        spaceBetween: 68,
+      },
+    },
+  });
+},
+{ once: true }
+);
+</script>
+
+{% schema %}
+{
+  "name": "Testimonial T1",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "main_client_testimonials_heading",
+      "label": "Client Testimonials Heading",
+      "default": "Clients Testimonials"
+    },
+    {
+      "type": "text",
+      "id": "main_client_testimonials_subheading",
+      "label": "Client Testimonials Sub Heading",
+      "default": "What our Clients Say About Us"
+    },
+    {
+      "type": "text_alignment",
+      "id": "testimonial_alignment",
+      "label": "Text alignment",
+      "default": "left"
+    },
+    {
+      "type": "color_background",
+      "id": "section_background",
+      "label": "Section Background Color",
+      "default": "linear-gradient(#ffffff, #ffffff)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Testimonial Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "testimonial_image",
+          "label": "Testimonial Image",
+          "info": "Image size should be 140px X 140px"
+        },
+        {
+          "type": "range",
+          "id": "testimonial_rating",
+          "min": 1,
+          "max": 5,
+          "step": 0.5,
+          "label": "Testimonial Rating",
+          "default": 1.5
+        },
+        {
+          "type": "text",
+          "id": "right_text",
+          "label": "Client Testimonials Content",
+          "default": "What our Clients Say About Us"
+        },
+        {
+          "type": "text",
+          "id": "right_name",
+          "label": "Client Name",
+          "default": "What our Clients Say About Us"
+        },
+        {
+          "type": "text",
+          "id": "right_designation",
+          "label": "Client Designation",
+          "default": "What our Clients Say About Us"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonial T1"
+    }
+  ]
+}
+{% endschema %}

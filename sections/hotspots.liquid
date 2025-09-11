@@ -1,0 +1,777 @@
+{{ 'hotspots.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+<style>
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  #{{ section.id }}.hotspot-main-container {
+    padding-top: {{ section.settings.padding_top}}px;
+    padding-bottom: {{ section.settings.padding_bottom}}px;
+  }
+
+  #{{ section.id }}.hotspot-main-container .text-container .slider-section-heading {
+    text-align: {{ section.settings.hotspot_text_alignment }};
+  }
+
+  {% for block in section.blocks %}
+    .hotspot-{{- forloop.index -}} {
+      left: {{ block.settings.horizontal_position_desktop }}%;
+      top: {{ block.settings.vertical_position_desktop }}%;
+      transform: translate(-{{- block.settings.horizontal_position_desktop -}}% , -{{- block.settings.vertical_position_desktop -}}%);
+      width: {{ block.settings.width }}px;
+      height: {{ block.settings.width }}px;
+    }
+
+    .hotspot-{{- forloop.index }} .hotspot-dot {
+      border-radius: {{ block.settings.border_radius }}px;
+      background-color: {{ block.settings.hotspot_background_color }};
+      width: {{ block.settings.width }}px;
+      height: {{ block.settings.width }}px;
+    }
+  {% endfor %}
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+
+    {% for block in section.blocks %}
+      .hotspot-{{- forloop.index -}} {
+        left: {{ block.settings.horizontal_position_mobile }}%;
+        top: {{ block.settings.vertical_position_mobile }}%;
+        transform: translate(-{{- block.settings.horizontal_position_mobile -}}% , -{{- block.settings.vertical_position_mobile -}}%);
+      }
+    {% endfor %}
+  }
+</style>
+
+{% liquid
+  for block in section.blocks
+    if forloop.index0 == 0
+      assign card_product = block.settings.product
+    endif
+  endfor
+
+  assign product_form_id = 'quick-add-' | append: section.id | append: card_product.id
+%}
+
+<section class="hotspot-main-container section-{{ section.id }}-margin" id="{{ section.id }}">
+  <div class="text-container page-width">
+    {% if section.settings.section_title != blank %}
+      <h2 class="slider-section-heading">{{ section.settings.section_title }}</h2>
+    {% endif %}
+  </div>
+  <div class="hotspot-main">
+    <div class="image-container">
+      {% if section.settings.desktop_background_image != blank %}
+        {{
+          section.settings.desktop_background_image
+          | image_url: width: 1600
+          | image_tag: class: 'desktop-background-image', loading: 'lazy', alt: 'Hotspot Desktop Image'
+        }}
+      {% endif %}
+      {% if section.settings.mobile_background_image != blank %}
+        {{
+          section.settings.mobile_background_image
+          | image_url: width: 600
+          | image_tag: class: 'mobile-background-image', loading: 'lazy', alt: 'Hotspot Mobile Image'
+        }}
+      {% endif %}
+    </div>
+    <div class="hotspot-container">
+      {% for block in section.blocks %}
+        <div {{ block.shopify_attributes }} class="hotspot hotspot-{{- forloop.index -}} {% if block.settings.animate_hotspot == true %} animate {% endif %}" product-id="d{{ block.settings.product.id }}">
+          <span class="hotspot-dot">
+            {% render 'icon-accordion', icon: block.settings.icon %}
+          </span>
+        </div>
+      {% endfor %}
+      <div class="main-product-info-container size-tool-tip-container" data-id="sizeToolTip">
+        <div id="tooltip"></div>
+        <div class="featured-image"></div>
+        <div class="product-info-container">
+          <a href="" class="no-underline info-wrapper">
+            <h3 class="product-title"></h3>
+            <p class="product-sub-title"></p>
+            <div class="card-price-container">
+              <span class="price"></span>
+              <span class="compare-price"></span>
+              <span class="discount"></span>
+            </div>
+          </a>
+          {% comment %} Product Form {% endcomment %}
+          <product-form data-section-id="{{ section.id }}">
+            {%- form 'product', card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+              <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}" class="product-variant-id" data-id="productId" {% if product.selected_or_first_available_variant.available == false %} disabled {% endif %}>
+              <button id="{{ product_form_id }}-submit" type="submit" name="add" class="card-button quick-add__submit button button--full-width button--secondary" aria-haspopup="dialog" aria-labelledby="{{ product_form_id }}-submit title-{{ section.id }}-{{ card_product.id }}" aria-live="polite" data-sold-out-message="true" {% if card_product.selected_or_first_available_variant.available == false %} disabled {% endif %}>
+                <span class="add">
+                  {%- if card_product.selected_or_first_available_variant.available -%}
+                    {{ 'products.product.add_to_cart' | t | replace: 'cart', 'bag' }}
+                  {%- else -%}
+                    {{ 'products.product.sold_out' | t }}
+                  {%- endif -%}
+                </span>
+                
+                <span class="sold-out-message hidden">
+                  {{ 'products.product.sold_out' | t }}
+                </span>
+                {%- render 'loading-spinner' -%}
+              </button>
+            {%- endform -%}
+          </product-form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} Mobile Modal  {% endcomment %}
+  <div class="mobile-modal">
+    <div class="main-product-info-container size-tool-tip-container" data-id="sizeToolTip">
+      <span class="hotspot-close-button">{% render 'hotspot-close' %}</span>
+      <div class="featured-image"></div>
+      <div class="product-info-container">
+        <a href="" class="no-underline info-wrapper">
+          <h3 class="product-title"></h3>
+          <p class="product-sub-title"></p>
+          <div class="card-price-container">
+            <span class="price"></span>
+            <span class="compare-price"></span>
+            <span class="discount"></span>
+          </div>
+        </a>
+        {% comment %} Product Form {% endcomment %}
+        <product-form data-section-id="{{ section.id }}">
+          {%- form 'product', card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+            <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}" class="product-variant-id" data-id="productId" {% if product.selected_or_first_available_variant.available == false %} disabled {% endif %}>
+            <button id="{{ product_form_id }}-submit" type="submit" name="add" class="card-button quick-add__submit button button--full-width button--secondary" aria-haspopup="dialog" aria-labelledby="{{ product_form_id }}-submit title-{{ section.id }}-{{ card_product.id }}" aria-live="polite" data-sold-out-message="true" {% if card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
+              <span class="add">
+                {%- if card_product.selected_or_first_available_variant.available -%}
+                  {{ 'products.product.add_to_cart' | t | replace: 'cart', 'bag' }}
+                {%- else -%}
+                  {{ 'products.product.sold_out' | t }}
+                {%- endif -%}
+              </span>
+              
+              <span class="sold-out-message hidden">
+                {{ 'products.product.sold_out' | t }}
+              </span>
+              {%- render 'loading-spinner' -%}
+            </button>
+          {%- endform -%}
+        </product-form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  let HOTSPOT_ROOT = document.querySelector('.hotspot-main-container#{{- section.id -}}');
+  let sizeToolTip = document.querySelector('[data-id="sizeToolTip"]');
+  let sizeToolTipArrow = document.querySelector('[data-id="sizeToolTip"] #tooltip');
+  let mainProductInfoContainer = document.querySelector('.main-product-info-container');
+  if (window.innerWidth < 767 ) {
+    mainProductInfoContainer = document.querySelector('.mobile-modal');
+  }
+  let featuredImage = mainProductInfoContainer.querySelector('.featured-image');
+  let productInfoUrl = mainProductInfoContainer.querySelector('.product-info-container a');
+  let productTitle = mainProductInfoContainer.querySelector('.product-title');
+  let productSubTitle = mainProductInfoContainer.querySelector('.product-sub-title');
+  let price = mainProductInfoContainer.querySelector('.price');
+  let comparePrice = mainProductInfoContainer.querySelector('.compare-price');
+  let discount = mainProductInfoContainer.querySelector('.discount');
+  let allHotSpots = document.querySelectorAll('.hotspot');
+  let closeHotspotButton = document.querySelector('.mobile-modal .hotspot-close-button');
+
+  let hotSpotAddToBag = mainProductInfoContainer.querySelector('[data-id="hotSpotAddToBag"]');
+
+  let productFormInouts = mainProductInfoContainer.querySelectorAll('input[data-id="productId"]');
+  let productFormInputProuctID = mainProductInfoContainer.querySelectorAll('input[name="product-id"]');
+  let productFormSubmitButton = mainProductInfoContainer.querySelectorAll('button[type="submit"]');
+
+  // Mobile Modal
+  let mobileModal = document.querySelector('.mobile-modal');
+  let mobileModalCloseButton = document.querySelector('.mobile-modal .hotspot-close-button');
+
+  const IMAGES_TO_CACHE = [];
+
+  // All Product Data
+  window.HOTSPOTDATA = {
+    {% for block in section.blocks %}
+      {% if block.settings.product.id != blank %} "d{{ block.settings.product.id }}" : {
+        productData : {{ block.settings.product | json }},
+        id : "{{ block.settings.product.id }}",
+        variantid : "{{ block.settings.product.variants[0].id }}",
+        url : "{{ block.settings.product.url }}",
+        image : "{{ block.settings.product.featured_media | image_url: width: 140 }}",
+        title : "{{ block.settings.product.title }}",
+        subTitle: "{{ block.settings.product.metafields.custom.short_description.value }}",
+        price: "{{ block.settings.product.price | money_with_currency }}",
+        comparePrice: "{{ block.settings.product.compare_at_price | money_with_currency }}",
+        discount: "{{ block.settings.product.compare_at_price | minus: block.settings.product.price | times: 100.0 | divided_by: block.settings.product.compare_at_price | money_without_currency | times: 100 | remove: '.0' }}"
+      }{% unless forloop.last %},{% endunless %} {% endif %}
+    {% endfor %}
+  };
+
+  for (const key in HOTSPOTDATA) {
+    if (HOTSPOTDATA.hasOwnProperty(key)) {
+        const product = HOTSPOTDATA[key];
+        if (product.hasOwnProperty("image")) {
+          IMAGES_TO_CACHE.push(product.image);
+        }
+    }
+  }
+
+  function setDataOnModal(productId) {
+    let productData = window.HOTSPOTDATA[productId];
+    // Set Data
+    featuredImage.innerHTML = `<a href="${productData.url}" class="no-underline">
+      <img src="${productData.image}" class="featured-img" loading="lazy" alt="${productData.title}">
+    </a>`;
+
+    productFormInouts.forEach(input => {
+      input.value = productData.variantid;
+    });
+
+    productFormInputProuctID.forEach(input => {
+      input.value = productData.variantid;
+    });
+
+    productInfoUrl.setAttribute('href', productData.url);
+    let titleString = productData.title.substring(0,57);
+    productTitle.innerHTML = titleString;
+    let subTitleString = productData.subTitle.substring(0,60);
+    productSubTitle.innerHTML = subTitleString;
+    price.innerHTML = productData.price;
+    comparePrice.innerHTML = productData.comparePrice;
+    discount.innerHTML = `(${productData.discount}%)`;
+  }
+
+  function setModalPosition(event) {
+    let parentPos = document.querySelector('.hotspot-main')?.getBoundingClientRect();
+    let childPos = event.currentTarget.getBoundingClientRect();
+    let sizeToolTipPos = sizeToolTip.getBoundingClientRect();
+
+    let hotSpotPos = {};
+
+    hotSpotPos.top = Math.abs(childPos.top - parentPos.top);
+    hotSpotPos.right = Math.abs(childPos.right - parentPos.right);
+    hotSpotPos.bottom = Math.abs(childPos.bottom - parentPos.bottom);
+    hotSpotPos.left = Math.abs(childPos.left - parentPos.left);
+
+    if( hotSpotPos.left > sizeToolTipPos.width ) {
+      // RIGHT
+      sizeToolTipArrow.classList.add('right');
+      if (hotSpotPos.top > sizeToolTipPos.height) {
+        // BOTTOM
+        sizeToolTipArrow.classList.add('bottom');
+        sizeToolTip.style.bottom = hotSpotPos.bottom - 20 + 'px';
+        sizeToolTip.style.top = 'unset';
+      } else {
+        // TOP
+        sizeToolTipArrow.classList.add('top');
+        sizeToolTip.style.top = hotSpotPos.top - 23 + 'px';
+        sizeToolTip.style.bottom = 'unset';
+      }
+      sizeToolTip.style.right = hotSpotPos.right + childPos.width + 22 + 'px';
+      sizeToolTip.style.left = 'unset';
+    } else {
+      // LEFT
+      sizeToolTipArrow.classList.add('left');
+      if (hotSpotPos.top > sizeToolTipPos.height) {
+        // BOTTOM
+        sizeToolTipArrow.classList.add('bottom');
+        sizeToolTip.style.bottom = hotSpotPos.bottom - 20 + 'px';
+        sizeToolTip.style.top = 'unset';
+      } else {
+        // TOP
+        sizeToolTipArrow.classList.add('top');
+        sizeToolTip.style.top = hotSpotPos.top - 23 + 'px';
+        sizeToolTip.style.bottom = 'unset';
+      }
+      sizeToolTip.style.left = hotSpotPos.left + childPos.width + 22 + 'px';
+      sizeToolTip.style.right = 'unset';
+    }
+  }
+
+  // Function to Get the Product Data and Show it in the Main Product Info Container
+  allHotSpots.forEach((hotspot) => {
+    if (window.innerWidth < 767 ) {
+      hotspot.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent the click event from propagating to the window
+        let productId = e.currentTarget.getAttribute('product-id');
+        document.body.classList.add('overflow-hidden');
+        setDataOnModal(productId);
+        // Close Modal on Click Outside
+        mainProductInfoContainer.addEventListener('click', mobileCloseModalOnOutsideClick);
+        mobileModalCloseButton.addEventListener('click', () => {
+          mobileModal.classList.remove('show');
+          document.body.classList.remove('overflow-hidden');
+        });
+        productFormSubmitButton.forEach(button => {
+          button.addEventListener('click', () => {
+            mobileModal.classList.remove('show');
+          });
+        })
+
+        mainProductInfoContainer.classList.add('show');
+      });
+    } else {
+      hotspot.addEventListener('mouseenter', (e) => {
+        e.stopPropagation(); // Prevent the click event from propagating to the window
+        let productId = e.currentTarget.getAttribute('product-id');
+        setDataOnModal(productId);
+        sizeToolTipArrow.classList.remove(...['left', 'top', 'bottom', 'right']);
+        setModalPosition(event);
+        // Close Modal on Click Outside
+        window.addEventListener('click', closeModalOnOutsideClick);
+        mainProductInfoContainer.classList.add('show');
+      });
+    }
+  });
+
+  closeHotspotButton.addEventListener('click', closeModal);
+
+  function closeModalOnOutsideClick(e) {
+    if (!mainProductInfoContainer.contains(e.target)) {
+      closeModal();
+    }
+    mainProductInfoContainer.classList.remove('show');
+  }
+
+  function mobileCloseModalOnOutsideClick(e) {
+    if (e.target.classList.contains('mobile-modal') && e.target.classList.contains('show')) {
+      closeModal();
+      mainProductInfoContainer.removeEventListener('click', mobileCloseModalOnOutsideClick);
+    }
+  }
+
+  function closeModal() {
+    mainProductInfoContainer.classList.remove('show');
+    sizeToolTipArrow.classList.remove(...['left', 'top', 'bottom', 'right']);
+    window.removeEventListener('click', closeModalOnOutsideClick);
+  }
+
+  function cacheImages(array, waitForOtherResources, timeout) {
+    if(array.length !== 0) {
+      if (!cacheImages.list) {
+        cacheImages.list = [];
+      }
+      let loaded = false;
+      let list = cacheImages.list;
+      let imgs = array.slice(0);
+      let t = timeout || 15 * 1000;
+      let timer;
+
+      if (!waitForOtherResources || document.readyState === 'complete') {
+        loadNow();
+      } else {
+        window.addEventListener('load', function () {
+          clearTimeout(timer);
+          loadNow();
+        });
+        timer = setTimeout(loadNow, t);
+      }
+
+      function loadNow() {
+        if (!loaded) {
+          loaded = true;
+          for (var i = 0; i < imgs.length; i++) {
+            var img = new Image();
+            img.onload = img.onerror = img.onabort = function () {
+              var index = list.indexOf(this);
+              if (index !== -1) {
+                list.splice(index, 1);
+              }
+            };
+            list.push(img);
+            img.src = imgs[i];
+          }
+        }
+      }
+    }
+  }
+
+  const HOTSPOT_OBSERVER = new IntersectionObserver( arrEntry => {
+    arrEntry.forEach( entry => {
+      if (entry.isIntersecting) {
+        cacheImages(IMAGES_TO_CACHE, true);
+        HOTSPOT_OBSERVER.unobserve(entry.target);
+      }
+    });
+  });
+
+  HOTSPOT_OBSERVER.observe(HOTSPOT_ROOT);
+</script>
+
+{% schema %}
+{
+  "name": "Hotspots",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Hotspot Main Heading",
+      "default": "Hotspot Section"
+    },
+    {
+      "type": "text_alignment",
+      "id": "hotspot_text_alignment",
+      "label": "Hotspot Alignment",
+      "default": "center"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_background_image",
+      "label": "Desktop Background Image",
+      "info": "Recommended size: 1600 x 600px"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "Mobile Background Image",
+      "info": "Recommended size: 428 x 440px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Hotspot",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Hotspot Positions Desktop"
+        },
+        {
+          "type": "range",
+          "id": "horizontal_position_desktop",
+          "min": 1,
+          "max": 99,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal Position",
+          "default": 36
+        },
+        {
+          "type": "range",
+          "id": "vertical_position_desktop",
+          "min": 4,
+          "max": 96,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical Position",
+          "default": 36
+        },
+        {
+          "type": "header",
+          "content": "Hotspot Positions Mobile"
+        },
+        {
+          "type": "range",
+          "id": "horizontal_position_mobile",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal Position",
+          "default": 36
+        },
+        {
+          "type": "range",
+          "id": "vertical_position_mobile",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical Position",
+          "default": 36
+        },
+        {
+          "type": "header",
+          "content": "Hotspot Styles"
+        },
+        {
+          "type": "range",
+          "id": "width",
+          "min": 20,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Hotspot Size",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "border_radius",
+          "min": 1,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "label": "Border Radius",
+          "default": 50
+        },
+        {
+          "type": "color",
+          "id": "hotspot_background_color",
+          "label": "Hotspot Background Color",
+          "default": "#D9D9D9"
+        },
+        {
+          "type": "checkbox",
+          "id": "animate_hotspot",
+          "label": "Animation Hotspot",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__1.label"
+            },
+            {
+              "value": "apple",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__2.label"
+            },
+            {
+              "value": "banana",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__3.label"
+            },
+            {
+              "value": "bottle",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__4.label"
+            },
+            {
+              "value": "box",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__5.label"
+            },
+            {
+              "value": "carrot",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__6.label"
+            },
+            {
+              "value": "chat_bubble",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__7.label"
+            },
+            {
+              "value": "check_mark",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__8.label"
+            },
+            {
+              "value": "clipboard",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__9.label"
+            },
+            {
+              "value": "dairy",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__10.label"
+            },
+            {
+              "value": "dairy_free",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__11.label"
+            },
+            {
+              "value": "dryer",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__12.label"
+            },
+            {
+              "value": "eye",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__13.label"
+            },
+            {
+              "value": "fire",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__14.label"
+            },
+            {
+              "value": "gluten_free",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__15.label"
+            },
+            {
+              "value": "heart",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__16.label"
+            },
+            {
+              "value": "iron",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__17.label"
+            },
+            {
+              "value": "leaf",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__18.label"
+            },
+            {
+              "value": "leather",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__19.label"
+            },
+            {
+              "value": "lightning_bolt",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__20.label"
+            },
+            {
+              "value": "lipstick",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__21.label"
+            },
+            {
+              "value": "lock",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__22.label"
+            },
+            {
+              "value": "map_pin",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__23.label"
+            },
+            {
+              "value": "nut_free",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__24.label"
+            },
+            {
+              "value": "pants",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__25.label"
+            },
+            {
+              "value": "paw_print",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__26.label"
+            },
+            {
+              "value": "pepper",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__27.label"
+            },
+            {
+              "value": "perfume",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__28.label"
+            },
+            {
+              "value": "plane",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__29.label"
+            },
+            {
+              "value": "plant",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__30.label"
+            },
+            {
+              "value": "price_tag",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__31.label"
+            },
+            {
+              "value": "question_mark",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__32.label"
+            },
+            {
+              "value": "recycle",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__33.label"
+            },
+            {
+              "value": "return",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__34.label"
+            },
+            {
+              "value": "ruler",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__35.label"
+            },
+            {
+              "value": "serving_dish",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__36.label"
+            },
+            {
+              "value": "shirt",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__37.label"
+            },
+            {
+              "value": "shoe",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__38.label"
+            },
+            {
+              "value": "silhouette",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__39.label"
+            },
+            {
+              "value": "snowflake",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__40.label"
+            },
+            {
+              "value": "star",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__41.label"
+            },
+            {
+              "value": "stopwatch",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__42.label"
+            },
+            {
+              "value": "truck",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__43.label"
+            },
+            {
+              "value": "washing",
+              "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.options__44.label"
+            }
+          ],
+          "default": "check_mark",
+          "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.label"
+        },
+        {
+          "type": "header",
+          "content": "Product"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hotspots"
+    }
+  ]
+}
+{% endschema %}

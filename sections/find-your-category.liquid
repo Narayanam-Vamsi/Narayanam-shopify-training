@@ -1,0 +1,410 @@
+{{ 'find-your-category.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+  .find_your_style_container-{{ section.id }}{
+    background:{{ section.settings.body_color }};
+    margin-top:{{ section.settings.mg_top }}px;
+    margin-bottom: {{ section.settings.mg_bottom }}px;
+  }
+</style>
+
+<section class="find_your_style_container-{{ section.id }} find_your_style_container">
+  <div class="find_style_container">
+    {% if section.settings.image != blank %}
+      <div class="content_1">
+        {{ section.settings.image | image_url: width: 800 | image_tag: loading: 'lazy' }}
+      </div>
+    {% endif %}
+    <div class="find-your-style">
+      {% if section.settings.heading != blank %}
+        <h2 class="title">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+      {% if section.settings.description != blank %}
+        <p class="description">{{ section.settings.description }}</p>
+      {% endif %}
+
+      <div class="find-your-style-option">
+        <div class="findyourstyleselect">
+          {% if section.settings.cyl != blank %}
+            <label for="style" class="styletitle"> {{ section.settings.cyl }}</label>
+          {% endif %}
+
+          <select id="category">
+            {% if section.settings.cyt != blank %}
+              <option value="" selected>{{ section.settings.cyt }}</option>
+            {% endif %}
+
+            {% for block in section.blocks %}
+              <option value="{{ block.settings.gender-name}}">
+                {% if block.settings['display-name'] != blank -%}
+                  {{- block.settings['display-name'] -}}
+                {%- else -%}
+                  {{- block.settings['gender-name'] -}}
+                {%- endif %}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="findyourstyleselect {% if section.settings.show_color == true %}yourstyledisplay{% endif %}">
+          {% if section.settings.csl != blank %}
+            <label for="style" class="styletitle">{{ section.settings.csl }}</label>
+          {% endif %}
+          <select id="purpose">
+            {% if section.settings.cst != blank %}
+              <option value="">{{ section.settings.cst }}</option>
+            {% endif %}
+          </select>
+        </div>
+
+        <div class="findyourstyleselect">
+          {% if section.settings.cel != blank %}
+            <label for="style" class="styletitle">{{ section.settings.cel }}</label>
+          {% endif %}
+          <select id="style">
+            {% if section.settings.cet != blank %}
+              <option value="">{{ section.settings.cet }}</option>
+            {% endif %}
+          </select>
+        </div>
+
+        <div class="findyourstyleselect">
+          {% if section.settings.ccl != blank %}
+            <label for="style" class="styletitle">{{ section.settings.ccl }}</label>
+          {% endif %}
+          <select id="color">
+            {% if section.settings.cct != blank %}
+              <option value="">{{ section.settings.cct }}</option>
+            {% endif %}
+          </select>
+        </div>
+
+        <button id="submit_btn button" onclick="submitStyle()">SUBMIT</button>
+      </div>
+    </div>
+
+    <div class="parent-fil-style" onclick="outSideClick()"></div>
+    <div class="fil-style-cls">
+      <h4>ERROR</h4>
+      {% if section.settings.fil != blank %}
+        <h5>{{ section.settings.fil }}</h5>
+      {% endif %}
+      <div class="closepopup" onclick="popup_close()"><span>CLOSE</span></div>
+    </div>
+  </div>
+</section>
+
+<script>
+    const categorySelect = document.getElementById("category");
+    const purposeSelect = document.getElementById("purpose");
+    const colorSelect = document.getElementById("color");
+    const selectStyle = document.getElementById("style");
+
+    const options = {
+        {% for block in section.blocks %}
+            '{{ block.settings.gender-name }}': {
+                purpose: ["{{ block.settings.purpose_id | split: ',' | join: '", "' }}"],
+                color: ["{{ block.settings.color_id | split: ',' | join: '", "' }}"],
+                style: ["{{ block.settings.style_id | split: ',' | join: '", "' }}"]
+            }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+    };
+
+    categorySelect.addEventListener("change", function () {
+        try {
+            const selectedCategory = categorySelect.value;
+            purposeSelect.innerHTML = '<option value="">Select Size</option>';
+            selectStyle.innerHTML = '<option value="">Select Style</option>';
+            colorSelect.innerHTML = '<option value="">Select Color</option>';
+
+            if (selectedCategory in options) {
+                const purposeOptions = options[selectedCategory].purpose;
+                const styleOptions = options[selectedCategory].style;
+                const colorOptions = options[selectedCategory].color;
+
+                styleOptions.forEach(function (option) {
+                    const optionElement = document.createElement("option");
+                    optionElement.value = option;
+                    optionElement.textContent = option;
+                    selectStyle.appendChild(optionElement);
+                });
+
+                selectStyle.style.display = "block";
+
+                purposeOptions.forEach(function (option) {
+                    const optionElement = document.createElement("option");
+                    optionElement.value = option;
+                    optionElement.textContent = option;
+                    purposeSelect.appendChild(optionElement);
+                });
+
+                purposeSelect.style.display = "block";
+
+                colorOptions.forEach(function (option) {
+                    const optionElement = document.createElement("option");
+                    optionElement.value = option;
+                    optionElement.textContent = option;
+                    colorSelect.appendChild(optionElement);
+                });
+
+                colorSelect.style.display = "block";
+            }
+        } catch (error) {
+            console.error("An error occurred in categorySelect change event:", error);
+        }
+    });
+
+    function emptySelectedValues() {
+        try {
+        setTimeout(() => {
+            categorySelect.innerHTML = '<option value="">Select Category</option>';
+            purposeSelect.innerHTML = '<option value="">Select Size</option>';
+            colorSelect.innerHTML = '<option value="">Select Color</option>';
+            selectStyle.innerHTML = '<option value="">Select Style</option>';
+        }, 100);
+        } catch (error) {
+        console.error("An error occurred in emptySelectedValues:", error);
+        }
+    }
+
+    function submitStyle() {
+        try {
+          const selectedCategory = encodeURIComponent(categorySelect.value);
+          const selectedPurpose = encodeURIComponent(purposeSelect.value);
+          const selectedColor = encodeURIComponent(colorSelect.value);
+          const selectedStyle = encodeURIComponent(selectStyle.value);
+      
+          if (selectedCategory !== "") {
+            document.querySelector('.fil-style-cls').style.display = "none";
+            emptySelectedValues();
+            location.href = `https://nykdbynykaa.com/collections/${selectedCategory}?filter.v.option.size=${selectedPurpose}&filter.p.m.my_fields.color=${selectedColor}&filter.p.m.my_fields.style=${selectedStyle}`;
+          } else {
+            document.querySelector(".fil-style-cls").style.display = "block";
+            document.querySelector(".parent-fil-style").classList.add("toggle-fil-style");
+            document.querySelector("body").classList.add("scroll-stop");
+      
+            setTimeout(() => {
+              document.querySelector(".fil-style-cls").style.opacity = "999";
+            }, 500);
+          }
+        } catch (error) {
+          console.error("An error occurred in submitStyle:", error);
+        }
+    }
+
+    function popup_close() {
+        try {
+        const parentFilStyle = document.querySelector(".parent-fil-style");
+        const body = document.querySelector("body");
+        const filStyleCls = document.querySelector(".fil-style-cls");
+
+        parentFilStyle.classList.remove("toggle-fil-style");
+        body.classList.remove("scroll-stop");
+        filStyleCls.classList.remove("rd123");
+        filStyleCls.style.opacity = "0";
+    
+        setTimeout(() => {
+            filStyleCls.style.display = "none";
+        }, 500);
+        } catch (error) {
+        console.error("An error occurred:", error);
+        }
+    }
+
+    function outSideClick() {
+        try {
+        const toggle = document.querySelector('.toggle-fil-style');
+    
+        if (toggle) {
+            const filStyleCls = document.querySelector('.fil-style-cls');
+            const parentFilStyle = document.querySelector('.parent-fil-style');
+            const body = document.querySelector('body');
+    
+            filStyleCls.style.display = 'none';
+            parentFilStyle.classList.remove('toggle-fil-style');
+            body.classList.remove('scroll-stop');
+        }
+        } catch (error) {
+        console.error("An error occurred:", error);
+        }
+    }
+</script>
+
+{% schema %}
+{
+  "name": "Find Your Category",
+  "settings": [
+    {
+      "type": "range",
+      "id": "mg_top",
+      "min": 0,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mg_bottom",
+      "min": 0,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 16
+    },
+    {
+      "type": "image_picker",
+      "id": "left_img",
+      "label": "Image"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Background Color",
+      "default": "#FAF7C7"
+    },
+    {
+      "type": "text",
+      "id": "fil",
+      "label": "Message",
+      "default": "Please choose catageory"
+    },
+    {
+      "type": "text",
+      "id": "find-style-heading",
+      "label": "Heading",
+      "default": "Find Your Style"
+    },
+    {
+      "type": "richtext",
+      "id": "style-paragraph",
+      "label": "Paragraph"
+    },
+    {
+      "type": "link_list",
+      "id": "find_style_menu",
+      "label": "Menu"
+    },
+    {
+      "type": "text",
+      "id": "cyt",
+      "label": "Choose Category text",
+      "default": "Choose Category"
+    },
+    {
+      "type": "text",
+      "id": "cst",
+      "label": "Choose Size Text",
+      "default": "Choose Size"
+    },
+    {
+      "type": "text",
+      "id": "cct",
+      "label": "Choose Color Text",
+      "default": "Choose Color"
+    },
+    {
+      "type": "text",
+      "id": "cet",
+      "label": "Choose Style Text",
+      "default": "Choose Style"
+    },
+    {
+      "type": "text",
+      "id": "cyl",
+      "label": "Choose Category Label",
+      "default": "Category"
+    },
+    {
+      "type": "text",
+      "id": "csl",
+      "label": "Choose Size Label",
+      "default": "Size"
+    },
+    {
+      "type": "text",
+      "id": "ccl",
+      "label": "Choose Color Label",
+      "default": "Color"
+    },
+    {
+      "type": "text",
+      "id": "cel",
+      "label": "Choose Style Label",
+      "default": "Style"
+    },
+
+    {
+      "type": "text",
+      "id": "find-style-btn",
+      "label": "Button Text",
+      "default": "SUBMIT"
+    },
+
+    {
+      "id": "heading",
+      "type": "text",
+      "label": "Section Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_color",
+      "label": "Show Color",
+      "default": true
+    },
+    {
+      "id": "image",
+      "type": "image_picker",
+      "label": "Left Side Image"
+    },
+    {
+      "id": "description",
+      "type": "text",
+      "label": "Section Description"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "category",
+      "type": "text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "gender-name",
+          "label": "Category"
+        },
+        {
+          "type": "text",
+          "id": "display-name",
+          "label": "Display name"
+        },
+        {
+          "type": "html",
+          "id": "style_id",
+          "label": "Style",
+          "info": "add style comma separated"
+        },
+        {
+          "type": "html",
+          "id": "purpose_id",
+          "label": "Size",
+          "info": "add purpose comma separated"
+        },
+        {
+          "type": "html",
+          "id": "color_id",
+          "label": "Color",
+          "info": "add colors comma separated"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Find Your Category"
+    }
+  ]
+}
+{% endschema %}

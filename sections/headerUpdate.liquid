@@ -1,0 +1,113 @@
+<div class="header-navigation">
+  <!-- Logo -->
+  {%- if settings.logo != blank -%}
+    <div class="header__heading-logo-wrapper">
+      {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+      {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+      {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
+      {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+      {{ settings.logo | image_url: width: 600 | image_tag:
+        class: 'header__heading-logo motion-reduce',
+        widths: widths,
+        height: logo_height,
+        width: settings.logo_width,
+        alt: logo_alt,
+        sizes: sizes,
+        preload: true
+      }}
+    </div>
+  {% endif %}
+
+  <!-- Navigation Menu -->
+  <nav class="header__nav">
+    <ul>
+      {% for link in linklists[section.settings.menu].links %}
+        <li>
+          <a href="{{ link.url }}">
+            {{ link.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+
+  <!-- Right Side Icons -->
+  <div class="header__icons">
+    <a href="/search" class="icon">🔍</a>
+    <a href="/account" class="icon">👤</a>
+    <a href="/cart" class="icon">🛒</a>
+  </div>
+</div>
+
+<style>
+.header-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+/* Logo */
+.header__heading-logo-wrapper {
+  max-width: 120px;
+  flex-shrink: 0;
+}
+
+/* Menu */
+.header__nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex; 
+  justify-content: center;
+  gap: 25px;
+}
+
+.header__nav ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  padding: 10px;
+  transition: color 0.3s ease;
+}
+
+.header__nav ul li a:hover {
+  color: #007bff;
+}
+
+/* Right Icons */
+.header__icons {
+  display: flex;
+  gap: 15px;
+}
+
+.header__icons .icon {
+  font-size: 18px;
+  text-decoration: none;
+  color: #333;
+}
+
+.header__icons .icon:hover {
+  color: #007bff;
+}
+</style>
+
+{% schema %}
+{
+  "name": "header_navigation",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu"
+    }
+  ],
+  "presets": [
+    {
+      "name": "header_navigation"
+    }
+  ]
+}
+{% endschema %}

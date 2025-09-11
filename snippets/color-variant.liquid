@@ -1,0 +1,38 @@
+<style>
+  .swatch-container {
+    display: flex;
+    align-items: center;
+    gap: 1.3rem;
+  }
+  .swatch-container .swatch-image {
+    max-width: 50px;
+  }
+  .swatch-container .swatch-image.active {
+    border: 3px solid {{swatchBorderColor}};
+    line-height: 0;
+  }
+</style>
+
+{% if product.metafields.custom.variants.value != blank %}
+  {% assign colorSwatches = product.metafields.custom.variants.value %}
+  {% assign defalutColorValue = product.metafields.custom.swatch_name.value %}
+  <div class="color-swatch-main-container" {{ block.shopify_attributes }}>
+    {% if product.metafields.custom.swatch_name.value != blank %}
+      <span class="sku">Choose Color : </span>
+      {{ defalutColorValue }}
+    {% endif %}
+    <div class="swatch-container">
+      {% for colorSwatche in colorSwatches %}
+        {% assign colorMetaObjects = colorSwatche.metafields.custom.swatch_image.value %}
+        <a class="no-underline" href="{{ colorSwatche.url }}">
+          {% if product.id == colorSwatche.id %}
+            {% assign colorSwatchImageClass = 'swatch-image active' %}
+          {% else %}
+            {% assign colorSwatchImageClass = 'swatch-image' %}
+          {% endif %}
+          {{ colorMetaObjects | image_url: width: 50 | image_tag: class: colorSwatchImageClass, loading: 'lazy' }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

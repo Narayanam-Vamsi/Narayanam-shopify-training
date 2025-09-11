@@ -1,0 +1,34 @@
+.announcement-swiper {
+  overflow: hidden;
+  width: 100%;
+  height: 43px;
+}
+.announcement-bar a:hover {
+  text-decoration: none;
+}
+.announcement-bar__message {
+  color: white;
+  margin: 0px;
+  padding: 0px;
+  min-height: unset;
+}
+.announcement-bar-section {
+  z-index: 3;
+}
+@media screen and (max-width: 768px) {
+  .announcement-swiper {
+    height: 34px;
+  }
+
+  .announcement-bar__message {
+    font-size: 12px;
+    line-height: clamp(24px, calc(26 * (100vw / var(--viewportDesktop))), 27px);
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .announcement-bar__message {
+    font-size: 12px;
+    line-height: 26px;
+  }
+}

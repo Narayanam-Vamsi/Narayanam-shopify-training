@@ -1,0 +1,67 @@
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "disabled": true,
+      "settings": {
+        "show_collection_description": true,
+        "show_collection_image": false,
+        "color_scheme": "background-1"
+      }
+    },
+    "custom_main_banner_DARJag": {
+      "type": "custom-main-banner",
+      "blocks": {
+        "image_block_tHhBBL": {
+          "type": "image_block",
+          "settings": {
+            "desktop_banner_image": "shopify:\/\/shop_images\/Group_240930_3d3c93ef-14a6-4798-b4cd-de8a1503555d.png",
+            "mobile_banner_image": "shopify:\/\/shop_images\/download_dbd454f4-70fc-4768-b8b9-a0f02ae65e0c.jpg",
+            "image_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_block_tHhBBL"
+      ],
+      "settings": {
+        "margin_bottom_desktop": 36,
+        "margin_bottom_mobile": 36,
+        "autoplay": false,
+        "loop": false,
+        "stopon_last_slide": false,
+        "change_slides_speed": 4,
+        "navigation": false,
+        "pagination": false
+      }
+    },
+    "breadcrumb_fXyGGg": {
+      "type": "breadcrumb",
+      "settings": {
+        "margin_top_desktop": 36,
+        "margin_bottom_desktop": 36,
+        "margin_bottom_mobile": 36
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 16,
+        "columns_desktop": 4,
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "columns_mobile": "2",
+        "pagInfinScroll": "pagination",
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "custom_main_banner_DARJag",
+    "breadcrumb_fXyGGg",
+    "product-grid"
+  ]
+}

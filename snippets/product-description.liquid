@@ -1,0 +1,68 @@
+{{ 'product-description.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+  .product-overview-section .shortDescription {
+    -webkit-line-clamp: {{numberOfLines}};
+  }
+</style>
+
+{% if block.settings.readmore_type == 'readmore_normal' %}
+  {%- if product.description != blank -%}
+    <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
+      {{ product.description }}
+    </div>
+  {%- endif -%}
+{% elsif block.settings.readmore_type == 'readmore_button' %}
+  {% if product.description != blank %}
+    <section class="product-overview-section" {{ block.shopify_attributes }}>
+      {% assign productDescriptionSize = product.description | size %}
+      <div class="product_description">
+        <div class="shortDescription ">
+          {{ product.description | truncate: 500 }}
+        </div>
+        <div class="fullDescription hidden">
+          {{ product.description }}
+        </div>
+      </div>
+      {% if productDescriptionSize > 300 %}
+        <div class="main_readmore_btn_div">
+          <div class="readmore_btn">
+            <div class="readmore_btn_text" style="display: block;">
+              <span>Read More</span>
+            </div>
+            <div class="readmore_overview_icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12.408" height="7.204" viewBox="0 0 12.408 7.204">
+                <g id="Group_2179" data-name="Group 2179" transform="translate(-6242.033 4426.708)">
+                  <path id="Path_7" data-name="Path 7" d="M0,9.58,4.79,4.79,0,0" transform="translate(6253.027 -4425.294) rotate(90)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </section>
+  {% endif %}
+{% endif %}
+
+<script>
+  const readMoreBtn = document.querySelector('.main_readmore_btn_div');
+  const shortDescription = document.querySelector('.shortDescription');
+  const longDescription = document.querySelector('.fullDescription');
+  const readMoreBtnText = document.querySelector('.readmore_btn_text span');
+  let isOpen = false;
+  readMoreBtn?.addEventListener('click', () => {
+    if (!isOpen) {
+      isOpen = true;
+      readMoreBtn.classList.add('opened');
+      readMoreBtnText.innerText = 'Read Less';
+      shortDescription.classList.add('hidden');
+      longDescription.classList.remove('hidden');
+    } else {
+      isOpen = false;
+      readMoreBtn.classList.remove('opened');
+      readMoreBtnText.innerText = 'Read More';
+      shortDescription.classList.remove('hidden');
+      longDescription.classList.add('hidden');
+    }
+  });
+</script>

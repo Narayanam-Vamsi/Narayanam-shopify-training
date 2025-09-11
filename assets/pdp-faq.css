@@ -1,0 +1,32 @@
+.faq_main_container .faq-question {
+  padding: 13px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+  cursor: pointer; /* Add cursor pointer for better UX */
+}
+
+.faq_main_container .faq-point {
+  margin-bottom: 20px;
+}
+
+.faq_main_container .faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  padding: 0 20px;
+}
+.faq_main_container .svg-icon {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.5s;
+}
+
+.faq_main_container .open .svg-icon {
+  transform: rotate(180deg);
+}

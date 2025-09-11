@@ -1,0 +1,155 @@
+<style>
+  .brand-usp-{{ section.id }} {  
+    background-color:#FFE2D233;
+    text-align: center;
+    height:324px;
+    width:100%;
+    margin-top:{{section.settings.margin_top}}px;
+    margin-bottom:{{ section.settings.margin_bottom}}px;
+  }
+  .brand-usp-{{ section.id }} .usp-section-heading {
+    font-size: 28px;
+    font-weight: 500;
+    padding:40px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    
+  }
+
+  .brand-usp-{{ section.id }} .usp-container {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    gap: 70px;
+    height:160px;
+    width:100%
+  }
+  .brand-usp-{{ section.id }} .usp-item {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:27px;
+  }
+
+.brand-usp-{{ section.id }} .usp-icon svg{
+    width: 60px;
+    height: 60px;
+}
+
+  .brand-usp-{{ section.id }} .usp-title {
+    font-size: 22px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+@media screen and (max-width: 768px) {
+
+  .brand-usp-{{ section.id }} {  
+
+    height:262px;
+
+  }
+
+  .brand-usp-{{ section.id }} .usp-icon svg{
+    width: 30px;
+    height: 30px;
+}
+
+    .brand-usp-{{ section.id }} .usp-section-heading {
+    font-size: 22px;
+    
+    padding:10px;
+
+  }
+    .brand-usp-{{ section.id }} .usp-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:15px;
+    }
+
+  .brand-usp-{{ section.id }} .usp-item {
+    gap:20px;
+  }
+
+
+    .brand-usp-{{ section.id }} .usp-title {
+      font-size: 11px;
+       font-weight: 400;
+    }
+  }
+
+</style>
+
+<section class="brand-usp brand-usp-{{ section.id }}">
+  
+  {% if section.settings.section_heading != blank %}
+    <h2 class="usp-section-heading">{{ section.settings.section_heading }}</h2>
+  {% endif %}
+  <div class="usp-container">
+    {% for block in section.blocks %}
+      <div class="usp-item">
+        <div class="usp-icon">
+          {{ block.settings.usp_icon  }}
+      </div>
+        <h3 class="usp-title">{{ block.settings.usp_title }}</h3>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand USP",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Heading",
+      "default": "Make a good choice"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Top Margin",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Bottom Margin",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "usp",
+      "name": "USP Item",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "usp_icon",
+          "label": "USP Icon (Paste SVG Code)"
+        },
+        {
+          "type": "text",
+          "id": "usp_title",
+          "label": "USP Title"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Brand USP Section"
+    }
+  ]
+}
+{% endschema %}

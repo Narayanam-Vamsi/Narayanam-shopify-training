@@ -1,0 +1,54 @@
+<style>
+  @font-face {
+    font-family: '{{ settings['font-file-weight-100'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}';
+    src: url("{{ settings['font-file-weight-100'] }}");
+    font-display: swap;
+  }
+  @font-face {
+    font-family: '{{ settings['font-file-weight-200'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}';
+    src: url("{{ settings['font-file-weight-200'] }}");
+    font-display: swap;
+  }
+  @font-face {
+    font-family: '{{ settings['font-file-weight-300'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}';
+    src: url("{{ settings['font-file-weight-300'] }}");
+    font-display: swap;
+  }
+  @font-face {
+    font-family: '{{ settings['font-file-weight-400'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}';
+    src: url("{{ settings['font-file-weight-400'] }}");
+    font-display: swap;
+  }
+  @font-face {
+    font-family: '{{ settings['font-file-weight-500'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}';
+    src: url("{{ settings['font-file-weight-500'] }}");
+    font-display: swap;
+  }
+  @font-face {
+    font-family: '{{ settings['font-file-weight-600'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}';
+    src: url("{{ settings['font-file-weight-600'] }}");
+    font-display: swap;
+  }
+  @font-face {
+    font-family: '{{ settings['font-file-weight-700'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}';
+    src: url("{{ settings['font-file-weight-700'] }}");
+    font-display: swap;
+  }
+  @font-face {
+    font-family: '{{ settings['font-file-weight-800'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}';
+    src: url("{{ settings['font-file-weight-800'] }}");
+    font-display: swap;
+  }
+  @font-face {
+    font-family: '{{ settings['font-file-weight-900'] | split: '?v=' | first | split: '/' | last | split: '.' | first }}';
+    src: url("{{ settings['font-file-weight-900'] }}");
+    font-display: swap;
+  }
+  {% comment %}
+    @font-face {
+      font-family: 'Neue-Helvetica-Bold';
+      src: url('https://cdn.shopify.com/s/files/1/0764/2808/3500/files/neue-helvetica-bold.otf?v=1684414272');
+      font-display: swap;
+    }
+  {% endcomment %}
+</style>

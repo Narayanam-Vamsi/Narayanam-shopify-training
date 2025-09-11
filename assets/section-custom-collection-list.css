@@ -1,0 +1,115 @@
+.custom-collection-list {
+  margin-top: 30px;
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+}
+.collectioncardlink {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  right: 0;
+  top: 0;
+}
+.custom-collection-list__item {
+  padding: 1rem;
+}
+.custom-collection-list__item .card-wrapper {
+  padding: 2rem;
+  height: 10vw;
+  padding-bottom: 0;
+  /* background: rgba(255, 250, 240, 1); */
+  border-radius: 6px;
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.custom-collection-list__item .card {
+  flex-direction: row-reverse;
+  align-items: center;
+}
+.custom-collection-list__item .card-wrapper .card__inner {
+  width: 40%;
+  box-shadow: none;
+  height: 100%;
+}
+.custom-collection-list__item .card-wrapper .card__heading,
+.card__heading a {
+  height: unset;
+  /* font-size: clamp(
+    calc(25 * 0.8px),
+    calc(25 * (100vw / var(--viewportDesktop))),
+    calc(25 * 1.6px)
+  ); */
+  line-height: clamp(29px, calc(30.8 * (100vw / var(--viewportDesktop))), 31px);
+  /* color: #000; */
+  /* font-family: "Sen-SemiBold"; */
+}
+.custom-collection-list-title {
+  margin: 0;
+}
+
+@media screen and (max-width: 749px) {
+  .custom-collection-list:not(.slider) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .custom-collection-list__item.grid__item {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .section-collection-list .page-width {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .section-collection-list .custom-collection-list:not(.slider) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.custom-collection-list__item:only-child {
+  max-width: 100%;
+  width: 100%;
+}
+
+@media screen and (max-width: 749px) {
+  .slider.custom-collection-list--1-items {
+    padding-bottom: 0;
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .slider.custom-collection-list--1-items,
+  .slider.custom-collection-list--2-items,
+  .slider.custom-collection-list--3-items,
+  .slider.custom-collection-list--4-items {
+    padding-bottom: 0;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .custom-collection-list__item a:hover {
+    box-shadow: none;
+  }
+}
+
+@media screen and (max-width: 989px) {
+  .custom-collection-list.slider .custom-collection-list__item {
+    max-width: 100%;
+  }
+  .custom-collection-list {
+    margin-top: 20px;
+  }
+  .custom-collection-list__item .card-wrapper {
+    height: 30vw;
+  }
+  .custom-collection-list__item .card-wrapper .card__heading,
+  .card__heading a {
+    /* font-size: 23px; */
+    line-height: 27.67px;
+  }
+}
+
+.custom-collection-list-view-all {
+  margin-top: 2rem;
+}

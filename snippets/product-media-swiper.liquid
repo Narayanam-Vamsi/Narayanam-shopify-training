@@ -1,0 +1,210 @@
+{{ 'product-media-swiper.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+  .product-slider .swiper,
+  .product-slider .rounded-borders {
+    border-radius: {{ roundedCorners }}px;
+  }
+
+  .product-slider .thumb-small-slider .swiper-slide-thumb-active .small-slider__img {
+    border-radius: {{ roundedCorners | plus: 2 }}px;
+    border: {{ activeSlideWidth }}px solid {{ activeSlideBorder }};
+  }
+
+  {% if enableSmallSlider %}
+    .product-slider .main-slider {
+      width: 100%;
+    }
+  {% endif %}
+</style>
+
+<div
+  class="product-slider {% if section.settings.enable_sticky_info %}product__column-sticky{% endif %} media-swiper-position-{{- mediaSliderPosition -}}"
+  {{ block.shopify_attributes }}
+>
+  <div class="slider-inner-wrapper">
+    <div data-id="main-slider" class="swiper main-slider">
+      <div class="swiper-wrapper border-radius">
+        {% for media in product.media %}
+          <div class="swiper-slide">
+            {% if forloop.index0 == 0 %}
+              {% assign preLoad = true %}
+              {% assign lazy = 'eager' %}
+              {% assign fetchPriority = 'high' %}
+              {% comment %} PRODUCT TAGS {% endcomment %}
+              {% render 'product-tags', productObj: productObj %}
+              {% comment %} PRODUCT TAGS {% endcomment %}
+            {% else %}
+              {% assign lazy = 'lazy' %}
+              {% assign preLoad = false %}
+              {% assign fetchPriority = 'auto' %}
+            {% endif %}
+
+            {% comment %} <div class="swiper-zoom-container"> {% endcomment %}
+            <div class="media_wrapper">
+              {% if media.media_type == 'image' %}
+                <div class="productImgWrapper">
+                  {% if forloop.index0 == 0 %}
+                    {% assign lazy = 'eager' %}
+                  {% else %}
+                    {% assign lazy = 'lazy' %}
+                  {% endif %}
+                  {% assign alt = media.alt | default: 'big-pdp-image' %}
+                  {{
+                    media
+                    | image_url: width: 720
+                    | image_tag:
+                      class: 'productImage big-image rounded-borders',
+                      loading: lazy,
+                      fetchpriority: fetchPriority,
+                      preload: preLoad,
+                      alt: alt,
+                      widths: '352, 832, 720',
+                      sizes: '(max-width: 450px) 352px, (max-width: 1350px) 529px, (min-width: 1351px) 720px'
+                  }}
+                </div>
+              {% else %}
+                <div class="productImgWrapper">
+                  {% render 'video',
+                    videoObj: media,
+                    lazy: false,
+                    mutedOnLoad: false,
+                    muteButtons: true,
+                    loop: true,
+                    controlsList: 'nodownload',
+                    forloopIndex: forloop.index0,
+                    class: 'video-play-mobile-button-container'
+                  %}
+                </div>
+              {% endif %}
+            </div>
+            {% comment %} </div> {% endcomment %}
+          </div>
+        {% endfor %}
+      </div>
+      {% if enablePagination %}
+        <div class="swiper-pagination product-pagination custom-main-slider_pagination"></div>
+      {% endif %}
+    </div>
+    <div
+      data-id="thumb-small-slider"
+      thumbsSlider=""
+      class="swiper thumb-small-slider {% if enableSmallSlider %} hide-small-slider {% endif %}"
+    >
+      <div class="swiper-wrapper">
+        {% for media in product.media %}
+          <div class="swiper-slide">
+            <div class="small-slider__img">
+              {% if forloop.index0 == 0 %}
+                {% assign lazy = 'eager' %}
+              {% else %}
+                {% assign lazy = 'lazy' %}
+              {% endif %}
+              {% assign alt = media.alt | default: 'small-pdp-image' %}
+              {{
+                media
+                | image_url: width: 200
+                | image_tag: class: 'productImage small-image rounded-borders', loading: lazy, alt: alt
+              }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      {% if swiperButtons %}
+        {% if section.blocks.size > 1 %}
+          <div class="swiper-button-next smallNext">
+            {% render 'slider_up.svg' %}
+          </div>
+          <div class="swiper-button-prev smallPrev">
+            {% render 'slider_down.svg' %}
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  const IMAGES_TO_CACHE = [];
+
+  document.querySelectorAll('.product__media-wrapper img').forEach( img => {
+    IMAGES_TO_CACHE.push(img.src);
+    IMAGES_TO_CACHE.push(`${img.src.split('&width')[0]}&width=352`);
+  })
+
+  function initSwipersPDP(event, isQuickAdd = false) {
+    let mainSlider = '[data-id="main-slider"]';
+    let thumbSmallSlider = '[data-id="thumb-small-slider"]';
+
+    if(isQuickAdd) {
+      mainSlider = 'quick-add-modal [data-id="main-slider"]';
+      thumbSmallSlider = 'quick-add-modal [data-id="thumb-small-slider"]';
+    }
+
+    let swiper = new Swiper(`${thumbSmallSlider}`, {
+      //loop: true,
+      {% if mediaSliderPosition == 'left' or mediaSliderPosition == 'right' %}
+        direction: 'vertical',
+        autoHeight: true,
+        spaceBetween: 15,
+        slidesPerView: 4,
+      {% else %}
+        spaceBetween: 15,
+        slidesPerView: 4,
+      {% endif %}
+      freeMode: true,
+      mousewheel: true,
+      breakpoints: {
+        600: {
+          {% if mediaSliderPosition == 'left' or mediaSliderPosition == 'right' %}
+            direction: 'vertical',
+            autoHeight: true,
+          {% endif %}
+          slidesPerView: 6,
+          spaceBetween: 20,
+        },
+      },
+      {% if reverseSwiperBehaviours %}
+        navigation: {
+          nextEl: '.swiper-button-prev',
+          prevEl: '.swiper-button-next',
+        },
+        {% else %}
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      {% endif %}
+      {% comment %} watchSlidesProgress: true, {% endcomment %}
+    });
+
+    let swiper2 = new Swiper(`${mainSlider}`, {
+      loop: true,
+      zoom: true,
+      spaceBetween: 20,
+      pagination: {
+        el: '.swiper-pagination',
+      },
+      thumbs: {
+        swiper: swiper,
+      },
+    });
+
+    document.querySelectorAll('.main-slider video-element').forEach(video => {
+      new VideoPlayer(video)
+    })
+
+    cacheImages(IMAGES_TO_CACHE, true);
+  }
+
+  // function for main product page slider
+  window.addEventListener(
+    'DOMContentLoaded',
+    () => {
+      (async () => {
+        initSwipersPDP();
+      })();
+    },
+    { once: true }
+  );
+</script>

@@ -1,0 +1,181 @@
+<style>
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+  #{{ section.id }}.testimonials-t4-container{
+    padding-top: {{ section.settings.padding_top}}px;
+    padding-bottom: {{ section.settings.padding_bottom}}px;
+  }
+  .testimonials-t4-container{
+    padding: unset;
+  }
+  .testimonials-t4-container .brand-image-conatiner {
+    max-width: 130px;
+  }
+  .testimonials-t4-container .swiper-wrapper {
+    align-items: center;
+    transition-timing-function: linear;
+    pointer-events: none;
+  }
+  .testimonials-t4-container .brand-image {
+    width: 100%;
+    height: auto;
+  }
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+</style>
+
+<section class="testimonials-t4-container page-width section-{{ section.id }}-margin" id="{{ section.id }}">
+  <div class="homepage-brand-logo">
+    <div class="swiper testimonials_t4">
+      <div class="swiper-wrapper" style="transition-timing-function: linear">
+        {% for block in section.blocks %}
+          {% if block.settings.brand_image != blank %}
+            <div class="swiper-slide">
+              <div class="brand-image-conatiner">
+                {% if forloop.index0 == 0 %}
+                  {% assign lazy = 'eager' %}
+                {% else %}
+                  {% assign lazy = 'lazy' %}
+                {% endif %}
+                {{
+                  block.settings.brand_image
+                  | image_url: width: 400
+                  | image_tag: class: 'brand-image', loading: lazy
+                }}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+        {% for block in section.blocks %}
+          {% if block.settings.brand_image != blank %}
+            <div class="swiper-slide">
+              <div class="brand-image-conatiner">
+                {% if forloop.index0 == 0 %}
+                  {% assign lazy = 'eager' %}
+                {% else %}
+                  {% assign lazy = 'lazy' %}
+                {% endif %}
+                {{
+                  block.settings.brand_image
+                  | image_url: width: 400
+                  | image_tag: class: 'brand-image', loading: lazy
+                }}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  window.addEventListener(
+    'DOMContentLoaded',
+    () => {
+  const homepageBrandLogo{{- section.id | remove: "--" | remove: "__" | remove: "-" }} = new Swiper(`#{{ section.id }} .testimonials_t4`, {
+    slidesPerView: 1.5,
+    loop: true,
+    speed: 5000,
+    autoplay: {
+      delay: 1,
+      disableOnInteraction: false,
+    },
+    breakpoints: {
+      0: {
+        slidesPerView: 3,
+        spaceBetween: 62,
+      },
+      750: {
+        slidesPerView: 3,
+        spaceBetween: 17,
+      },
+      1200: {
+        slidesPerView: 5,
+        spaceBetween: 98,
+      },
+    },
+  });
+},
+{ once: true }
+);
+</script>
+
+{% schema %}
+{
+  "name": "Testimonial T4",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Brand Slides",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "brand_image",
+          "label": "Brand Image",
+          "info": "Image size should be 125px X 40px"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonial T4"
+    }
+  ]
+}
+{% endschema %}

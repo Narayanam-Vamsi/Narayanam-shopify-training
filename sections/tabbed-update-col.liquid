@@ -1,0 +1,356 @@
+<style>
+  .tabbed-collection-{{ section.id }} {
+    position: relative;
+     margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+  }
+  .tabbed-banner {
+    width: 100%;
+  }
+  .banner-bg {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+  }
+  .banner-overlay {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100%;
+    padding: 20px ;
+  }
+  .banner-left {
+    color: #fff;
+    width: 45%;
+    margin-top:5%;
+  }
+  .banner-left .banner-subtitle {
+    font-size: 50px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    color:#FFFFFF;
+    opacity:70%;
+
+
+  }
+
+  .banner-left .banner-title {
+    font-size: 30px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+     color:white;
+  }
+
+
+  .banner-right {
+    border-radius: 15px;
+    width: 45%;
+    margin-top:10.2%;
+  }
+ 
+  .product-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align:left;
+    width: 100%;
+   
+  }
+
+  a{
+    text-decoration:none;
+  }
+  
+  .product-card img {
+    border-radius: 10px;
+    margin-bottom: 10px;
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .prod-title{
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+  
+  }
+
+  .price {
+    font-weight: 400;
+    font-size:14px;
+    margin: 5px 0;
+
+  }
+
+  .add-to-bag {
+    border: 1px solid #d5a46d;
+    color: #d5a46d;
+    background: transparent;
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  .add-to-bag:hover {
+    background: #d5a46d;
+    color: #fff;
+  }
+
+  .toggle-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    background-color: #DB763F;
+    border-radius: 16px;
+    padding-top:15px;
+     padding-bottom:15px;
+      padding-right:20px;
+       padding-left:20px;
+       position: absolute;
+       top: 30px;
+       right: 60px;
+       z-index: 1;
+  
+  }
+  .toggle-btn {
+
+    border: 1px solid  #DB763F;
+    background-color: #DB763F;
+    opacity:1 !important;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    padding-right:10px;
+     padding-left:10px;
+    border-radius: 16px;
+    color: white;
+  }
+  .toggle-btn.active {
+    background-color: white;
+    color: #E16A28;
+      opacity:1 !important;
+  }
+
+  .swiper-slide {
+    width: auto;
+    flex-shrink: 0;
+  }
+
+
+   @media screen and (max-width: 1000px) {
+ .banner-right {
+    margin-top:12%;
+  }
+}
+
+
+   @media screen and (max-width: 800px) {
+ .banner-right {
+    margin-top:14%;
+  }
+}
+
+  @media screen and (max-width: 768px) {
+    .banner-overlay {
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
+      gap: 15px;
+    }
+
+    .banner-left {
+      width: 100%;
+      text-align: center;
+      margin-bottom:60px;
+      margin-top:5px;
+    }
+
+    .toggle-buttons {
+     
+      position: absolute;
+      margin: 10px 0;
+      top:14%;
+      right:35%;
+      z-index:2;
+    }
+
+    .toggle-btn {
+      font-size: 16px;
+   
+    }
+
+    .banner-right {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .banner-left .banner-title {
+      font-size: 28px;
+    }
+
+    .banner-left .banner-subtitle {
+      font-size: 18px;
+    }
+
+    .product-card img {
+      height: 180px;
+    }
+
+  }
+</style>
+
+<section class="tabbed-collection tabbed-collection-{{ section.id }}">
+  <div class="toggle-buttons">
+    {% for block in section.blocks %}
+      <button class="toggle-btn{% if forloop.first %} active{% endif %}" data-block="{{ forloop.index }}">
+        {{ block.settings.block_toggle }}
+      </button>
+    {% endfor %}
+  </div>
+
+  {% for block in section.blocks %}
+    <div
+      class="tabbed-banner tabbed-banner-{{ forloop.index }}"
+      {% unless forloop.first %}
+        style="display:none"
+      {% endunless %}
+    >
+      <div
+        class="banner-bg"
+        style="background-image: url('{{ block.settings.block_image_banner | image_url:width:2000 }}');"
+      >
+        <div class="banner-overlay">
+          <div class="banner-left">
+            <h2 class="banner-subtitle">{{ block.settings.subtitle }}</h2>
+            <h1 class="banner-title">{{ block.settings.title }}</h1>
+          </div>
+
+          <div class="banner-right">
+            {% assign collection = block.settings.block_collection %}
+            {% if collections[collection] != blank %}
+              <div class="swiper product-swiper-{{ forloop.index }}">
+                <div class="swiper-wrapper">
+                  {% for product in collections[collection].products %}
+                    <div class="swiper-slide product-card">
+                      <a href="{{ product.url}}">
+                      {% if product.featured_image %}
+                        {{ product.featured_image | image_url: width: 300 | image_tag: alt: product.title }}
+                      {% endif %}
+                      <h3 class="prod-title">{{ product.title | strip_html | split: ' ' | slice: 0, 2 | join: ' ' }}</h3>
+                      <p class="price">{{ product.price | money }}</p>
+                      <button class="add-to-bag">ADD TO BAG</button>
+                    </a>  
+                    </div>
+                  {% endfor %}
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const section = document.querySelector('.tabbed-collection-{{ section.id }}');
+    const buttons = section.querySelectorAll('.toggle-btn');
+    const banners = section.querySelectorAll('.tabbed-banner');
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-block');
+
+        banners.forEach((b) => (b.style.display = 'none'));
+        buttons.forEach((b) => b.classList.remove('active'));
+
+        btn.classList.add('active');
+        section.querySelector('.tabbed-banner-' + target).style.display = 'block';
+      });
+    });
+
+    new Swiper('.swiper', {
+      slidesPerView: 2.5,
+      spaceBetween: 10,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      grabCursor: true,
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Tabbed Collection",
+  "settings": [
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Top Margin",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Bottom Margin",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_block",
+      "name": "Collection Block",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "block_collection",
+          "label": "Choose Collection"
+        },
+        {
+          "type": "text",
+          "id": "block_toggle",
+          "label": "Toggle Button Label",
+          "default": "Tab"
+        },
+        {
+          "type": "image_picker",
+          "id": "block_image_banner",
+          "label": "Image Banner collection"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "THE SKIN CARE ESSENTIAL"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "DISCOVER THE LATEST TREND"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 2,
+  "presets": [
+    {
+      "name": "Tabbed Collection",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

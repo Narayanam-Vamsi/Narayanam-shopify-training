@@ -1,0 +1,151 @@
+{%- if productObj and productObj != empty -%}
+  {%- liquid
+    assign enable_sale_tag = settings.enable_sale_tag
+    assign hasBestSellersTag = false
+    assign hasOnSaleTag = false
+    assign soldOut = false
+    assign labelTag = false
+
+    if productObj.available == false
+      assign soldOut = true
+    endif
+
+    if productObj.tags contains 'Best Sellers'
+      assign hasBestSellersTag = true
+    endif
+
+    if productObj.tags contains 'lebel:new' or productObj.tags contains 'label:new'
+      assign hasNewTag = true
+    endif
+
+    if productObj.compare_at_price > productObj.price and productObj.available
+      assign hasOnSaleTag = true
+    endif
+
+    for tag in productObj.tags
+      if tag contains 'label_'
+        assign labelTag = true
+        break
+      endif
+    endfor
+  -%}
+
+  <style>
+    .card__badge .soldOut p{ color: {{ settings.sold_out_text_color }};}
+    .card__badge .soldOut svg path{  fill: {{ settings.sold_out_background }};}
+
+    .card__badge .sale p{ color: {{ settings.sale_text_color }};}
+    .card__badge .sale svg path{ fill: {{ settings.sale_text_background }};}
+
+    .card__badge .bestSellers p{ color: {{ settings.bestSellers_text_color }};}
+    .card__badge .bestSellers svg path{fill: {{ settings.bestSellers_background }};}
+
+    .card__badge .custom p{ color: {{ settings.custom_tag_text_color }};}
+    .card__badge .custom svg path{fill: {{ settings.custom_tag_background }};}
+
+    .card__badge {
+      align-self: flex-end;
+      grid-row-start: 3;
+      justify-self: flex-start;
+      margin-top: 6px;
+      display: inline-flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      position: absolute;
+      z-index: 1;
+    }
+
+    .card__badge.top {
+      align-self: flex-start;
+      grid-row-start: 1;
+    }
+
+    .card__badge.right {
+      justify-self: flex-end;
+    }
+
+    .badge{
+      line-height:0;
+      border: 1px solid transparent;
+      display: block;
+      font-size: 1.2rem;
+      letter-spacing: 0.1rem;
+      text-align: center;
+      background-color: transparent;
+      color: rgb(var(--color-badge-foreground));
+      word-break: break-word;
+      position:relative;
+      border: none;
+      border-top: 8px solid transparent;
+    }
+
+
+    .badge p{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: inline-block;
+        white-space: nowrap;
+        font-size:12px;
+    }
+  </style>
+
+  {% if hasBestSellersTag or hasOnSaleTag or soldOut or labelTag %}
+    <div class="card__badge {{ settings.badge_position }}">
+      {% if soldOut %}
+        <span id="Badge-{{ section_id }}-{{ productObj.id }}" class="badge soldOut">
+          {{ settings.badge_svg }}
+          <p>{{- 'products.product.sold_out' | t | capitalize -}}</p>
+        </span>
+      {% endif %}
+
+      {% if hasOnSaleTag and enable_sale_tag %}
+        <span
+          id="Badge-{{ section_id }}-{{ productObj.id }}"
+          class="badge sale"
+        >
+          {{ settings.badge_svg }}
+          {%- if settings.sale_badge_type == 'sale' -%}
+            <p>On Sale</p>
+          {%- elsif settings.sale_badge_type == 'save_amount' -%}
+            <p>Save {{ productObj.compare_at_price | minus: productObj.price | money_without_trailing_zeros }}</p>
+          {% elsif settings.sale_badge_type == 'save_percentage' %}
+            <p>
+              {{
+                productObj.compare_at_price
+                | minus: productObj.price
+                | times: 100.0
+                | divided_by: productObj.compare_at_price
+                | round
+              -}}
+              % Off
+            </p>
+          {% endif %}
+        </span>
+      {% endif %}
+
+      {% if hasNewTag %}
+        <span class="badge color-{{ settings.custom_badge_color_scheme }}">
+          {{ settings.badge_svg }}
+          <p>New</p>
+        </span>
+      {% endif %}
+
+      {% if settings.enable_custom_tag %}
+        {% if labelTag %}
+          {% for tag in productObj.tags %}
+            {% if tag contains 'label_' %}
+              <span class="badge custom">
+                {% assign splitLabelTag = tag | split: 'label_' %}
+                {{ settings.badge_svg }}
+                <p>{{ splitLabelTag[1] | capitalize }}</p>
+              </span>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endif %}
+    </div>
+  {% endif %}
+{%- endif -%}

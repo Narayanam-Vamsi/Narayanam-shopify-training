@@ -1,0 +1,228 @@
+{% comment %} {{ 'announcement-bar.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<div
+  id="{{- section.id -}}"
+  class="announcement-bar utility-bar color-{{ section.settings.color_scheme }} gradient"
+  {{ block.shopify_attributes }}
+>
+  <div class="announcement-swiper">
+    <div
+      class="swiper-wrapper"
+      style="{% if section.settings.mode == "continous_animation" %}transition-timing-function: linear;{% endif %}"
+    >
+      {% for block in section.blocks %}
+        {%- case block.type -%}
+          {%- when 'announcement' -%}
+            {%- if block.settings.text != blank -%}
+              <div class="swiper-slide {% if section.settings.mode == 'continous_animation' %} inline-block w-auto {% endif %}">
+                <div
+                  class="announcement-bar color-{{ block.settings.color_scheme }} gradient"
+                  role="region"
+                  aria-label="{{ 'sections.header.announcement' | t }}"
+                  {{ block.shopify_attributes }}
+                >
+                  {%- if block.settings.link != blank -%}
+                    <a
+                      href="{{ block.settings.link }}"
+                      class="announcement-bar__link link link--text focus-inset animate-arrow"
+                    >
+                  {%- endif -%}
+                  <p class="announcement-bar__message announcement-bar-custom">{{ block.settings.text | escape }}</p>
+                  {%- if block.settings.link != blank -%}
+                    </a>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+        {%- endcase -%}
+      {% endfor %}
+
+      {% if section.blocks.size < 7 %}
+        {% for block in section.blocks %}
+          {% if section.settings.mode == 'continous_animation' %}
+            {%- if block.settings.text != blank -%}
+              <div class="swiper-slide {% if section.settings.mode == 'continous_animation' %} inline-block w-auto {% endif %}">
+                <div
+                  class="announcement-bar color-{{ block.settings.color_scheme }} gradient"
+                  role="region"
+                  aria-label="{{ 'sections.header.announcement' | t }}"
+                  {{ block.shopify_attributes }}
+                >
+                  {%- if block.settings.link != blank -%}
+                    <a
+                      href="{{ block.settings.link }}"
+                      class="announcement-bar__link link link--text focus-inset animate-arrow"
+                    >
+                  {%- endif -%}
+                  <p class="announcement-bar__message announcement-bar-custom">{{ block.settings.text | escape }}</p>
+                  {%- if block.settings.link != blank -%}
+                    </a>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const announcementBarSwiper  = new Swiper('#{{- section.id }} .announcement-swiper', {
+      {% if section.settings.loop %}
+        loop: {{- section.settings.loop -}},
+      {% endif %}
+      {% if section.settings.mode == "auto_rotate" %}
+        autoplay: {
+          delay  : {{- section.settings.change_slides_speed | times: 1000 -}},
+        },
+      {% elsif section.settings.mode == "continous_animation" %}
+        loop: true,
+        speed: 8000,
+        slidesPerView: "auto",
+        allowTouchMove: false,
+        spaceBetween: 10,
+        autoplay: {
+          delay: 0,
+          pauseOnMouseEnter: true,
+        },
+        breakpoints: {
+          320: {
+            centeredSlides: true,
+            spaceBetween: 10,
+          },
+          640: {
+            spaceBetween: 20,
+          },
+          1280: {
+            spaceBetween: 20,
+          },
+        },
+      {% elsif section.settings.mode == "vertical_animation" %}
+        direction: "vertical",
+        autoplay: {
+          delay  : {{- section.settings.change_slides_speed | times: 1000 -}},
+        }
+      {% endif %}
+    });
+
+    {% if section.settings.pause_on_hover %}
+      const swiperContainer = document.querySelector('#{{- section.id }} .announcement-swiper');
+
+      // Stop Swiper on MouseEnter
+      swiperContainer.addEventListener('mouseenter', () => {
+        announcementBarSwiper .autoplay.stop();
+      });
+
+      // Restart Swiper on MouseLeave
+      swiperContainer.addEventListener('mouseleave', () => {
+        announcementBarSwiper .autoplay.start();
+      });
+    {% endif %}
+  });
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.announcement-bar.name",
+  "max_blocks": 12,
+  "class": "announcement-bar-section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "accent-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.announcement-bar.settings.header__2.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Loop the Announcements",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Select Slider Mode"
+    },
+    {
+      "type": "select",
+      "id": "mode",
+      "label": "Slider Mode",
+      "options": [
+        {
+          "value": "auto_rotate",
+          "label": "Horizontal"
+        },
+        {
+          "value": "continous_animation",
+          "label": "Continous Autoplay"
+        },
+        {
+          "value": "vertical_animation",
+          "label": "Vertical"
+        }
+      ],
+      "default": "auto_rotate",
+      "info": "Requires 6 or more announcements to work Properly."
+    },
+    {
+      "type": "header",
+      "content": "On Hover Pause"
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on Hover/Touch(Apply Only on Horizontal/Vertical Mode)",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "change_slides_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "sec",
+      "label": "Change Every..",
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "t:sections.announcement-bar.blocks.announcement.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Welcome to our store",
+          "label": "t:sections.announcement-bar.blocks.announcement.settings.text.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.announcement-bar.blocks.announcement.settings.link.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.announcement-bar.presets.name",
+      "blocks": [
+        {
+          "type": "announcement"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %} {% endcomment %}

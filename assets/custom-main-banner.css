@@ -1,0 +1,73 @@
+.custom-main-banner-container .single-desktop-mobile-banner-container .desktop-main-banner,
+.custom-main-banner-container .video-play-desktop-button-container {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.custom-main-banner-container .video-play-desktop-button-container video {
+  width: 100%;
+  height: auto;
+}
+.custom-main-banner-container .single-desktop-mobile-banner-container .mobile-main-banner,
+.custom-main-banner-container .single-desktop-mobile-banner-container .mobile_banner_video,
+.custom-main-banner-container .video-play-mobile-button-container {
+  display: none;
+}
+
+.custom-main-banner-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.custom-main-banner-container .swiper-button-next:after,
+.custom-main-banner-container .swiper-button-prev:after {
+  content: "";
+}
+
+.custom-main-banner-container .single-desktop-mobile-banner-container .play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.custom-main-banner-container .swiper-button-next {
+  right: 1.5rem;
+}
+
+.custom-main-banner-container .swiper-button-prev {
+  left: 1.5rem;
+  /* transform: rotate(180deg); */
+}
+
+.custom-main-banner-container .swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+  bottom: 10px;
+}
+.custom-main-banner-container .swiper-pagination .swiper-pagination-bullet {
+  background: #d5aa85;
+}
+.custom-main-banner-container .swiper-pagination .swiper-pagination-bullet-active {
+  background: #62032c;
+}
+
+@media only screen and (max-width: 767px) {
+  .custom-main-banner-container .single-desktop-mobile-banner-container .desktop-main-banner,
+  .custom-main-banner-container .single-desktop-mobile-banner-container .desktop_banner_video,
+  .custom-main-banner-container .video-play-desktop-button-container {
+    display: none;
+  }
+  .custom-main-banner-container .single-desktop-mobile-banner-container .mobile-main-banner,
+  .custom-main-banner-container .single-desktop-mobile-banner-container .mobile_banner_video,
+  .custom-main-banner-container .video-play-mobile-button-container {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}

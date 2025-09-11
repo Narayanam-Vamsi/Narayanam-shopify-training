@@ -1,0 +1,148 @@
+{{ 'section-custom-collection-list.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+{% style %}
+  @media screen and (max-width: 750px) {
+    {%- if section.settings.columns_mobile == '2' -%}
+    .custom-collection-list .card__heading a {
+    /* font-size: 17px; */
+  }
+  {%- endif -%}
+    .custom-collection-list.grid-mobile {
+      display: grid;
+      grid-template-columns: repeat({{ section.settings.columns_mobile }}, 1fr);
+    }
+  }
+{% endstyle %}
+
+<div class="page-width">
+  {% comment %}
+    <h1 class="title title--primary inline-richtext{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      {{ section.settings.title }}
+    </h1>
+  {% endcomment %}
+  {%- liquid
+    case section.settings.sort
+      when 'products_high', 'products_low'
+        assign collections = collections | sort: 'all_products_count'
+      when 'date', 'date_reversed'
+        assign collections = collections | sort: 'published_at'
+    endcase
+
+    if section.settings.sort == 'products_high' or section.settings.sort == 'date_reversed' or section.settings.sort == 'alphabetical_reversed'
+      assign collections = collections | reverse
+    endif
+
+    assign moduloResult = 28 | modulo: section.settings.columns_desktop
+    assign paginate_by = 30
+    if moduloResult == 0
+      assign paginate_by = 28
+    endif
+  -%}
+  {%- paginate collections by paginate_by -%}
+    <ul
+      class="custom-collection-list grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_tablet }}-col-tablet-down grid-mobile"
+      role="list"
+    >
+      {% for block in section.blocks %}
+        <li
+          class="custom-collection-list__item grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+            style="--animation-order: {{ forloop.index }};"
+          {% endif %}
+        >
+          {% render 'card-collection',
+            card_collection: block.settings.collection,
+            media_aspect_ratio: section.settings.image_ratio,
+            color_scheme: section.settings.color_scheme,
+            columns: 3,
+
+          %}
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endpaginate -%}
+</div>
+{% schema %}
+{
+  "name": "Custom Collection List",
+  "class": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "t:sections.main-list-collections.settings.title.label",
+      "default": "Collections"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "scheme_1",
+      "label": "Color Scheme"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3,
+      "label": "t:sections.main-list-collections.settings.columns_desktop.label"
+    },
+    {
+      "type": "header",
+      "content": "Mobile and Tab Layout"
+    },
+    {
+      "type": "select",
+      "id": "columns_tablet",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 Column"
+        },
+        {
+          "value": "2",
+          "label": "2 Columns"
+        }
+      ],
+      "default": "2",
+      "label": "Number of Columns on Tab"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 Column"
+        },
+        {
+          "value": "2",
+          "label": "2 Columns"
+        }
+      ],
+      "default": "1",
+      "label": "Number of Columns on Mobile"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection "
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom List collection"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,239 @@
+{{ 'customer-testimonials.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+{%- style -%}
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  .customer-testimonials-container {
+    background: {{ section.settings.testimonial_background }};
+  }
+
+  .customer-testimonials-container .testimonials-title {
+    text-align: {{ section.settings.testimonial_heading_alignment }};
+  }
+
+  .customer-testimonials-container .swiper.customer_testimonial .swiper-pagination {
+    position: static;
+    margin-top: 25px;
+  }
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+    .customer-testimonials-container{
+      padding-right: 0;
+    }
+  }
+{%- endstyle -%}
+
+<section class="customer-testimonials-container page-width section-{{ section.id }}-margin" id="{{ section.id }}">
+  <div class="customer-testimonials">
+    {% if section.settings.testimonial_main_heading != blank %}
+      <div class="testimonials-title">
+        <h2>{{ section.settings.testimonial_main_heading }}</h2>
+      </div>
+    {% endif %}
+    <div class="swiper customer_testimonial">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide" {{ block.shopify_attributes }}>
+            <div class="testimonial_video">
+              <div class="testimonial_video_svg_container">
+                {% if block.settings.testimonial_image != blank %}
+                  <div class="testimonial_video_img">
+                    {% if forloop.index0 == 0 %}
+                      {% assign lazy = 'eager' %}
+                    {% else %}
+                      {% assign lazy = 'lazy' %}
+                    {% endif %}
+                    {% assign alt = block.settings.testimonial_image.alt | default: 'testimonial_image' %}
+                    {{
+                      block.settings.testimonial_image
+                      | image_url: width: 600
+                      | image_tag: class: 'testimonial-change-image', loading: lazy, alt: alt
+                    }}
+                  </div>
+                {% else %}
+                  {% if block.settings.testimonial_video != blank %}
+                    {{
+                      block.settings.testimonial_video.preview_image
+                      | image_url: width: block.settings.testimonial_video.preview_image.width
+                      | image_tag: class: 'testimonial-preview-image', loading: lazy
+                    }}
+                    <div
+                      data-width="{{ block.settings.testimonial_video.sources[0].width }}"
+                      data-height="{{ block.settings.testimonial_video.sources[0].height }}"
+                      data-poster="{{ block.settings.testimonial_video.preview_image.src | image_url: width: block.settings.testimonial_video.preview_image.width, format: 'webp' }}"
+                      data-src="{{ block.settings.testimonial_video.sources[0].url }}"
+                      id="play-button-{{ forloop.index0 }}"
+                      class="play-button"
+                      onclick="handleClick(this)"
+                    >
+                      {% render 'play_button-banner' %}
+                    </div>
+                  {% endif %}
+                {% endif %}
+              </div>
+              {% if block.settings.testimonial_text != blank %}
+                <div class="testimonial-text-container">
+                  <div class="svg-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="18" viewBox="0 0 23 18" fill="none">
+                      <path d="M1.95127 2.5785C3.56421 0.867375 6.00489 0 9.20434 0H10.354V3.17137L9.42967 3.3525C7.85466 3.66075 6.75906 4.26712 6.17274 5.157C5.86681 5.6364 5.69331 6.1853 5.6692 6.75H9.20434C9.50924 6.75 9.80165 6.86853 10.0173 7.0795C10.2329 7.29048 10.354 7.57663 10.354 7.875V15.75C10.354 16.9909 9.32275 18 8.0547 18H1.15687C0.851964 18 0.559549 17.8815 0.34395 17.6705C0.128351 17.4595 0.00722873 17.1734 0.00722873 16.875V11.25L0.0106777 7.96613C0.000330926 7.84125 -0.2181 4.8825 1.95127 2.5785ZM20.7007 18H13.8029C13.498 18 13.2056 17.8815 12.99 17.6705C12.7744 17.4595 12.6533 17.1734 12.6533 16.875V11.25L12.6567 7.96613C12.6464 7.84125 12.4279 4.8825 14.5973 2.5785C16.2102 0.867375 18.6509 0 21.8504 0H23V3.17137L22.0757 3.3525C20.5007 3.66075 19.4051 4.26712 18.8188 5.157C18.5128 5.6364 18.3393 6.1853 18.3152 6.75H21.8504C22.1553 6.75 22.4477 6.86853 22.6633 7.0795C22.8789 7.29048 23 7.57663 23 7.875V15.75C23 16.9909 21.9688 18 20.7007 18Z" fill="#1E22AA"/>
+                    </svg>
+                  </div>
+                  <div class="text-container">
+                    {{ block.settings.testimonial_text }}
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+{% render 'custom-video-modal' %}
+
+{% if section.blocks.size > 1 %}
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    (async () => {
+      const customMainBanner{{- section.id | remove: "--" | remove: "__" | remove: "-" }} = new Swiper(`#{{ section.id }} .customer_testimonial`, {
+        pagination: {
+        el: ".swiper-pagination",
+        },
+        breakpoints: {
+          0: {
+            slidesPerView: 1.5,
+            spaceBetween: 15,
+          },
+          750: {
+            slidesPerView: 2,
+            spaceBetween: 40,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 52,
+          },
+        }
+      });
+    })();
+  },{ once: true });
+  </script>
+{% endif %}
+
+<script>
+  const overlay = document.querySelector('.product-zoom-modal-overlay');
+  const closeButton = document.querySelector('.zoom-close-button');
+  const videoContainer = document.querySelector('.video-zoom-container video');
+
+  closeButton.addEventListener('click', handleCloseButtonClick);
+
+  function handleClick(element) {
+    const { width, height, poster, src } = element.dataset;
+    const videoElement = videoContainer;
+    videoElement.setAttribute('width', width);
+    videoElement.setAttribute('height', height);
+    videoElement.setAttribute('poster', poster);
+    videoElement.setAttribute('src', src);
+    videoElement.play();
+    toggleOverlay(true);
+  }
+
+  function handleCloseButtonClick() {
+    toggleOverlay(false);
+  }
+
+  function toggleOverlay(isActive) {
+    overlay.style.display = isActive ? 'block' : 'none';
+    overlay.classList.toggle('active', isActive);
+    document.body.style.overflow = isActive ? 'hidden' : 'auto';
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Customer Testimonials",
+  "settings": [
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "text",
+      "id": "testimonial_main_heading",
+      "label": "Testimonial Main Heading",
+      "default": "Heading"
+    },
+    {
+      "type": "text_alignment",
+      "id": "testimonial_heading_alignment",
+      "label": "Testimonial Heading Alignment",
+      "default": "center"
+    },
+    {
+      "type": "color_background",
+      "id": "testimonial_background",
+      "label": "Testimonials Background Color",
+      "default": "linear-gradient(#ffffff, #000000)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Testimonial Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "testimonial_image",
+          "label": "Testimonial Image",
+          "info": "Recommended size is: 578px x 330px"
+        },
+        {
+          "type": "video",
+          "id": "testimonial_video",
+          "label": "Testimonial Video",
+          "info": "Recommended size is: 578px x 330px"
+        },
+        {
+          "type": "richtext",
+          "id": "testimonial_text",
+          "label": "Testimonial Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Customer Testimonials"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

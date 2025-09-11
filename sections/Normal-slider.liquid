@@ -1,0 +1,200 @@
+<style>
+.normal-slider .slider-heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.normal-slider .swiper {
+  padding-bottom: 120px;
+}
+
+.normal-slider .swiper-slide {
+  position: relative;
+  min-height: 300px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+}
+
+.normal-slider .swiper-slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  transition: background 0.3s ease-in-out;
+  border-radius: 12px;
+}
+
+.normal-slider .overlay-text {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  top:50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+}
+
+
+
+.normal-slider .swiper-slide.swiper-slide-active .overlay-text {
+  opacity: 1;
+}
+
+.normal-slider .swiper-slide.swiper-slide-active::after,
+.normal-slider .swiper-slide:hover::after {
+  background: rgba(0,0,0,0.5);
+}
+
+.normal-slider .swiper-slide.swiper-slide-active {
+  opacity: 1;
+  z-index: 2;
+}
+
+
+.normal-slider .swiper-button-prev,
+.normal-slider .swiper-button-next {
+  top: 80%;
+  bottom: 10px;
+}
+.normal-slider .swiper-button-prev { left: 46%; }
+.normal-slider .swiper-button-next { right: 46%; }
+
+@media screen and (max-width:768px){
+  .normal-slider .swiper-button-prev { left: 41%; }
+  .normal-slider .swiper-button-next { right: 41%; }
+  
+  .normal-slider .swiper-slide {
+    width:50%;
+}
+}
+
+</style>
+
+{% for block in section.blocks %}
+<style>
+.hero-slide-{{ forloop.index }} {
+  background-image: url('{{ block.settings.desktop_image | image_url: width: 2000 }}');
+}
+
+</style>
+{% endfor %}
+
+
+
+<section class="normal-slider normal-slider-{{ section.id }}" 
+  style="margin-bottom: {{ section.settings.margin_bottom_desktop }}px;">
+  <div class="page-width">
+    
+    {% if section.settings.main_title != blank %}
+      <h2 class="slider-heading">{{ section.settings.main_title }}</h2>
+    {% endif %}
+
+    <div class="swiper swiper-{{ section.id }}">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+   
+  <a href="{{ block.settings.image_url }}" class="swiper-slide hero-slide-{{ forloop.index }}">
+    <div class="overlay-text">{{ block.settings.image_title }}</div>
+  </a>
+        {% endfor %}
+      </div>
+      
+      <div class="swiper-button-prev">{% render 'slider-left-arrow'  %}</div>
+ 
+      <div class="swiper-button-next">{% render 'slider-right-arrow' %}</div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  new Swiper(".swiper-{{ section.id }}", {
+    slidesPerView: 3,
+    spaceBetween: 10,
+    centeredSlides: true,
+    loop: true,
+  
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    effect: "coverflow",
+    coverflowEffect: {
+      rotate: -1,    
+      stretch:-50,
+      depth: 150,   
+      modifier:1,
+      slideShadows: true
+    },
+    breakpoints: {
+      320: { slidesPerView: 2, spaceBetween: 10 },
+      768: { slidesPerView: 3, spaceBetween: 10 },
+      1024: { slidesPerView: 5, spaceBetween: 10 }
+    }
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Normal Slider",
+  "settings": [
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 30
+    },
+    {
+      "type": "text",
+      "id": "main_title",
+      "label": "Heading Title",
+      "default": "Shop Our Collection"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_slider",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Minimum 6 slides required"
+        },
+        {
+          "type": "image_picker",
+          "id": "desktop_image",
+          "label": "Card Image Desktop"
+        },
+        {
+          "type": "text",
+          "id": "image_title",
+          "label": "Shop By Concern Title",
+          "default": "Product Title"
+        },
+        {
+          "type": "url",
+          "id": "image_url",
+          "label": "Shop Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Normal Slider"
+    }
+  ]
+}
+{% endschema %}

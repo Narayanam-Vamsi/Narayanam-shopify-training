@@ -1,0 +1,219 @@
+.insta_video_gallery {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.insta_video_gallery .start_div {
+  text-align: center;
+  padding: calc(45 * (100vw / 1440)) 0px calc(35 * (100vw / 1440)) 0px;
+  position: relative;
+}
+
+.insta_video_gallery .title {
+  line-height: normal;
+  margin-bottom: 5px;
+  margin-top: 0;
+  text-transform: uppercase;
+}
+
+.insta_video_gallery .sub_heading {
+  margin-bottom: 28px;
+}
+
+.insta_video_gallery img,
+.insta_video_gallery video {
+  width: 100%;
+  height: 100%;
+  border-radius: 26.04px;
+}
+
+.insta_video_gallery video {
+  cursor: pointer;
+}
+
+.insta_video_gallery_video video {
+  width: 100%;
+  max-width: 578px;
+  position: relative;
+}
+.insta_video_gallery_video img {
+  width: 100%;
+  max-width: 578px;
+  position: absolute;
+  z-index: -1;
+}
+
+.insta_video_gallery .myTrendingCampaignSwiper {
+  margin-top: 3.5rem;
+  border-radius: 26px;
+}
+
+.insta_video_gallery .swiper-wrapper {
+  line-height: 0px;
+}
+
+.insta_video_gallery .swiper-slide {
+  margin-right: 6.5px;
+  margin-left: 6.5px;
+  width: auto;
+  min-width: 578px;
+}
+
+.insta_video_gallery .swiper-pagination {
+  position: static;
+  margin-top: clamp(17px, calc(30 * (100vw / 1440)), 32px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.insta_video_gallery .swiper-pagination .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.42) !important;
+  margin: 0px 10px 0px 0px !important;
+  opacity: 1;
+}
+
+.insta_video_gallery .swiper-pagination .swiper-pagination-bullet:last-child {
+  margin: 0px 0px 0px 0px;
+}
+
+.insta_video_gallery .swiper-pagination .swiper-pagination-bullet-active {
+  background-image: none !important;
+  width: 20px !important;
+  height: 20px !important;
+  padding: 0px;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0) !important;
+  outline: unset !important;
+}
+
+.insta_video_gallery .swiper-pagination .swiper-pagination-bullet-active::after {
+  content: "";
+  background: rgba(255, 255, 255, 1);
+  width: 10px;
+  height: 10px;
+  display: block;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.insta_video_gallery .play_btn_insta_video_gallery {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.insta_video_gallery .play_btn_insta_video_gallery svg {
+  width: 108px;
+  height: 108px;
+}
+
+.insta_video_gallery .play_btn_insta_video_gallery::before {
+  content: "";
+  width: 84px;
+  height: 84px;
+  display: none;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.27);
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+}
+
+.insta_video_gallery .play_btn_insta_video_gallery:hover:before {
+  display: block;
+  width: 108px;
+  height: 108px;
+}
+
+@media only screen and (max-width: 600px) {
+  .insta_video_gallery .start_div {
+    text-align: center;
+    padding: 22px 0px 24px 0px;
+  }
+
+  .insta_video_gallery_video {
+    max-width: 411px;
+  }
+  .insta_video_gallery_video img {
+    max-width: 411px;
+  }
+
+  .insta_video_gallery .start_div::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    background: url("https://cdn.shopify.com/s/files/1/0753/1056/3627/files/logo-emblem-whiter.svg?v=1687714815");
+    background-position: 110% 0px;
+    background-repeat: no-repeat;
+    background-size: 226px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .insta_video_gallery img,
+  .insta_video_gallery video {
+    border-radius: 14px;
+  }
+
+  .insta_video_gallery .title {
+    line-height: 1.1;
+  }
+
+  .insta_video_gallery .sub_heading {
+    line-height: 1.1;
+  }
+
+  .insta_video_gallery .play_btn_insta_video_gallery svg {
+    width: 58px;
+    height: 58px;
+  }
+
+  .insta_video_gallery .swiper-pagination {
+    position: relative;
+    /* margin-bottom: clamp(17px, calc(35 * (100vw / 1440)), 40px); */
+  }
+
+  .insta_video_gallery .swiper-pagination .swiper-pagination-bullet {
+    width: 6px;
+    height: 6px;
+    margin: 0px 6px 0px 0px !important;
+  }
+
+  .insta_video_gallery .swiper-pagination .swiper-pagination-bullet-active {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  .insta_video_gallery .swiper-pagination .swiper-pagination-bullet-active::after {
+    width: 6px;
+    height: 6px;
+  }
+  .insta_video_gallery .myTrendingCampaignSwiper {
+    margin-top: 2rem;
+    border-radius: 14px;
+  }
+  .insta_video_gallery .swiper-wrapper {
+    padding-left: 10px;
+  }
+
+  .insta_video_gallery .swiper-slide {
+    min-width: 265px;
+  }
+}

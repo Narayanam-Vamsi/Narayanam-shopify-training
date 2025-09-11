@@ -1,0 +1,99 @@
+.homepage-usp .section_title_shop_by_concern::selection {
+  background-color: transparent;
+}
+
+.homepage-usp .section_title_shop_by_concern {
+  line-height: normal;
+  margin-bottom: 5px;
+}
+
+.homepage-usp .section_sub_title_shop_by_concern {
+  margin-bottom: 28px;
+}
+
+.homepage-usp .grid_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3rem;
+  /* margin: 0 auto;
+  max-width: 800px; */
+}
+.homepage-usp .grid_container .div_blocks {
+  /* border: 1px solid #ccc;
+  padding: 10px; */
+  text-align: center;
+  flex: 1 0 20%; /* Each item takes up 20% of the available width */
+  max-width: calc(25% - 20px); /* Limit width to prevent overflow */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.homepage-usp .swiper .div_blocks {
+  width: 100%;
+}
+
+.homepage-usp .div_blocks .image_center {
+  display: flex;
+  width: auto;
+  /* height: 113px; */
+  align-items: center;
+  margin: auto;
+}
+
+.homepage-usp .div_blocks .image_center img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.homepage-usp .text-container {
+  width: 100%;
+  text-align: center;
+}
+
+.homepage-usp .swiper.uSp .swiper-slide {
+  width: calc(280 * (100vw / 1440));
+  margin-right: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .homepage-usp {
+    margin-top: 0;
+  }
+  .homepage-usp .section_title_shop_by_concern {
+    line-height: 1.1;
+  }
+  .homepage-usp .section_sub_title_shop_by_concern {
+    margin-bottom: 28px;
+  }
+  .homepage-usp .grid_container .div_blocks {
+    text-align: center;
+    flex: 1 0 30%;
+    max-width: calc(48% - 0px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+@media only screen and (max-width: 749px) {
+  .homepage-usp .swiper.uSp .swiper-slide {
+    width: calc(90 * (100vw / 360));
+    margin-right: 10px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .grid-item {
+    flex-basis: calc(50% - 20px); /* Two items per row on smaller screens */
+    max-width: calc(50% - 20px);
+  }
+}
+@media screen and (max-width: 480px) {
+  .grid-item {
+    flex-basis: calc(100% - 20px); /* One item per row on even smaller screens */
+    max-width: calc(100% - 20px);
+  }
+}

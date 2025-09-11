@@ -1,0 +1,151 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "disabled": true,
+      "settings": {
+        "title": "Collections",
+        "sort": "alphabetical",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "columns_mobile": "2"
+      }
+    },
+    "custom_collection_list_tQdhXW": {
+      "type": "custom-collection-list",
+      "blocks": {
+        "collection_EmJaDQ": {
+          "type": "collection",
+          "settings": {
+            "collection": "men"
+          }
+        },
+        "collection_Yhn6Qe": {
+          "type": "collection",
+          "settings": {
+            "collection": "automated-collection"
+          }
+        },
+        "collection_Va9aG6": {
+          "type": "collection",
+          "settings": {
+            "collection": "female"
+          }
+        },
+        "collection_7D4iYz": {
+          "type": "collection",
+          "settings": {
+            "collection": "bangles"
+          }
+        },
+        "collection_rT9iDJ": {
+          "type": "collection",
+          "settings": {
+            "collection": "necklace"
+          }
+        },
+        "collection_FGkdMY": {
+          "type": "collection",
+          "settings": {
+            "collection": "youth"
+          }
+        },
+        "collection_6Lwrqa": {
+          "type": "collection",
+          "settings": {
+            "collection": "sample-test-collection"
+          }
+        },
+        "collection_AkEiYd": {
+          "type": "collection",
+          "settings": {
+            "collection": "mens"
+          }
+        },
+        "collection_itV7cY": {
+          "type": "collection",
+          "settings": {
+            "collection": "hydrogen"
+          }
+        },
+        "collection_Ga7NWP": {
+          "type": "collection",
+          "settings": {
+            "collection": "automated-collection"
+          }
+        },
+        "collection_VVFXTm": {
+          "type": "collection",
+          "settings": {
+            "collection": "bangles"
+          }
+        },
+        "collection_VnPTaX": {
+          "type": "collection",
+          "settings": {
+            "collection": "automated-collection"
+          }
+        },
+        "collection_N9iUQ9": {
+          "type": "collection",
+          "settings": {
+            "collection": "female"
+          }
+        },
+        "collection_kAzfMU": {
+          "type": "collection",
+          "settings": {
+            "collection": "men"
+          }
+        },
+        "collection_PLKBGW": {
+          "type": "collection",
+          "settings": {
+            "collection": "necklace"
+          }
+        },
+        "collection_VrqbGj": {
+          "type": "collection",
+          "settings": {
+            "collection": "hydrogen"
+          }
+        },
+        "collection_jjwimT": {
+          "type": "collection",
+          "settings": {
+            "collection": "youth"
+          }
+        }
+      },
+      "block_order": [
+        "collection_EmJaDQ",
+        "collection_Yhn6Qe",
+        "collection_Va9aG6",
+        "collection_7D4iYz",
+        "collection_rT9iDJ",
+        "collection_FGkdMY",
+        "collection_6Lwrqa",
+        "collection_AkEiYd",
+        "collection_itV7cY",
+        "collection_Ga7NWP",
+        "collection_VVFXTm",
+        "collection_VnPTaX",
+        "collection_N9iUQ9",
+        "collection_kAzfMU",
+        "collection_PLKBGW",
+        "collection_VrqbGj",
+        "collection_jjwimT"
+      ],
+      "settings": {
+        "title": "Collections",
+        "columns_desktop": 3,
+        "columns_tablet": "2",
+        "columns_mobile": "2"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_collection_list_tQdhXW"
+  ]
+}

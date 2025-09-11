@@ -1,0 +1,365 @@
+{{ 'testimonial-t2.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  #{{ section.id }}.testimonials-container-t2{
+    background: {{ section.settings.section_background }};
+    padding-top: {{ section.settings.padding_top}}px;
+    padding-bottom: {{ section.settings.padding_bottom}}px;
+  }
+
+  #{{ section.id }}.testimonials-container-t2 .seenHeadings h2,
+  #{{ section.id }}.testimonials-container-t2 .seenHeadings p {
+    text-align: {{ section.settings.testimonial_alignment_t2 }};
+  }
+
+  @media screen and (max-width: 750px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+</style>
+
+<section class="testimonials-container-t2 section-{{ section.id }}-margin" id="{{ section.id }}">
+  <div class="seenHeadings page-width">
+    <h2 class="headingFirst">{{ section.settings.testimonial_main_heading }}</h2>
+    <p class="secondFirst">{{ section.settings.testimonial_sub_heading }}</p>
+  </div>
+
+  <div class="sliderseen testimonials-desktop swiper sample-slider">
+    <div class="swiper-wrapper">
+      {% if section.blocks.size < 6 %}
+        {% for block in section.blocks %}
+          <div class="swiper-slide">
+            <div class="first-dicv-seen">
+              {% if block.settings.firstImG %}
+                <div class="imgFirstFull">
+                  {{
+                    block.settings.firstImG
+                    | image_url: width: 420
+                    | image_tag: class: 'testimonial-images', loading: 'lazy'
+                  }}
+                  <div class="contSeen contDiv1">
+                    <p class="titles">{{ block.settings.firsttext }}</p>
+                  </div>
+                </div>
+              {% endif %}
+              <div class="secondMainDiv">
+                {% if block.settings.secImG %}
+                  <div class="firstHalfImg">
+                    {{
+                      block.settings.secImG
+                      | image_url: width: 420
+                      | image_tag: class: 'testimonial-images', loading: 'lazy'
+                    }}
+                    <div class="contSeen firsrHalf">
+                      <p class="titles ">{{ block.settings.secondtext }}</p>
+                    </div>
+                  </div>
+                {% endif %}
+                {% if block.settings.thirdImG %}
+                  <div class="secondHalfImg">
+                    {{
+                      block.settings.thirdImG
+                      | image_url: width: 420
+                      | image_tag: class: 'testimonial-images', loading: 'lazy'
+                    }}
+                    <div class="contSeen contDiv3">
+                      <p class="titles ">{{ block.settings.thirdtext }}</p>
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      
+      {% else %}
+        {% for block in section.blocks %}
+          <div class="swiper-slide">
+            <div class="first-dicv-seen">
+              {% if block.settings.firstImG %}
+                <div class="imgFirstFull">
+                  {{
+                    block.settings.firstImG
+                    | image_url: width: 420
+                    | image_tag: class: 'testimonial-images', loading: 'lazy'
+                  }}
+                  <div class="contSeen contDiv1">
+                    <p class="titles">{{ block.settings.firsttext }}</p>
+                  </div>
+                </div>
+              {% endif %}
+              <div class="secondMainDiv">
+                {% if block.settings.secImG %}
+                  <div class="firstHalfImg">
+                    {{
+                      block.settings.secImG
+                      | image_url: width: 420
+                      | image_tag: class: 'testimonial-images', loading: 'lazy'
+                    }}
+                    <div class="contSeen firsrHalf">
+                      <p class="titles ">{{ block.settings.secondtext }}</p>
+                    </div>
+                  </div>
+                {% endif %}
+                {% if block.settings.thirdImG %}
+                  <div class="secondHalfImg">
+                    {{
+                      block.settings.thirdImG
+                      | image_url: width: 420
+                      | image_tag: class: 'testimonial-images', loading: 'lazy'
+                    }}
+                    <div class="contSeen contDiv3">
+                      <p class="titles ">{{ block.settings.thirdtext }}</p>
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+  </div>
+
+  <div class="sliderseen slidder-seen-mob swiper sample-slider">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide">
+          <div class="first-dicv-seen">
+            <div class="secondMainDiv">
+              {% if block.settings.mobfirst %}
+                <div class="firstHalfImg secon-imgfir">
+                  {{
+                    block.settings.mobfirst
+                    | image_url: width: 420
+                    | image_tag: class: 'testimonial-images', loading: 'lazy'
+                  }}
+                  <div class="contSeen firsrHalf">
+                    <p class="titles font-heebo-regular">{{ block.settings.firstmobtext }}</p>
+                  </div>
+                </div>
+              {% endif %}
+              {% if block.settings.mobsec %}
+                <div class="secondHalfImg">
+                  {{
+                    block.settings.mobsec
+                    | image_url: width: 420
+                    | image_tag: class: 'testimonial-images', loading: 'lazy'
+                  }}
+                  <div class="contSeen contDiv3">
+                    <p class="titles font-heebo-regular">{{ block.settings.sectext }}</p>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+            {% if block.settings.mobthird %}
+              <div class="imgFirstFull mob-img">
+                {{
+                  block.settings.mobthird
+                  | image_url: width: 420
+                  | image_tag: class: 'testimonial-images', loading: 'lazy'
+                }}
+                <div class="contSeen mob-connt contDiv1">
+                  <p class="titles font-heebo-regular">{{ block.settings.thirdtextmob }}</p>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+    window.addEventListener(
+      'DOMContentLoaded',
+      () => {
+    const swiperseen{{- section.id | remove: "--" | remove: "__" | remove: "-" }} = new Swiper(`#{{ section.id }} .sliderseen`, {
+        loop: true,
+        speed: 10000,
+        slidesPerView: 3,
+        allowTouchMove: false,
+        spaceBetween: 20,
+        autoplay: {
+         delay: 0,
+        },
+        breakpoints: {
+          0: {
+            slidesPerView: 1,
+          },
+          640: {
+            slidesPerView: 1.7,
+          },
+          1200: {
+            slidesPerView: 3,
+          },
+        },
+    });
+  },
+  { once: true }
+  );
+</script>
+
+{% schema %}
+{
+  "name": "Testimonial T2",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Auto Slide",
+      "info": "Automatic swiper required minimum 3 slides."
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "testimonial_main_heading",
+      "label": "Testimonial Main Heading",
+      "default": "Seen in Knya"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_sub_heading",
+      "label": "Testimonial Sub Heading",
+      "default": "Over a 1000+ 5-star reviews and counting"
+    },
+    {
+      "type": "text_alignment",
+      "id": "testimonial_alignment_t2",
+      "label": "Text alignment",
+      "default": "left"
+    },
+    {
+      "type": "color_background",
+      "id": "section_background",
+      "label": "Section Background Color",
+      "default": "linear-gradient(#ffffff, #ffffff)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Testimonial Slides",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "firstImG",
+          "label": "First Image Size Should be 456X500px"
+        },
+        {
+          "type": "text",
+          "id": "firsttext",
+          "label": "Text for First Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "secImG",
+          "label": "Second Image Size Should be 250X250px"
+        },
+        {
+          "type": "text",
+          "id": "secondtext",
+          "label": "Text for Second Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "thirdImG",
+          "label": "Third Image Size Should be 250X250px"
+        },
+        {
+          "type": "text",
+          "id": "thirdtext",
+          "label": "Text for Third Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobfirst",
+          "label": "Mobile First Image Size Should be 250X250px"
+        },
+        {
+          "type": "text",
+          "id": "firstmobtext",
+          "label": "Text For Mob First Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobsec",
+          "label": "Mobile Second Image Size Should be 250X250px"
+        },
+        {
+          "type": "text",
+          "id": "sectext",
+          "label": "Text For Mob Second Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobthird",
+          "label": "Mobile Third Image Size Should be 250X250px"
+        },
+        {
+          "type": "text",
+          "id": "thirdtextmob",
+          "label": "Text For Mob Third Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonial T2"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,451 @@
+{{ 'sub-category-t2.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .section-{{ section.id }}-margin {
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  {% for block in section.blocks %}
+    .sub-category-t2-container .containerblock-{{ block.id }} {
+      border-top-left-radius: {{ block.settings.border_top_left_radius }}%;
+      border-top-right-radius: {{ block.settings.border_top_right_radius }}%;
+      border-bottom-left-radius: {{ block.settings.border_bottom_left_radius }}%;
+      border-bottom-right-radius: {{ block.settings.border_bottom_right_radius }}%;
+      border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+      overflow: hidden;
+    }
+  {% endfor %}
+
+  #{{ section.id }}.sub-category-t2-container {
+    padding-top: {{ section.settings.section_padding_top }}px;
+    padding-bottom: {{ section.settings.section_padding_bottom }}px;
+    background: {{ section.settings.section_background }};
+  }
+
+  .sub-category-t2-container .collection-image-container {
+    width: {{section.settings.image_size}}%;
+    max-width: 100%;
+  }
+
+  #{{ section.id }}.sub-category-t2-container .sub-category-block .heading-subtext {
+    font-size: {{ section.settings.block_subtext_size_desktop }}px;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  #{{ section.id }}.sub-category-t2-container .sub-category-block .heading-text {
+    font-size: {{ section.settings.block_text_size_desktop }}px;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  #{{ section.id }}.sub-category-t2-container .sub-category-block .section-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  #{{ section.id }}.sub-category-t2-container .swiper-slide {
+    max-width: {{ section.settings.section_block_size_desktop }}%;
+    margin-right: {{ section.settings.space_between_slides_desktop }}px;
+  }
+
+
+  #{{ section.id }} .section-heading {
+    text-align: {{ section.settings.section_text_alignment }};
+    font-size: {{ section.settings.section_heading_size_desktop }}px;
+  }
+
+  @media screen and (max-width: 767px) {
+    .section-{{ section.id }}-margin {
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+
+    .sub-category-t2-container {
+      padding-right: 0px;
+    }
+
+    #{{ section.id }} .section-heading {
+      font-size: {{ section.settings.section_heading_size_mobile }}px;
+    }
+
+    #{{ section.id }}.sub-category-t2-container .swiper-slide {
+      max-width: unset;
+      margin-right: {{ section.settings.space_between_slides_mobile }}px;
+      width: calc({{ section.settings.section_block_size_mobile }}% - {{ section.settings.space_between_slides_mobile }}px);
+    }
+
+    #{{ section.id }}.sub-category-t2-container .sub-category-block .heading-subtext {
+      font-size: {{ section.settings.block_subtext_size_mobile }}px;
+    }
+
+    #{{ section.id }}.sub-category-t2-container .sub-category-block .heading-text {
+      font-size: {{ section.settings.block_text_size_mobile }}px;
+    }
+  }
+</style>
+
+{% if section.blocks.size > 0 %}
+  <section class="sub-category-t2-container page-width section-{{ section.id }}-margin" id="{{ section.id }}">
+    {% if section.settings.section_heading != blank %}
+      <div class="section-heading-container">
+        <h2 class="section-heading h2">{{ section.settings.section_heading }}</h2>
+      </div>
+    {% endif %}
+    <div class="swiper sub-cate">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide">
+            {% if block.settings.collection_slide_image != blank %}
+              <div class="sub-category-block" {{ block.shopify_attributes }}>
+                <a href="{{ block.settings['collection_slide_url'] }}" class="section-block no-underline">
+                  <div class="collection-image-container containerblock-{{ block.id }}">
+                    {{
+                      block.settings.collection_slide_image
+                      | image_url: width: 500
+                      | image_tag: class: 'collection-image', loading: 'lazy'
+                    }}
+                  </div>
+                  {% if block.settings.collection_slide_text != blank %}
+                    <div class="sub-category__slide-text">
+                      <h6 class="heading-text">{{ block.settings.collection_slide_text }}</h6>
+                    </div>
+                  {% endif %}
+                  {% if block.settings.collection_slide_subtext != blank %}
+                    <div class="sub-category__slide-text">
+                      <h6 class="heading-subtext">{{ block.settings.collection_slide_subtext }}</h6>
+                    </div>
+                  {% endif %}
+                </a>
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </section>
+{% endif %}
+
+{% if section.blocks.size > 1 %}
+  <script>
+    window.addEventListener(
+      'DOMContentLoaded',
+      () => {
+        (async () => {
+          const uspLogo = new Swiper(`#{{ section.id }} .sub-cate`, {
+            {% assign width = 100 %}
+            {% assign slidesPerViewMobile = width | divided_by: section.settings.section_block_size_mobile %}
+            slidesPerView: {{ slidesPerViewMobile }},
+            spaceBetween: {{ section.settings.space_between_slides_mobile }},
+            breakpoints: {
+              750: {
+                slidesPerView: "auto",
+                spaceBetween: {{ section.settings.space_between_slides_desktop }},
+              },
+            },
+          });
+        })();
+      },
+      { once: true }
+    );
+  </script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Sub Category T2",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom Mobile",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Inner Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Inner Spacing Top",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Inner Spacing Bottom",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Text Settings"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Heading",
+      "default": "Subcategories"
+    },
+    {
+      "type": "text_alignment",
+      "id": "section_text_alignment",
+      "label": "Section Heading Alignment",
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "section_heading_size_desktop",
+      "min": 9,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Section Heading Size - Desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "section_heading_size_mobile",
+      "min": 9,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Section Heading Size - Mobile",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "block_text_size_desktop",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Block Text Size - Desktop",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "block_text_size_mobile",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Block Text Size - Mobile",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "block_subtext_size_desktop",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Block Subtext Size - Desktop",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "block_subtext_size_mobile",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Block Subtext Size - Mobile",
+      "default": 11
+    },
+
+    {
+      "type": "header",
+      "content": "Image Settings"
+    },
+    {
+      "type": "range",
+      "id": "section_block_size_desktop",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Image Size - Desktop",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "section_block_size_mobile",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Image Size - Mobile",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "space_between_slides_desktop",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "label": "Space Between Slides Desktop",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "space_between_slides_mobile",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "label": "Space Between Slides Mobile",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color_background",
+      "id": "section_background",
+      "label": "Section Background Color",
+      "default": "linear-gradient(180deg, rgb(255 255 255 / 0%) 100%, rgb(255 255 255 / 0%) 100%)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slideshow",
+      "limit": 15,
+      "name": "Slides",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Text Settings"
+        },
+        {
+          "type": "text",
+          "id": "collection_slide_text",
+          "label": "Collection Slide Text"
+        },
+        {
+          "type": "text",
+          "id": "collection_slide_subtext",
+          "label": "Collection Slide Sub Text"
+        },
+        {
+          "type": "header",
+          "content": "Collection Slide Settings"
+        },
+        {
+          "type": "image_picker",
+          "id": "collection_slide_image",
+          "label": "Collection Slide Image",
+          "info": "Recommended image size is 300x300px"
+        },
+        {
+          "type": "url",
+          "id": "collection_slide_url",
+          "label": "Collection Slide URL"
+        },
+        {
+          "type": "header",
+          "content": "Border Settings"
+        },
+        {
+          "type": "range",
+          "id": "border_width",
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "unit": "px",
+          "label": "Border Width",
+          "default": 1
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "border_top_left_radius",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "px",
+          "label": "Border Top Left Radius",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "border_top_right_radius",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "px",
+          "label": "Border Top Right Radius",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "border_bottom_left_radius",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "px",
+          "label": "Border Bottom Left Radius",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "border_bottom_right_radius",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "px",
+          "label": "Border Bottom Right Radius",
+          "default": 20
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sub Category T2"
+    }
+  ]
+}
+{% endschema %}

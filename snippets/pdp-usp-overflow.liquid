@@ -1,0 +1,17 @@
+{{ 'pdp-usp-overflow.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+{% assign uspImage = product.metafields.custom.product_usp_image.value %}
+{% assign uspTitle = product.metafields.custom.product_usp_title.value %}
+{% if uspImage != empty %}
+  <div class="usp-content-container-scroll-container" {{ block.shopify_attributes }}>
+    <div class="usp-content-container">
+      {% for usp_image in uspImage %}
+        <div class="usp-image-content">
+          {% assign alt = usp_image.alt | default: 'USP of the Product' %}
+          {{ usp_image | image_url: width: 180 | image_tag: class: 'usp-image', loading: 'lazy', alt: alt }}
+          <p>{{ uspTitle[forloop.index0] }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,59 @@
+{{ 'product-reviews-judgeme-badge.css' | asset_url | stylesheet_tag: media: 'screen' }}
+
+<style>
+  .custom-product-info .custom-reviews-main {
+    border-radius: {{roundedCorners}}px;
+    border: 1.325px solid rgba(0, 0, 0, 0.2);
+  }
+</style>
+
+{% unless template.suffix == 'gift_card' and template.name == 'search' %}
+  {% if product.metafields.reviews.rating.value != blank %}
+    {% assign judgmeReview = product.metafields.judgeme.badge %}
+    {% assign averageRating = judgmeReview | split: "data-average-rating='" | last | split: "'" | first %}
+    {% assign numberOfReviews = judgmeReview | split: "data-number-of-reviews='" | last | split: "'" | first %}
+    <div class="custom-reviews-main" {{ block.shopify_attributes }}>
+      <div class="custom-reviews-main-svg review-first">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none">
+          <path d="M12.2192 0.835938L15.7004 7.81562L23.4852 8.94174L17.8522 14.3716L19.1816 22.0426L12.2192 18.419L5.25675 22.0426L6.58614 14.3716L0.953125 8.94174L8.73795 7.81562L12.2192 0.835938Z" fill="#FFDE30"></path>
+        </svg>
+        <div>
+          <p class="custom-average-number">{{ averageRating }}</p>
+        </div>
+      </div>
+      <div class="custom-reviews-main-svg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+          <path d="M10.5755 20.0426H9.52446L7.05226 17.4964H3.39577L2.61118 16.7562V13.1737L0.109375 10.6275V9.57647L2.61118 7.03025V3.43297L3.39577 2.69279H7.05226L9.52446 0.161377H10.5755L13.1217 2.69279H16.719L17.4592 3.41817V7.03025L19.9906 9.57647V10.6275L17.4148 13.1737V16.7562L16.6746 17.4964H13.1217L10.5755 20.0426ZM8.13293 13.7659H9.18398L14.7649 8.18493L13.7139 7.13387L8.66586 12.1967L6.62296 10.1538L5.5719 11.2049L8.13293 13.7659Z" fill="#00AFEF"/>
+        </svg>
+        <div>
+          <p class="custom-average-number">
+            {{ numberOfReviews }}
+            <span class="not-show">reviews</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endunless %}
+
+<script>
+  const starReviewDiv = document.querySelector('.custom-reviews-main');
+  starReviewDiv?.addEventListener('click', goToReviewSection);
+
+  function goToReviewSection() {
+    // Access the CSS variable values using getComputedStyle
+    const headerHeight = getComputedStyle(document.querySelector('.header')).getPropertyValue('--header-height');
+    const topDistance = getComputedStyle(document.querySelector('.header')).getPropertyValue('--topDistance');
+
+    // Convert the headerHeight and topDistance values to numbers (remove 'px' suffix)
+    const headerHeightNum = parseFloat(headerHeight);
+    const topDistanceNum = parseFloat(topDistance);
+
+    // Calculate the distance including the --header-height and --topDistance variables
+    let distance =
+      window.pageYOffset +
+      document.querySelector('#judgeme_product_reviews').getBoundingClientRect().top -
+      (headerHeightNum + topDistanceNum);
+    window.scrollTo({ top: distance, behavior: 'smooth' });
+  }
+</script>
