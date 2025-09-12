@@ -1,0 +1,69 @@
+<style>
+.shop-the-look-{{ section.id }} .shop-the-look-image {
+  position: relative;
+  display: block;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+</style>
+
+<section class="shop-the-look-{{ section.id }}">
+  <div class="shop-the-look-image"
+       {% if section.settings.main_image != blank %}
+         style="background-image: url('{{ section.settings.main_image | image_url: width:2000 }}')"
+       {% endif %}>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Shop The Look",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Main Look Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product Marker",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        },
+        {
+          "type": "range",
+          "id": "pos_x",
+          "label": "Marker Position X (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "pos_y",
+          "label": "Marker Position Y (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 50
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop The Look",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
