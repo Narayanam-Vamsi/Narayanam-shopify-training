@@ -667,12 +667,12 @@
           "type": "product",
           "settings": {
             "product": "arata-anti-dandruff-conditioner",
-            "pos_x": 23,
-            "pos_y": 29,
-            "pos_x_mobile": 37,
-            "pos_y_mobile": 11,
-            "pos_x_mobile_small": 27,
-            "pos_y_mobile_small": 21
+            "pos_x": 33,
+            "pos_y": 50,
+            "pos_x_mobile": 28,
+            "pos_y_mobile": 50,
+            "pos_x_mobile_small": 4,
+            "pos_y_mobile_small": 48
           }
         }
       },
