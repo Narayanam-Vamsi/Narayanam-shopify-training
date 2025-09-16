@@ -1,144 +1,180 @@
 <style>
-.shop-the-look-{{ section.id }} .shop-the-look-image {
-  position: relative;
-  width: 100%;
-  height: 450px; 
-  background-size: cover;
-  background-position: center;
-  z-index: 10;
-}
-
-.shop-the-look-{{ section.id }} .marker {
-  position: absolute;
-  background: black;
-  color: white;
-  border-radius: 50%;
-  padding:10px;
-  cursor: pointer;
-  z-index: 50;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-
-.shop-the-look-{{ section.id }} .product-popup {
-  display: none;
-  position: absolute;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  padding: 15px;
-  width: 340px;
-  z-index: 100;
-}
-
-.shop-the-look-{{ section.id }} .popup-content {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-
-.shop-the-look-{{ section.id }} .popup-image img {
-  border-radius: 6px;
-  width:100px;
-  height:auto;
-}
-
-
-.shop-the-look-{{ section.id }} .popup-details h4 {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.shop-the-look-{{ section.id }} .popup-details p {
-
-  font-size: 14px;
-  color: #444;
-}
-
-.shop-the-look-{{ section.id }} .popup-details .price {
-  font-size: 18px;
-  font-weight: 700;
-  margin: 6px 0;
-}
-
-.shop-the-look-{{ section.id }} .popup-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 8px;
-}
-
-.shop-the-look-{{ section.id }} .popup-actions .btn {
-  background: #ffcc00;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.shop-the-look-{{ section.id }} .popup-actions a {
-  font-size: 14px;
-  color: #0066cc;
-  text-decoration: underline;
-  font-weight: bold;
-}
-
-@media (max-width: 768px) {
   .shop-the-look-{{ section.id }} .shop-the-look-image {
-    height: 320px; 
-    background-position: center center;
-  }
-
-  .shop-the-look-{{ section.id }} .product-popup {
-    width: 280px;
-    padding: 12px;
-  }
-
-  .shop-the-look-{{ section.id }} .popup-image img {
-    width: 80px;
-  }
-
-  .shop-the-look-{{ section.id }} .popup-details h4 {
-    font-size: 14px;
-  }
-
-  .shop-the-look-{{ section.id }} .popup-details .price {
-    font-size: 16px;
+    position: relative;
+    width: 100%;
+    height: 450px;
+    background-size: cover;
+    background-position: center;
+    z-index: 10;
   }
 
   .shop-the-look-{{ section.id }} .marker {
-    padding: 8px;
-    font-size: 14px;
+    position: absolute;
+    background: black;
+    color: white;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 50;
+    top: var(--pos-y-desktop);
+    left: var(--pos-x-desktop);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    animation: glowPulseWhite 1.8s infinite alternate;
   }
-}
 
+  .shop-the-look-{{ section.id }} .marker:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 1);
+  }
+
+  @keyframes glowPulseWhite {
+    from { box-shadow: 0 0 8px rgba(255,255,255,0.6), 0 0 16px rgba(255,255,255,0.4); }
+    to   { box-shadow: 0 0 15px rgba(255,255,255,1), 0 0 35px rgba(255,255,255,0.9); }
+  }
+
+
+  .shop-the-look-{{ section.id }} .product-popup {
+    display: none;
+    position: absolute;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    padding: 15px;
+    width: 340px;
+    z-index: 100;
+  }
+
+  .shop-the-look-{{ section.id }} .popup-content {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+
+  .shop-the-look-{{ section.id }} .popup-image img {
+    border-radius: 6px;
+    width:100px;
+    height:auto;
+  }
+
+
+  .shop-the-look-{{ section.id }} .popup-details h4 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .shop-the-look-{{ section.id }} .popup-details p {
+
+    font-size: 14px;
+    color: #444;
+  }
+
+  .shop-the-look-{{ section.id }} .popup-details .price {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 6px 0;
+  }
+
+  .shop-the-look-{{ section.id }} .popup-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .shop-the-look-{{ section.id }} .popup-actions .btn {
+    background: #ffcc00;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .shop-the-look-{{ section.id }} .popup-actions a {
+    font-size: 14px;
+    color: #0066cc;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+
+    .shop-the-look-{{ section.id }} .shop-the-look-image {
+      height: 320px;
+      background-position: center;
+    }
+
+    .shop-the-look-{{ section.id }} .product-popup {
+
+      padding: 12px;
+    }
+
+    .shop-the-look-{{ section.id }} .popup-image img {
+      width: 60px;
+    }
+
+    .shop-the-look-{{ section.id }} .popup-details h4 {
+      font-size: 14px;
+    }
+
+    .shop-the-look-{{ section.id }} .popup-details .price {
+      font-size: 16px;
+    }
+
+    .shop-the-look-{{ section.id }} .marker {
+      padding: 8px;
+      font-size: 14px;
+     top: var(--pos-y-mobile);
+      left: var(--pos-x-mobile);
+    }
+  }
+
+  @media (max-width:400px) {
+
+      .shop-the-look-{{ section.id }} .marker {
+      padding: 8px;
+      font-size: 14px;
+     top: var(--pos-y-mobile_s);
+      left: var(--pos-x-mobile_s);
+    }
+
+  }
 </style>
 
 <section class="shop-the-look-{{ section.id }}">
-  <div class="shop-the-look-image"
-       {% if section.settings.main_image != blank %}
-         style="background-image: url('{{ section.settings.main_image | image_url: width:2000 }}')"
-       {% endif %}>
-
+  <div
+    class="shop-the-look-image"
+    {% if section.settings.main_image != blank %}
+      style="background-image: url('{{ section.settings.main_image | image_url: width:2000 }}')"
+    {% endif %}
+  >
     {% for block in section.blocks %}
       {% assign product = all_products[block.settings.product] %}
       {% if product %}
-  
-        <div class="marker" 
-             style="top:{{ block.settings.pos_y }}%; left:{{ block.settings.pos_x }}%;" 
-             data-popup-id="popup-{{ section.id }}-{{ product.handle }}">
+        <div
+          class="marker"
+          style="
+            --pos-x-desktop: {{ block.settings.pos_x }}%;
+            --pos-y-desktop: {{ block.settings.pos_y }}%;
+            --pos-x-mobile: {{ block.settings.pos_x_mobile }}%;
+            --pos-y-mobile: {{ block.settings.pos_y_mobile }}%;
+            --pos-x-mobile_s: {{ block.settings.pos_x_mobile_small}}%;
+            --pos-y-mobile_s: {{ block.settings.pos_y_mobile_small }}%;
+          "
+          data-popup-id="popup-{{ section.id }}-{{ product.handle }}"
+        >
           +
         </div>
 
         <div class="product-popup" id="popup-{{ section.id }}-{{ product.handle }}">
           <div class="popup-content">
             <div class="popup-image">
-              {{ product.featured_image | image_url: width:150 | image_tag }}
+              {{ product.featured_image | image_url: width: 150 | image_tag }}
             </div>
             <div class="popup-details">
               <h4>{{ product.title }}</h4>
-              <p>{{ product.description | strip_html | truncate: 30 }}</p>
+              <p>{{ product.description | strip_html | truncate: 10 }}</p>
               <div class="price">{{ product.price | money }}</div>
 
               <div class="popup-actions">
@@ -154,38 +190,36 @@
         </div>
       {% endif %}
     {% endfor %}
-
   </div>
 </section>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll(".shop-the-look-{{ section.id }}").forEach(section => {
-    const markers = section.querySelectorAll(".marker");
-    const popups = section.querySelectorAll(".product-popup");
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.shop-the-look-{{ section.id }}').forEach((section) => {
+      const markers = section.querySelectorAll('.marker');
+      const popups = section.querySelectorAll('.product-popup');
 
-    markers.forEach(marker => {
-      marker.addEventListener("click", function () {
-        const popupId = this.getAttribute("data-popup-id");
-        const popup = section.querySelector("#" + popupId);
+      markers.forEach((marker) => {
+        marker.addEventListener('click', function () {
+          const popupId = this.getAttribute('data-popup-id');
+          const popup = section.querySelector('#' + popupId);
 
-        popups.forEach(p => p.style.display = "none");
+          popups.forEach((p) => (p.style.display = 'none'));
 
-        if (popup) {
-          popup.style.display = "block";
+          if (popup) {
+            popup.style.display = 'block';
+          }
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.product-popup') && !e.target.classList.contains('marker')) {
+          popups.forEach((p) => (p.style.display = 'none'));
         }
       });
     });
-
-    document.addEventListener("click", function (e) {
-      if (!e.target.closest(".product-popup") && !e.target.classList.contains("marker")) {
-        popups.forEach(p => p.style.display = "none");
-      }
-    });
   });
-});
 </script>
-
 
 {% schema %}
 {
@@ -224,6 +258,42 @@ document.addEventListener("DOMContentLoaded", function () {
           "max": 100,
           "step": 1,
           "default": 50
+        },
+        {
+          "type": "range",
+          "id": "pos_x_mobile",
+          "label": "Marker Position X (Mobile, %)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "pos_y_mobile",
+          "label": "Marker Position Y (Mobile, %)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "pos_x_mobile_small",
+          "label": "Marker Position X (Mobile, %)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "pos_y_mobile_small",
+          "label": "Marker Position Y (Mobile, %)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 50
         }
       ]
     }
@@ -236,5 +306,3 @@ document.addEventListener("DOMContentLoaded", function () {
   ]
 }
 {% endschema %}
-
-
