@@ -658,7 +658,7 @@
             "pos_x": 42,
             "pos_y": 42,
             "pos_x_mobile": 38,
-            "pos_y_mobile": 38,
+            "pos_y_mobile": 45,
             "pos_x_mobile_small": 27,
             "pos_y_mobile_small": 43
           }
@@ -667,7 +667,7 @@
           "type": "product",
           "settings": {
             "product": "arata-anti-dandruff-conditioner",
-            "pos_x": 33,
+            "pos_x": 32,
             "pos_y": 50,
             "pos_x_mobile": 28,
             "pos_y_mobile": 50,
