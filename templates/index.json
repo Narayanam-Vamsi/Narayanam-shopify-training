@@ -655,12 +655,12 @@
           "type": "product",
           "settings": {
             "product": "arata-anti-dandruff-shampoo",
-            "pos_x": 29,
-            "pos_y": 18,
+            "pos_x": 42,
+            "pos_y": 42,
             "pos_x_mobile": 21,
-            "pos_y_mobile": 21,
-            "pos_x_mobile_small": 27,
-            "pos_y_mobile_small": 28
+            "pos_y_mobile": 38,
+            "pos_x_mobile_small": 45,
+            "pos_y_mobile_small": 43
           }
         },
         "product_6Ky9Dn": {
