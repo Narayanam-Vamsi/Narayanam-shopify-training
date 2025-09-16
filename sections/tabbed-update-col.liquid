@@ -1,223 +1,227 @@
 <style>
-  .tabbed-collection-{{ section.id }} {
-    position: relative;
-     margin-top: {{ section.settings.margin_top }}px;
-    margin-bottom: {{ section.settings.margin_bottom }}px;
-  }
-
-  .tabbed-banner {
-    width: 100%;
-  }
-  
-  .banner-bg {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-  
-  }
-
-.banner-bg::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: black; 
-  opacity: 0.35; 
-  z-index: 0;
-}
-
-  .banner-overlay {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    height: 100%;
-    padding: 20px ;
-    z-index:1;
-  }
-  .banner-left {
-    color: #fff;
-    width: 45%;
-    margin-top:5%;
-    z-index:2;
-  }
-  .banner-left .banner-subtitle {
-    font-size: 30px;
-    font-weight: 700;
-    font-family: 'Montserrat', sans-serif;
-    color:#FFFFFF;
-    opacity:70%;
-  }
-
-  .banner-left .banner-title {
-    font-size: 50px;
-    font-weight: 700;
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-     color:white;
-  }
-
-
-  .banner-right {
-    border-radius: 15px;
-    width: 45%;
-    margin-top:10.2%;
-  }
- 
-  .product-card {
-    background: #fff;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    text-align:left;
-    width: 100%;
-   
-  }
-
-  a{
-    text-decoration:none;
-  }
-  
-  .product-card img {
-    border-radius: 10px;
-    margin-bottom: 10px;
-    height: 200px;
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .prod-title{
-    font-size: 16px;
-    font-weight: 600;
-    font-family: 'Montserrat', sans-serif;
-  
-  }
-
-  .price {
-    font-weight: 400;
-    font-size:14px;
-    margin: 5px 0;
-
-  }
-
-  .add-to-bag {
-    border: 1px solid #d5a46d;
-    color: #d5a46d;
-    background: transparent;
-    padding: 8px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-  }
-  .add-to-bag:hover {
-    background: #d5a46d;
-    color: #fff;
-  }
-
-  .toggle-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-    background-color: #C28D5D;
-    border: 1px solid  #FFFFFF;
-    border-radius: 16px;
-    padding-top:15px;
-     padding-bottom:15px;
-      padding-right:20px;
-       padding-left:20px;
-       position: absolute;
-       top: 30px;
-       right: 60px;
-       z-index: 1;
-  
-  }
-  .toggle-btn {
-
-    border: 1px solid  #C28D5D;
-    background-color: #C28D5D;
-    opacity:1 !important;
-    font-weight: 500;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 24px;
-    padding-right:10px;
-     padding-left:10px;
-    border-radius: 16px;
-    color: white;
-  }
-  .toggle-btn.active {
-    background-color: white;
-    color: #E16A28;
-      opacity:1 !important;
-  }
-
-  .swiper-slide {
-    width: auto;
-    flex-shrink: 0;
-  }
-
-
-   @media screen and (max-width: 1000px) {
- .banner-right {
-    margin-top:12%;
-  }
-}
-
-
-   @media screen and (max-width: 800px) {
- .banner-right {
-    margin-top:14%;
-  }
-}
-
-  @media screen and (max-width: 768px) {
-    .banner-overlay {
-      flex-direction: column;
-      align-items: center;
-      padding: 15px;
-      gap: 15px;
+    .tabbed-collection-{{ section.id }} {
+      position: relative;
+       margin-top: {{ section.settings.margin_top }}px;
+      margin-bottom: {{ section.settings.margin_bottom }}px;
     }
 
-    .banner-left {
+    .tabbed-banner {
       width: 100%;
-      text-align: center;
-      margin-bottom:60px;
-      margin-top:5px;
     }
 
-    .toggle-buttons {
-     
-      position: absolute;
-      margin: 10px 0;
-      top:14%;
-      right:35%;
+    .banner-bg {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+
+    }
+
+  .banner-bg::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.35;
+    z-index: 0;
+  }
+
+    .banner-overlay {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      height: 100%;
+      padding: 20px ;
+      z-index:1;
+    }
+    .banner-left {
+      color: #fff;
+      width: 45%;
+      margin-top:5%;
       z-index:2;
     }
-
-    .toggle-btn {
-      font-size: 16px;
-   
-    }
-
-    .banner-right {
-      width: 100%;
-      margin-top: 10px;
+    .banner-left .banner-subtitle {
+      font-size: 30px;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      color:#FFFFFF;
+      opacity:70%;
     }
 
     .banner-left .banner-title {
-      font-size: 28px;
+      font-size: 50px;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+       color:white;
     }
 
-    .banner-left .banner-subtitle {
-      font-size: 18px;
+
+    .banner-right {
+      border-radius: 15px;
+      width: 45%;
+      margin-top:10.2%;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      text-align:left;
+      width: 100%;
+
+    }
+
+    a{
+      text-decoration:none;
     }
 
     .product-card img {
-      height: 180px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      height: 200px;
+      width: 100%;
+      object-fit: cover;
     }
 
+    .prod-title{
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Montserrat', sans-serif;
+
+    }
+
+    .price {
+      font-weight: 600;
+      font-size:16px;
+      margin: 5px 0;
+      font-family: 'Montserrat', sans-serif;
+
+    }
+
+    .add-to-bag {
+      border: 1px solid #E16A28;
+      color: #E16A28;
+      background: transparent;
+      padding: 6px 14px;
+      font-size:14px;
+      font-weight:600;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .add-to-bag:hover {
+      background: #E16A28;
+      color: #fff;
+    }
+
+    .toggle-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      background-color: #C28D5D;
+      border: 1px solid  #FFFFFF;
+      border-radius: 16px;
+      padding-top:15px;
+       padding-bottom:15px;
+        padding-right:20px;
+         padding-left:20px;
+         position: absolute;
+         top: 30px;
+         right: 60px;
+         z-index: 1;
+
+    }
+    .toggle-btn {
+
+      border: 1px solid  #C28D5D;
+      background-color: #C28D5D;
+      opacity:1 !important;
+      font-weight: 500;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 24px;
+      padding-right:10px;
+       padding-left:10px;
+      border-radius: 16px;
+      color: white;
+    }
+    .toggle-btn.active {
+      background-color: white;
+      color: #E16A28;
+        opacity:1 !important;
+    }
+
+    .swiper-slide {
+      width: auto;
+      flex-shrink: 0;
+    }
+
+
+     @media screen and (max-width: 1000px) {
+   .banner-right {
+      margin-top:12%;
+    }
   }
+
+
+     @media screen and (max-width: 800px) {
+   .banner-right {
+      margin-top:14%;
+    }
+  }
+
+    @media screen and (max-width: 768px) {
+      .banner-overlay {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        gap: 15px;
+      }
+
+      .banner-left {
+        width: 100%;
+        text-align: center;
+        margin-bottom:60px;
+        margin-top:5px;
+      }
+
+      .toggle-buttons {
+
+        position: absolute;
+        margin: 10px 0;
+        top:14%;
+        right:35%;
+        z-index:2;
+      }
+
+      .toggle-btn {
+        font-size: 16px;
+
+      }
+
+      .banner-right {
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .banner-left .banner-title {
+        font-size: 28px;
+      }
+
+      .banner-left .banner-subtitle {
+        font-size: 18px;
+      }
+
+      .product-card img {
+        height: 180px;
+      }
+
+    }
 </style>
 
 <section class="tabbed-collection tabbed-collection-{{ section.id }}">
@@ -254,13 +258,15 @@
                   {% for product in collections[collection].products %}
                     <div class="swiper-slide product-card">
                       <a href="{{ product.url}}">
-                      {% if product.featured_image %}
-                        {{ product.featured_image | image_url: width: 300 | image_tag: alt: product.title }}
-                      {% endif %}
-                      <h3 class="prod-title">{{ product.title | strip_html | split: ' ' | slice: 0, 2 | join: ' ' }}</h3>
-                      <p class="price">{{ product.price | money }}</p>
-                      <button class="add-to-bag">ADD TO BAG</button>
-                    </a>  
+                        {% if product.featured_image %}
+                          {{ product.featured_image | image_url: width: 300 | image_tag: alt: product.title }}
+                        {% endif %}
+                        <h3 class="prod-title">
+                          {{ product.title | strip_html | split: ' ' | slice: 0, 1 | join: ' ' }}
+                        </h3>
+                        <p class="price">{{ product.price | money_without_trailing_zeros }}</p>
+                        <button class="add-to-bag">ADD TO BAG</button>
+                      </a>
                     </div>
                   {% endfor %}
                 </div>
@@ -292,15 +298,30 @@
       });
     });
 
-    new Swiper('.swiper', {
+   new Swiper('.swiper', {
+  slidesPerView: 3,
+  spaceBetween: 20,
+  pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+  },
+  grabCursor: true,
+  breakpoints: {
+    320: {                
+      slidesPerView: 1.5,
+      spaceBetween: 10,
+    },
+    768: {               
       slidesPerView: 2.5,
       spaceBetween: 10,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      grabCursor: true,
-    });
+    },
+    1024: {               
+      slidesPerView: 2.5,
+      spaceBetween: 20,
+    }
+  }
+});
+
   });
 </script>
 
