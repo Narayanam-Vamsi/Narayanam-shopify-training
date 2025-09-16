@@ -83,6 +83,36 @@
   text-decoration: underline;
   font-weight: bold;
 }
+
+@media (max-width: 768px) {
+  .shop-the-look-{{ section.id }} .shop-the-look-image {
+    height: 320px; 
+    background-position: center center;
+  }
+
+  .shop-the-look-{{ section.id }} .product-popup {
+    width: 280px;
+    padding: 12px;
+  }
+
+  .shop-the-look-{{ section.id }} .popup-image img {
+    width: 80px;
+  }
+
+  .shop-the-look-{{ section.id }} .popup-details h4 {
+    font-size: 14px;
+  }
+
+  .shop-the-look-{{ section.id }} .popup-details .price {
+    font-size: 16px;
+  }
+
+  .shop-the-look-{{ section.id }} .marker {
+    padding: 8px;
+    font-size: 14px;
+  }
+}
+
 </style>
 
 <section class="shop-the-look-{{ section.id }}">
