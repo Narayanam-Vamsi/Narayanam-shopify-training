@@ -648,6 +648,35 @@
         "main_title": "Shop Our Collection"
       }
     },
+    "shop_look_update_N9djxN": {
+      "type": "ShopLook-update",
+      "blocks": {
+        "product_PnreYM": {
+          "type": "product",
+          "settings": {
+            "product": "arata-anti-dandruff-shampoo",
+            "pos_x": 38,
+            "pos_y": 38
+          }
+        },
+        "product_6Ky9Dn": {
+          "type": "product",
+          "settings": {
+            "product": "arata-anti-dandruff-conditioner",
+            "pos_x": 23,
+            "pos_y": 52
+          }
+        }
+      },
+      "block_order": [
+        "product_PnreYM",
+        "product_6Ky9Dn"
+      ],
+      "name": "Shop The Look",
+      "settings": {
+        "main_image": "shopify://shop_images/Group_238517_aad9fefe-c503-4f3c-9123-7bbeeec16255.png"
+      }
+    },
     "best_seller_updated_UCQipQ": {
       "type": "BestSellerUpdated",
       "disabled": true,
@@ -1087,24 +1116,6 @@
         "youtube_link": "https://www.youtube.com/",
         "youtube_svg": "<svg width=\"20\" height=\"15\" viewbox=\"0 0 20 15\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M8 10.689L13.19 7.68897L8 4.68897V10.689ZM19.56 2.85897C19.69 3.32897 19.78 3.95896 19.84 4.75897C19.91 5.55897 19.94 6.24897 19.94 6.84897L20 7.68897C20 9.87897 19.84 11.489 19.56 12.519C19.31 13.419 18.73 13.999 17.83 14.249C17.36 14.379 16.5 14.469 15.18 14.529C13.88 14.599 12.69 14.629 11.59 14.629L10 14.689C5.81 14.689 3.2 14.529 2.17 14.249C1.27 13.999 0.69 13.419 0.44 12.519C0.31 12.049 0.22 11.419 0.16 10.619C0.0900001 9.81897 0.0599999 9.12897 0.0599999 8.52897L0 7.68897C0 5.49897 0.16 3.88897 0.44 2.85897C0.69 1.95897 1.27 1.37896 2.17 1.12896C2.64 0.998965 3.5 0.908965 4.82 0.848965C6.12 0.778965 7.31 0.748965 8.41 0.748965L10 0.688965C14.19 0.688965 16.8 0.848965 17.83 1.12896C18.73 1.37896 19.31 1.95897 19.56 2.85897Z\" fill=\"#DB763F\"></path>\n</svg>"
       }
-    },
-    "shop_look_update_N9djxN": {
-      "type": "ShopLook-update",
-      "blocks": {
-        "product_MTcaqn": {
-          "type": "product",
-          "settings": {
-            "product": "acne-calming-toner-centella",
-            "pos_x": 50,
-            "pos_y": 50
-          }
-        }
-      },
-      "block_order": [
-        "product_MTcaqn"
-      ],
-      "name": "Shop The Look",
-      "settings": {}
     }
   },
   "order": [
@@ -1121,6 +1132,7 @@
     "featured_collection_t4_UBtzDg",
     "arc_duplicate_DnfUCx",
     "normal_slider_WicRUV",
+    "shop_look_update_N9djxN",
     "best_seller_updated_UCQipQ",
     "best_seller_updated_QLtAVC",
     "story_section_updated_AiNCac",
@@ -1131,7 +1143,6 @@
     "bbd238b4-605a-4761-9c7b-1ed49defc2b1",
     "our_story_t4_je7eAn",
     "our_story_t1_6iNmRD",
-    "footer_update_fxKgVM",
-    "shop_look_update_N9djxN"
+    "footer_update_fxKgVM"
   ]
 }
