@@ -655,8 +655,12 @@
           "type": "product",
           "settings": {
             "product": "arata-anti-dandruff-shampoo",
-            "pos_x": 38,
-            "pos_y": 38
+            "pos_x": 29,
+            "pos_y": 18,
+            "pos_x_mobile": 21,
+            "pos_y_mobile": 21,
+            "pos_x_mobile_small": 27,
+            "pos_y_mobile_small": 28
           }
         },
         "product_6Ky9Dn": {
@@ -664,7 +668,11 @@
           "settings": {
             "product": "arata-anti-dandruff-conditioner",
             "pos_x": 23,
-            "pos_y": 52
+            "pos_y": 29,
+            "pos_x_mobile": 37,
+            "pos_y_mobile": 11,
+            "pos_x_mobile_small": 27,
+            "pos_y_mobile_small": 21
           }
         }
       },
