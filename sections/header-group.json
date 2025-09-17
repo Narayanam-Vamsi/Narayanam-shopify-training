@@ -45,27 +45,27 @@
           "type": "Anouncementt",
           "settings": {
             "Anouncement_Text": "Buy 1 Get 1 Free—This Weekend Only!",
-            "text_color": "#ffd100",
-            "font_size": 20,
-            "font_size_mobile": 12
+            "text_color": "#ffffff",
+            "font_size": 18,
+            "font_size_mobile": 14
           }
         },
         "anouncementt_3itRrm": {
           "type": "Anouncementt",
           "settings": {
             "Anouncement_Text": "Subscribe to our newsletter for updates.",
-            "text_color": "#a2b7ff",
-            "font_size": 22,
-            "font_size_mobile": 12
+            "text_color": "#ffffff",
+            "font_size": 18,
+            "font_size_mobile": 14
           }
         },
         "anouncementt_D3hiQe": {
           "type": "Anouncementt",
           "settings": {
             "Anouncement_Text": "Checkout latest products",
-            "text_color": "#a8ffa2",
-            "font_size": 24,
-            "font_size_mobile": 20
+            "text_color": "#ffffff",
+            "font_size": 18,
+            "font_size_mobile": 14
           }
         }
       },
