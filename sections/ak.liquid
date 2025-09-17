@@ -64,37 +64,33 @@
 <style>
 .announcement-bar {
   width: 100%;
-  padding: 8px 15px;
-  font-size: 14px;
+  height:42px;
+ 
 }
 
 .announcement-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content:center;
+  gap: 15px;
   font-weight: 600;
 }
 
 .announcement-item .icon svg {
-  width: 18px;
-  height: 18px;
-  fill: currentColor; /* inherit text color */
+  fill: currentColor; 
+  height:20px;
+  width:20px;
 }
 
 .announcement-item .text {
-  line-height: 1.2;
-  white-space: nowrap;
+
 }
 
 .announcement-swiper {
   overflow: hidden;
 }
 
-.swiper-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 </style>
 
 
@@ -102,13 +98,13 @@
   document.addEventListener("DOMContentLoaded", function () {
     new Swiper(".announcement-swiper", {
       slidesPerView: 4,
-      spaceBetween: 30,
+      spaceBetween: 10,
       loop: true,
       autoplay: {
-        delay: 2000,
+        delay: 1000,
         disableOnInteraction: false,
       },
-      speed: 800,
+      speed: 1000,
     });
   });
 </script>
