@@ -87,12 +87,44 @@ display:none;
     top:95%
   }
  .product-reviews-{{ section.id }} .swiper-button-prev {
-  left: 43%;  
+  left: 44%;  
 }
 .product-reviews-{{ section.id }} .swiper-button-next {
-  right: 43%; 
+  right: 44%; 
+}
 }
 
+@media screen and (max-width:500px){
+
+  .product-reviews-{{ section.id }} .swiper-button-prev,
+  .product-reviews-{{ section.id }} .swiper-button-next {
+    display: block;
+    position:absolute;
+    top:95%
+  }
+ .product-reviews-{{ section.id }} .swiper-button-prev {
+  left: 42%;  
+}
+.product-reviews-{{ section.id }} .swiper-button-next {
+  right: 42%; 
+}
+}
+
+@media screen and (max-width:400px){
+
+  .product-reviews-{{ section.id }} .swiper-button-prev,
+  .product-reviews-{{ section.id }} .swiper-button-next {
+    display: block;
+    position:absolute;
+    top:95%
+  }
+ .product-reviews-{{ section.id }} .swiper-button-prev {
+  left: 40%;  
+}
+.product-reviews-{{ section.id }} .swiper-button-next {
+  right: 40%; 
+}
+}
 </style>
 
 
