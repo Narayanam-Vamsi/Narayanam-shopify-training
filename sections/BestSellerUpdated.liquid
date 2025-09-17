@@ -131,6 +131,7 @@ width:70%;
   height: 4px;
   background: #eee;
   border-radius: 2px;
+
 }
 
 .bestsellers-section .swiper-pagination-progressbar-fill {
@@ -141,6 +142,11 @@ width:70%;
 .bestsellers-{{ section.id }} .nav-buttons .swiper-button-next{
 right:35%;
 }
+
+.bestsellers-{{ section.id }} .swiper-pagination-bullet {
+  display: none !important;
+}
+
 @media screen and (max-width:1150px){
 
 
