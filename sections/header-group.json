@@ -36,9 +36,9 @@
           "type": "Anouncementt",
           "settings": {
             "Anouncement_Text": "Use Code: CENTFREE for free delivery",
-            "text_color": "#ff7575",
-            "font_size": 17,
-            "font_size_mobile": 12
+            "text_color": "#ffffff",
+            "font_size": 18,
+            "font_size_mobile": 14
           }
         },
         "anouncementt_bCt6dV": {
