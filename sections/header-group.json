@@ -1,1 +1,162 @@
-{"name":"t:sections.header.name","type":"header","sections":{"006895a4-1654-4fe8-94e4-d9c9f1ed3c3f":{"type":"flash-sale-timer","settings":{}},"flash_sale_timer_updated_z9NJN6":{"type":"flash-sale-timer-updated","name":"New Flash Timer","settings":{"Flash_Headline":"\"Score Big: It's Time to Shop 'till You Drop\"","Count_Timer":"2025-08-22T15:00:00","Flash_Background":"#db763f"}},"announcement-bar":{"type":"announcement-bar","settings":{}},"anouncement_bar_update_nyqPAH":{"type":"anouncement-bar-update","blocks":{"anouncementt_8L9MpY":{"type":"Anouncementt","settings":{"Anouncement_Text":"Use Code: CENTFREE for free delivery","text_color":"#ff7575","font_size":17,"font_size_mobile":12}},"anouncementt_bCt6dV":{"type":"Anouncementt","settings":{"Anouncement_Text":"Buy 1 Get 1 Free—This Weekend Only!","text_color":"#ffd100","font_size":20,"font_size_mobile":12}},"anouncementt_3itRrm":{"type":"Anouncementt","settings":{"Anouncement_Text":"Subscribe to our newsletter for updates.","text_color":"#a2b7ff","font_size":22,"font_size_mobile":12}},"anouncementt_D3hiQe":{"type":"Anouncementt","settings":{"Anouncement_Text":"Checkout latest products","text_color":"#a8ffa2","font_size":24,"font_size_mobile":20}}},"block_order":["anouncementt_8L9MpY","anouncementt_bCt6dV","anouncementt_3itRrm","anouncementt_D3hiQe"],"name":"New Anouncement Bar","settings":{"loop":false,"Sliders":"horizontal","Slider_Time":3}},"header":{"type":"header","blocks":{"mega_menu_JtBrRd":{"type":"mega-menu","settings":{"menu_title":"Home","menu_link":"shopify:\/\/pages\/offers","menu-block":""}},"dropdown_b9iEXL":{"type":"dropdown","settings":{"menu_title":"About","menu_link":"shopify:\/\/pages\/about-us","menu-block":""}},"mega_menu_images_7kMDJ6":{"type":"mega-menu-images","settings":{"menu_title":"Collections","menu_link":"shopify:\/\/collections","menu-block":"","image_1_link":"#","image_2_link":"#","image_3_link":"#"}}},"block_order":["mega_menu_JtBrRd","dropdown_b9iEXL","mega_menu_images_7kMDJ6"],"settings":{"desktop_header_layout":"nav-center","menu":"narayanam_vamsi-deskheader","sticky_header_type":"reduce-logo-size","show_line_separator":true,"megamenu_width":"fullwidth","color_scheme":"background-1","menu_color_scheme":"background-1","enable_country_selector":false,"enable_language_selector":false,"mobile_logo_position":"center","padding_top":20,"padding_bottom":24}},"header_update_B4LpFR":{"type":"headerUpdate","disabled":true,"name":"header_navigation","settings":{"menu":"narayanam_vamsi-deskheader"}},"datepicker_KwMrUe":{"type":"datepicker","disabled":true,"name":"Booking Section","settings":{"default_date":""}}},"order":["006895a4-1654-4fe8-94e4-d9c9f1ed3c3f","flash_sale_timer_updated_z9NJN6","announcement-bar","anouncement_bar_update_nyqPAH","header","header_update_B4LpFR","datepicker_KwMrUe"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "006895a4-1654-4fe8-94e4-d9c9f1ed3c3f": {
+      "type": "flash-sale-timer",
+      "disabled": true,
+      "settings": {}
+    },
+    "flash_sale_timer_updated_z9NJN6": {
+      "type": "flash-sale-timer-updated",
+      "name": "New Flash Timer",
+      "settings": {
+        "Flash_Headline": "\"Score Big: It's Time to Shop 'till You Drop\"",
+        "Count_Timer": "2025-09-25T15:00:00",
+        "Flash_Background": "#db763f"
+      }
+    },
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {}
+    },
+    "anouncement_bar_update_nyqPAH": {
+      "type": "anouncement-bar-update",
+      "blocks": {
+        "anouncementt_8L9MpY": {
+          "type": "Anouncementt",
+          "settings": {
+            "Anouncement_Text": "Use Code: CENTFREE for free delivery",
+            "text_color": "#ff7575",
+            "font_size": 17,
+            "font_size_mobile": 12
+          }
+        },
+        "anouncementt_bCt6dV": {
+          "type": "Anouncementt",
+          "settings": {
+            "Anouncement_Text": "Buy 1 Get 1 Free—This Weekend Only!",
+            "text_color": "#ffd100",
+            "font_size": 20,
+            "font_size_mobile": 12
+          }
+        },
+        "anouncementt_3itRrm": {
+          "type": "Anouncementt",
+          "settings": {
+            "Anouncement_Text": "Subscribe to our newsletter for updates.",
+            "text_color": "#a2b7ff",
+            "font_size": 22,
+            "font_size_mobile": 12
+          }
+        },
+        "anouncementt_D3hiQe": {
+          "type": "Anouncementt",
+          "settings": {
+            "Anouncement_Text": "Checkout latest products",
+            "text_color": "#a8ffa2",
+            "font_size": 24,
+            "font_size_mobile": 20
+          }
+        }
+      },
+      "block_order": [
+        "anouncementt_8L9MpY",
+        "anouncementt_bCt6dV",
+        "anouncementt_3itRrm",
+        "anouncementt_D3hiQe"
+      ],
+      "name": "New Anouncement Bar",
+      "settings": {
+        "loop": false,
+        "Sliders": "horizontal",
+        "Slider_Time": 3
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "mega_menu_JtBrRd": {
+          "type": "mega-menu",
+          "settings": {
+            "menu_title": "Home",
+            "menu_link": "shopify://pages/offers",
+            "menu-block": ""
+          }
+        },
+        "dropdown_b9iEXL": {
+          "type": "dropdown",
+          "settings": {
+            "menu_title": "About",
+            "menu_link": "shopify://pages/about-us",
+            "menu-block": ""
+          }
+        },
+        "mega_menu_images_7kMDJ6": {
+          "type": "mega-menu-images",
+          "settings": {
+            "menu_title": "Collections",
+            "menu_link": "shopify://collections",
+            "menu-block": "",
+            "image_1_link": "#",
+            "image_2_link": "#",
+            "image_3_link": "#"
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_JtBrRd",
+        "dropdown_b9iEXL",
+        "mega_menu_images_7kMDJ6"
+      ],
+      "settings": {
+        "desktop_header_layout": "nav-center",
+        "menu": "",
+        "sticky_header_type": "reduce-logo-size",
+        "show_line_separator": true,
+        "megamenu_width": "fullwidth",
+        "color_scheme": "background-1",
+        "menu_color_scheme": "background-1",
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "mobile_logo_position": "center",
+        "padding_top": 20,
+        "padding_bottom": 24
+      }
+    },
+    "header_update_B4LpFR": {
+      "type": "headerUpdate",
+      "disabled": true,
+      "name": "header_navigation",
+      "settings": {
+        "menu": ""
+      }
+    },
+    "datepicker_KwMrUe": {
+      "type": "datepicker",
+      "disabled": true,
+      "name": "Booking Section",
+      "settings": {
+        "default_date": ""
+      }
+    }
+  },
+  "order": [
+    "006895a4-1654-4fe8-94e4-d9c9f1ed3c3f",
+    "flash_sale_timer_updated_z9NJN6",
+    "announcement-bar",
+    "anouncement_bar_update_nyqPAH",
+    "header",
+    "header_update_B4LpFR",
+    "datepicker_KwMrUe"
+  ]
+}
