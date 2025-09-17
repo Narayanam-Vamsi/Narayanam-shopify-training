@@ -1,6 +1,4 @@
- {% comment %} {{ 'BestSellerUpdated.css' | asset_url | stylesheet_tag: media: 'screen' }} {% endcomment %}
-
-<style>
+ <style>
 
 .bestsellers-{{ section.id }} .bestsellers-container {
   display: flex;
@@ -8,6 +6,7 @@
   align-items: center;
   margin-right:50px;
   margin-left:50px;
+   margin-top:50px;
 }
 
 .bestsellers-{{ section.id }} .bestsellers-left {
@@ -21,6 +20,7 @@
 .bestsellers-{{ section.id }} .bestsellers-heading {
   font-size: 32px;
   font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
   margin: 0;
 }
 
@@ -28,6 +28,7 @@
   font-size: 24px;
   color: #555;
   font-weight:400;
+  font-family: 'Montserrat', sans-serif;
   margin: 0;
 }
 
@@ -72,27 +73,30 @@ width:70%;
   color: #888;
   text-transform: uppercase;
   margin-bottom: 4px;
+  font-weight:400;
 }
 
 .bestsellers-{{ section.id }} .prod-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   margin-bottom: 6px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .bestsellers-{{ section.id }} .price {
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 10px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .bestsellers-{{ section.id }} .add-to-bag {
   display: inline-block;
   padding: 8px 16px;
   border: 1px solid  #d66b40;
-  border-radius: 24px;
+  border-radius: 20px;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 16px;
   font-weight:600;
   transition: all 0.3s;
   color:black;
@@ -248,7 +252,7 @@ right:35%;
 }
 
 
-@media screen and (max-width:500px){
+@media screen and (max-width:560px){
 
 
 .bestsellers-{{ section.id }} .nav-buttons{
@@ -259,6 +263,50 @@ right:35%;
 .bestsellers-{{ section.id }} .swiper-pagination {
 
   width:64% !important;
+
+}
+
+}
+
+
+@media screen and (max-width:460px){
+
+
+.bestsellers-{{ section.id }} .nav-buttons{
+
+  width:40%;    
+}
+
+.bestsellers-{{ section.id }} .swiper-pagination {
+
+  width:60% !important;
+
+}
+
+}
+
+
+@media screen and (max-width:400px){
+
+.bestsellers-{{ section.id }} .nav-buttons svg {
+  width: 18px;
+  height: 18px;
+}
+.bestsellers-{{ section.id }} .add-to-bag {
+
+  font-size: 12px;
+
+}
+
+.bestsellers-{{ section.id }} .nav-buttons{
+
+  width:50%;  
+
+}
+
+.bestsellers-{{ section.id }} .swiper-pagination {
+
+  width:50% !important;
 
 }
 
@@ -299,10 +347,10 @@ right:35%;
                   {% if product.type != blank %}
                     <p class="prod-type">{{ product.type }}</p>
                   {% endif %}
-                  <h3 class="prod-title">{{ product.title }}</h3>
+                  <h3 class="prod-title">{{ product.title | strip_html | split: ' ' | slice: 0, 1 | join: ' ' }}</h3>
                   <p class="price">{{ product.price | money }}</p>
                   <button class="add-to-bag">
-                    ADD TO BAG <span class="bag-price">- {{ product.price | money }}</span>
+                    ADD TO BAG <span class="bag-price">- {{ product.price | money_without_trailing_zeros }}</span>
                   </button>
                 </div>
               </div>
@@ -326,7 +374,7 @@ right:35%;
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   new Swiper('.bestsellers-swiper-{{ section.id }}', {
-    slidesPerView: 1.5,
+    slidesPerView: 1.2,
     spaceBetween: 10,
     navigation: {
       nextEl: '.bestsellers-next-{{ section.id }}',
@@ -337,8 +385,9 @@ document.addEventListener('DOMContentLoaded', function () {
       type: 'progressbar'
     },
     breakpoints: {
-      768: { slidesPerView: 1.5, spaceBetween: 10 },
-      1024: { slidesPerView: 3, spaceBetween: 10 }
+      320: { slidesPerView: 1.2, spaceBetween: 10 },
+      768: { slidesPerView: 2.5, spaceBetween: 10 },
+      1024: { slidesPerView: 3, spaceBetween: 20 }
     }
   });
 });
