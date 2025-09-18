@@ -219,6 +219,7 @@
         "announcement_item_eiF9Am",
         "announcement_item_cpMWp7"
       ],
+      "disabled": true,
       "name": "New Bar",
       "settings": {
         "background_color": "#1f3330",
