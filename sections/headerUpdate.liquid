@@ -1,25 +1,23 @@
 <div class="header-navigation">
-  
+  <!-- Logo -->
   {% if section.settings.image_logo != blank %}
     <div class="header__heading-logo-wrapper">
-      {{ section.settings.image_logo | image_url: width: 200 | image_tag: 
-        class: 'header__heading-logo',
-        alt: shop.name 
-      }}
+      {{ section.settings.image_logo | image_url: width: 200 | image_tag: class: 'header__heading-logo', alt: shop.name }}
     </div>
   {% endif %}
 
+  <!-- Navigation -->
   <nav class="header__nav">
     <ul>
       {% for link in linklists[section.settings.menu].links %}
-        <li class="{% if link.links != blank %}has-submenu{% endif %}">
+        <li class="has-submenu">
           <a href="{{ link.url }}">{{ link.title }}</a>
 
-        
+          <!-- Simple / Multi-Level Submenu -->
           {% if link.links != blank %}
             <ul class="submenu">
               {% for sublink in link.links %}
-                <li class="{% if sublink.links != blank %}has-submenu{% endif %}">
+                <li class="has-submenu">
                   <a href="{{ sublink.url }}">{{ sublink.title }}</a>
 
                   {% if sublink.links != blank %}
@@ -34,19 +32,15 @@
             </ul>
           {% endif %}
 
-        
+          <!-- Megamenu (optional, with metafields) -->
           {% if link.metafields.megamenu_image != blank %}
             <div class="megamenu">
               {% for sublink in link.links %}
                 <div class="megamenu-column">
                   {% if sublink.metafields.sub_image != blank %}
-                    <a href="{{ sublink.url }}">
-                      {{ sublink.metafields.sub_image | image_url: width: 100 }}" alt="{{ sublink.title }}"
-                      <span>{{ sublink.title }}</span>
-                    </a>
-                  {% else %}
-                    <a href="{{ sublink.url }}">{{ sublink.title }}</a>
+                    {{ sublink.metafields.sub_image | image_url: width: 100 | image_tag: alt: sublink.title }}
                   {% endif %}
+                  <a href="{{ sublink.url }}">{{ sublink.title }}</a>
                 </div>
               {% endfor %}
             </div>
@@ -75,10 +69,7 @@
 }
 
 /* Logo */
-.header__heading-logo-wrapper {
-  max-width: 120px;
-  flex-shrink: 0;
-}
+.header__heading-logo-wrapper { max-width: 120px; flex-shrink: 0; }
 .header__heading-logo { max-width: 100%; height: auto; }
 
 /* Menu */
@@ -91,7 +82,6 @@
   gap: 25px;
   position: relative;
 }
-
 .header__nav ul li { position: relative; }
 .header__nav ul li a {
   text-decoration: none;
@@ -102,6 +92,7 @@
 }
 .header__nav ul li a:hover { color: #007bff; }
 
+/* Submenu */
 .submenu {
   display: none;
   position: absolute;
@@ -117,7 +108,7 @@
 .submenu li { position: relative; }
 .submenu li .submenu { left: 100%; top: 0; }
 
-
+/* Megamenu */
 .megamenu {
   display: none;
   position: absolute;
@@ -135,6 +126,7 @@
 .megamenu-column img { width: 100%; max-width: 100px; }
 .megamenu-column span { display: block; text-align: center; margin-top: 5px; }
 
+/* Right Icons */
 .header__icons { display: flex; gap: 15px; }
 .header__icons .icon {
   font-size: 18px;
