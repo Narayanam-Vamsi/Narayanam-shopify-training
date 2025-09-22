@@ -146,7 +146,9 @@
       "name": "header_navigation",
       "settings": {
         "image_logo": "shopify://shop_images/CENTELLA_1.png",
-        "menu": "test_menu"
+        "menu": "test_menu",
+        "mega_image": "shopify://shop_images/Group_14071_1.svg",
+        "mega_text": "hello"
       }
     }
   },
