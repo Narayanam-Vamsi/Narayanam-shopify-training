@@ -1,12 +1,10 @@
 <div class="header-navigation">
 
-
   {% if section.settings.image_logo != blank %}
     <div class="header__heading-logo-wrapper">
       {{ section.settings.image_logo | image_url: width: 200 | image_tag: class: 'header__heading-logo', alt: shop.name }}
     </div>
   {% endif %}
-
 
   <nav class="header__nav">
     <ul>
@@ -15,27 +13,29 @@
           <a href="{{ link.url }}">{{ link.title }}</a>
 
           {% if link.links != blank %}
-            <ul class="submenu">
-              {% for sublink in link.links %}
-                <li class="has-submenu">
-                  <a href="{{ sublink.url }}">{{ sublink.title }}</a>
-
-                  {% if sublink.links != blank %}
-                    <ul class="submenu">
-                      {% for sub2 in sublink.links %}
-                        <li><a href="{{ sub2.url }}">{{ sub2.title }}</a></li>
-                      {% endfor %}
-                    </ul>
-                  {% endif %}
-                </li>
-              {% endfor %}
-            </ul>
+            <div class="dropdown">
+              <div class="dropdown-columns">
+                {% for sublink in link.links %}
+                  <div class="column">
+                    <h4 class="column-title">
+                      <a href="{{ sublink.url }}">{{ sublink.title }}</a>
+                    </h4>
+                    {% if sublink.links != blank %}
+                      <ul class="column-list">
+                        {% for sub2 in sublink.links %}
+                          <li><a href="{{ sub2.url }}">{{ sub2.title }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
           {% endif %}
         </li>
       {% endfor %}
     </ul>
   </nav>
-
 
   <div class="header__icons">
     <a href="/search" class="icon">🔍</a>
@@ -45,17 +45,23 @@
 </div>
 
 <style>
+
 .header-navigation {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 12px 20px;
   background: #fff;
   border-bottom: 1px solid #eee;
+    position: relative;
 }
 
-.header__heading-logo-wrapper { max-width: 120px; flex-shrink: 0; }
-.header__heading-logo { max-width: 100%; height: auto; }
+.header__heading-logo-wrapper { 
+  max-width: 140px; 
+  flex-shrink: 0; }
+.header__heading-logo { 
+  max-width: 100%; height: auto;
+ }
 
 
 .header__nav > ul {
@@ -63,54 +69,100 @@
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 25px;
+  gap: 20px;
 }
 
-.header__nav > ul > li { position: relative; }
+.header__nav > ul > li {
+}
+
 .header__nav > ul > li > a {
   text-decoration: none;
   color: #333;
   font-weight: 500;
   padding: 10px;
-  transition: color 0.3s ease;
 }
-.header__nav > ul > li > a:hover { color: #007bff; }
+
+.header__nav > ul > li > a:hover {
+  color: #000;
+}
 
 
-.header__nav > ul > li.has-submenu > .submenu {
+.dropdown {
   display: none;
   position: absolute;
   top: 100%;
-  left: 0;
+  left:0;
   background: #fff;
-  border: 1px solid #eee;
-  padding: 10px;
-  width: 1000px;
+  padding: 20px 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
   z-index: 999;
+  width: 100% ;
 }
-.header__nav > ul > li.has-submenu:hover > .submenu { display: block; }
 
-
-.submenu li.has-submenu > .submenu {
-  display: none;
-  position: absolute;
-  top: 100%;
-    left: 0;
-  width: 1000px;
-  background: #fff;
-  border: 1px solid #eee;
-  padding: 10px;
+.header__nav > ul > li.has-submenu:hover > .dropdown {
+  display: flex;
 }
-.submenu li.has-submenu:hover > .submenu { display: block; }
 
 
-.header__icons { display: flex; gap: 15px; }
+.dropdown-columns {
+  display: flex;
+  gap: 100px;
+}
+
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.column-title a {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: inline-block;
+  color: #111;
+  text-decoration: none;
+}
+
+.column-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.column-list li {
+  margin-bottom: 8px;
+}
+
+.column-list li a {
+  text-decoration: none;
+  font-size: 14px;
+  color: #555;
+  transition: color 0.2s ease;
+}
+
+.column-list li a:hover {
+  color: #007bff;
+  font-weight: 600;
+}
+
+
+.header__icons {
+  display: flex;
+  gap: 15px;
+}
+
 .header__icons .icon {
   font-size: 18px;
   text-decoration: none;
   color: #333;
 }
-.header__icons .icon:hover { color: #007bff; }
+
+.header__icons .icon:hover {
+  color: #007bff;
+}
 </style>
 
 {% schema %}
