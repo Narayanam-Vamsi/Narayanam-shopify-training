@@ -1,10 +1,12 @@
 <div class="header-navigation">
 
+
   {% if section.settings.image_logo != blank %}
     <div class="header__heading-logo-wrapper">
       {{ section.settings.image_logo | image_url: width: 200 | image_tag: class: 'header__heading-logo', alt: shop.name }}
     </div>
   {% endif %}
+
 
   <nav class="header__nav">
     <ul>
@@ -13,42 +15,27 @@
           <a href="{{ link.url }}">{{ link.title }}</a>
 
           {% if link.links != blank %}
-            <div class="mega-menu">
-              <div class="mega-menu__content">
-                
-                <!-- Left side - categories in columns -->
-                <div class="mega-menu__columns">
-                  {% for sublink in link.links %}
-                    <div class="mega-menu__column">
-                      <h4 class="mega-title">{{ sublink.title }}</h4>
-                      {% if sublink.links != blank %}
-                        <ul>
-                          {% for sub2 in sublink.links %}
-                            <li><a href="{{ sub2.url }}">{{ sub2.title }}</a></li>
-                          {% endfor %}
-                        </ul>
-                      {% endif %}
-                    </div>
-                  {% endfor %}
-                </div>
+            <ul class="submenu">
+              {% for sublink in link.links %}
+                <li class="has-submenu">
+                  <a href="{{ sublink.url }}">{{ sublink.title }}</a>
 
-                <!-- Right side - image / special offerings -->
-                <div class="mega-menu__banner">
-                  {% if section.settings.mega_image != blank %}
-                    <img src="{{ section.settings.mega_image | image_url: width: 400 }}" alt="Promo">
+                  {% if sublink.links != blank %}
+                    <ul class="submenu">
+                      {% for sub2 in sublink.links %}
+                        <li><a href="{{ sub2.url }}">{{ sub2.title }}</a></li>
+                      {% endfor %}
+                    </ul>
                   {% endif %}
-                  {% if section.settings.mega_text != blank %}
-                    <p>{{ section.settings.mega_text }}</p>
-                  {% endif %}
-                </div>
-
-              </div>
-            </div>
+                </li>
+              {% endfor %}
+            </ul>
           {% endif %}
         </li>
       {% endfor %}
     </ul>
   </nav>
+
 
   <div class="header__icons">
     <a href="/search" class="icon">🔍</a>
@@ -70,6 +57,7 @@
 .header__heading-logo-wrapper { max-width: 120px; flex-shrink: 0; }
 .header__heading-logo { max-width: 100%; height: auto; }
 
+
 .header__nav > ul {
   list-style: none;
   margin: 0;
@@ -77,6 +65,7 @@
   display: flex;
   gap: 25px;
 }
+
 .header__nav > ul > li { position: relative; }
 .header__nav > ul > li > a {
   text-decoration: none;
@@ -87,74 +76,34 @@
 }
 .header__nav > ul > li > a:hover { color: #007bff; }
 
-/* Mega menu */
-.mega-menu {
+
+.header__nav > ul > li.has-submenu > .submenu {
   display: none;
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100vw;
   background: #fff;
-  border-top: 1px solid #eee;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  padding: 30px;
+  border: 1px solid #eee;
+  padding: 10px;
+  width: 1000px;
   z-index: 999;
 }
+.header__nav > ul > li.has-submenu:hover > .submenu { display: block; }
 
-.header__nav > ul > li.has-submenu:hover > .mega-menu { display: block; }
 
-.mega-menu__content {
-  display: flex;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  gap: 40px;
+.submenu li.has-submenu > .submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+    left: 0;
+  width: 1000px;
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 10px;
 }
+.submenu li.has-submenu:hover > .submenu { display: block; }
 
-/* Left columns */
-.mega-menu__columns {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  flex: 2;
-}
 
-.mega-menu__column h4 {
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-}
-.mega-menu__column ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.mega-menu__column ul li a {
-  display: block;
-  padding: 4px 0;
-  color: #333;
-  text-decoration: none;
-  font-size: 14px;
-}
-.mega-menu__column ul li a:hover { color: #007bff; }
-
-/* Right banner */
-.mega-menu__banner {
-  flex: 1;
-  text-align: center;
-}
-.mega-menu__banner img {
-  max-width: 100%;
-  border-radius: 8px;
-}
-.mega-menu__banner p {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #333;
-}
-
-/* Icons */
 .header__icons { display: flex; gap: 15px; }
 .header__icons .icon {
   font-size: 18px;
@@ -177,16 +126,6 @@
       "type": "link_list",
       "id": "menu",
       "label": "Menu"
-    },
-    {
-      "type": "image_picker",
-      "id": "mega_image",
-      "label": "Mega Menu Banner"
-    },
-    {
-      "type": "text",
-      "id": "mega_text",
-      "label": "Mega Menu Text"
     }
   ],
   "presets": [
