@@ -1,5 +1,5 @@
 <div class="header-navigation">
-  <!-- Logo -->
+  
   {% if section.settings.image_logo != blank %}
     <div class="header__heading-logo-wrapper">
       {{ section.settings.image_logo | image_url: width: 200 | image_tag: 
@@ -12,15 +12,51 @@
   <nav class="header__nav">
     <ul>
       {% for link in linklists[section.settings.menu].links %}
-        <li>
-          <a href="{{ link.url }}">
-            {{ link.title }}
-          </a>
+        <li class="{% if link.links != blank %}has-submenu{% endif %}">
+          <a href="{{ link.url }}">{{ link.title }}</a>
+
+          <!-- Simple Submenu or Multi-Level -->
+          {% if link.links != blank %}
+            <ul class="submenu">
+              {% for sublink in link.links %}
+                <li class="{% if sublink.links != blank %}has-submenu{% endif %}">
+                  <a href="{{ sublink.url }}">{{ sublink.title }}</a>
+
+                  {% if sublink.links != blank %}
+                    <ul class="submenu">
+                      {% for sub2 in sublink.links %}
+                        <li><a href="{{ sub2.url }}">{{ sub2.title }}</a></li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+
+          <!-- Megamenu with Images (optional, using link.image metafield) -->
+          {% if link.metafields.megamenu_image != blank %}
+            <div class="megamenu">
+              {% for sublink in link.links %}
+                <div class="megamenu-column">
+                  {% if sublink.metafields.sub_image != blank %}
+                    <a href="{{ sublink.url }}">
+                      <img src="{{ sublink.metafields.sub_image | image_url: width: 100 }}" alt="{{ sublink.title }}">
+                      <span>{{ sublink.title }}</span>
+                    </a>
+                  {% else %}
+                    <a href="{{ sublink.url }}">{{ sublink.title }}</a>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
         </li>
       {% endfor %}
     </ul>
   </nav>
 
+  <!-- Right Icons -->
   <div class="header__icons">
     <a href="/search" class="icon">🔍</a>
     <a href="/account" class="icon">👤</a>
@@ -43,11 +79,7 @@
   max-width: 120px;
   flex-shrink: 0;
 }
-
-.header__heading-logo {
-  max-width: 100%;
-  height: auto;
-}
+.header__heading-logo { max-width: 100%; height: auto; }
 
 /* Menu */
 .header__nav ul {
@@ -57,8 +89,10 @@
   display: flex; 
   justify-content: center;
   gap: 25px;
+  position: relative;
 }
 
+.header__nav ul li { position: relative; }
 .header__nav ul li a {
   text-decoration: none;
   color: #333;
@@ -66,26 +100,48 @@
   padding: 10px;
   transition: color 0.3s ease;
 }
+.header__nav ul li a:hover { color: #007bff; }
 
-.header__nav ul li a:hover {
-  color: #007bff;
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 10px;
+  min-width: 180px;
+  z-index: 999;
 }
+.has-submenu:hover > .submenu { display: block; }
+.submenu li { position: relative; }
+.submenu li .submenu { left: 100%; top: 0; }
 
-/* Right Icons */
-.header__icons {
+
+.megamenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 600px;
+  background: #fff;
+  border: 1px solid #eee;
   display: flex;
   gap: 15px;
+  padding: 15px;
+  z-index: 999;
 }
+.has-submenu:hover > .megamenu { display: flex; }
+.megamenu-column img { width: 100%; max-width: 100px; }
+.megamenu-column span { display: block; text-align: center; margin-top: 5px; }
 
+.header__icons { display: flex; gap: 15px; }
 .header__icons .icon {
   font-size: 18px;
   text-decoration: none;
   color: #333;
 }
-
-.header__icons .icon:hover {
-  color: #007bff;
-}
+.header__icons .icon:hover { color: #007bff; }
 </style>
 
 {% schema %}
@@ -104,9 +160,7 @@
     }
   ],
   "presets": [
-    {
-      "name": "header_navigation"
-    }
+    { "name": "header_navigation" }
   ]
 }
 {% endschema %}
