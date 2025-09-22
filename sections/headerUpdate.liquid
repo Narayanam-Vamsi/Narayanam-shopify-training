@@ -6,51 +6,43 @@
     </div>
   {% endif %}
 
-  <!-- Navigation -->
   <nav class="header__nav">
     <ul>
       {% for link in linklists[section.settings.menu].links %}
         <li class="has-submenu">
           <a href="{{ link.url }}">{{ link.title }}</a>
 
-          <!-- Simple / Multi-Level Submenu -->
-          {% if link.links != blank %}
+          {% if link.metafields.megamenu_image != blank %}
+         
+            <div class="megamenu">
+         
+              <div class="megamenu-column">
+                <h4>{{ link.title }}</h4>
+                <ul>
+                  {% for sublink in link.links %}
+                    <li><a href="{{ sublink.url }}">{{ sublink.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+
+              <div class="megamenu-column">
+                {{ link.metafields.megamenu_image | image_url: width: 300 | image_tag: alt: link.title }}
+              </div>
+            </div>
+
+          {% elsif link.links != blank %}
+         
             <ul class="submenu">
               {% for sublink in link.links %}
-                <li class="has-submenu">
-                  <a href="{{ sublink.url }}">{{ sublink.title }}</a>
-
-                  {% if sublink.links != blank %}
-                    <ul class="submenu">
-                      {% for sub2 in sublink.links %}
-                        <li><a href="{{ sub2.url }}">{{ sub2.title }}</a></li>
-                      {% endfor %}
-                    </ul>
-                  {% endif %}
-                </li>
+                <li><a href="{{ sublink.url }}">{{ sublink.title }}</a></li>
               {% endfor %}
             </ul>
-          {% endif %}
-
-          <!-- Megamenu (optional, with metafields) -->
-          {% if link.metafields.megamenu_image != blank %}
-            <div class="megamenu">
-              {% for sublink in link.links %}
-                <div class="megamenu-column">
-                  {% if sublink.metafields.sub_image != blank %}
-                    {{ sublink.metafields.sub_image | image_url: width: 100 | image_tag: alt: sublink.title }}
-                  {% endif %}
-                  <a href="{{ sublink.url }}">{{ sublink.title }}</a>
-                </div>
-              {% endfor %}
-            </div>
           {% endif %}
         </li>
       {% endfor %}
     </ul>
   </nav>
 
-  <!-- Right Icons -->
   <div class="header__icons">
     <a href="/search" class="icon">🔍</a>
     <a href="/account" class="icon">👤</a>
@@ -68,11 +60,11 @@
   border-bottom: 1px solid #eee;
 }
 
-/* Logo */
+
 .header__heading-logo-wrapper { max-width: 120px; flex-shrink: 0; }
 .header__heading-logo { max-width: 100%; height: auto; }
 
-/* Menu */
+
 .header__nav ul {
   list-style: none;
   margin: 0;
@@ -92,7 +84,6 @@
 }
 .header__nav ul li a:hover { color: #007bff; }
 
-/* Submenu */
 .submenu {
   display: none;
   position: absolute;
@@ -108,25 +99,51 @@
 .submenu li { position: relative; }
 .submenu li .submenu { left: 100%; top: 0; }
 
-/* Megamenu */
+
 .megamenu {
   display: none;
   position: absolute;
   top: 100%;
   left: 0;
-  width: 600px;
+  width: 800px;
   background: #fff;
   border: 1px solid #eee;
+  padding: 20px;
   display: flex;
-  gap: 15px;
-  padding: 15px;
+  gap: 30px;
   z-index: 999;
 }
 .has-submenu:hover > .megamenu { display: flex; }
-.megamenu-column img { width: 100%; max-width: 100px; }
-.megamenu-column span { display: block; text-align: center; margin-top: 5px; }
 
-/* Right Icons */
+.megamenu-column {
+  flex: 1;
+}
+.megamenu-column h4 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.megamenu-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.megamenu-column ul li {
+  margin-bottom: 8px;
+}
+.megamenu-column ul li a {
+  color: #333;
+  text-decoration: none;
+}
+.megamenu-column ul li a:hover {
+  color: #007bff;
+}
+.megamenu-column img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 .header__icons { display: flex; gap: 15px; }
 .header__icons .icon {
   font-size: 18px;
