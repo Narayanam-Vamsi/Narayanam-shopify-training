@@ -15,7 +15,7 @@
         <li class="{% if link.links != blank %}has-submenu{% endif %}">
           <a href="{{ link.url }}">{{ link.title }}</a>
 
-          <!-- Simple Submenu or Multi-Level -->
+        
           {% if link.links != blank %}
             <ul class="submenu">
               {% for sublink in link.links %}
@@ -34,14 +34,14 @@
             </ul>
           {% endif %}
 
-          <!-- Megamenu with Images (optional, using link.image metafield) -->
+        
           {% if link.metafields.megamenu_image != blank %}
             <div class="megamenu">
               {% for sublink in link.links %}
                 <div class="megamenu-column">
                   {% if sublink.metafields.sub_image != blank %}
                     <a href="{{ sublink.url }}">
-                      <img src="{{ sublink.metafields.sub_image | image_url: width: 100 }}" alt="{{ sublink.title }}">
+                      {{ sublink.metafields.sub_image | image_url: width: 100 }}" alt="{{ sublink.title }}"
                       <span>{{ sublink.title }}</span>
                     </a>
                   {% else %}
