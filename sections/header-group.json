@@ -140,6 +140,14 @@
       "settings": {
         "default_date": ""
       }
+    },
+    "header_update_JERUjk": {
+      "type": "headerUpdate",
+      "name": "header_navigation",
+      "settings": {
+        "image_logo": "shopify://shop_images/CENTELLA_1.png",
+        "menu": "menu3"
+      }
     }
   },
   "order": [
@@ -148,6 +156,7 @@
     "announcement-bar",
     "anouncement_bar_update_nyqPAH",
     "header",
-    "datepicker_KwMrUe"
+    "datepicker_KwMrUe",
+    "header_update_JERUjk"
   ]
 }
