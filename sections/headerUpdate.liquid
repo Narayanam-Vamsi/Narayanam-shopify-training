@@ -1,23 +1,14 @@
 <div class="header-navigation">
-  {%- if settings.logo != blank -%}
+  <!-- Logo -->
+  {% if section.settings.image_logo != blank %}
     <div class="header__heading-logo-wrapper">
-      {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-      {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-      {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-      {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-      {{ settings.logo | image_url: width: 600 | image_tag:
-        class: 'header__heading-logo motion-reduce',
-        widths: widths,
-        height: logo_height,
-        width: settings.logo_width,
-        alt: logo_alt,
-        sizes: sizes,
-        preload: true
+      {{ section.settings.image_logo | image_url: width: 200 | image_tag: 
+        class: 'header__heading-logo',
+        alt: shop.name 
       }}
     </div>
   {% endif %}
 
-  
   <nav class="header__nav">
     <ul>
       {% for link in linklists[section.settings.menu].links %}
@@ -30,7 +21,6 @@
     </ul>
   </nav>
 
- 
   <div class="header__icons">
     <a href="/search" class="icon">🔍</a>
     <a href="/account" class="icon">👤</a>
@@ -52,6 +42,11 @@
 .header__heading-logo-wrapper {
   max-width: 120px;
   flex-shrink: 0;
+}
+
+.header__heading-logo {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Menu */
@@ -97,6 +92,11 @@
 {
   "name": "header_navigation",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_logo",
+      "label": "Logo Image"
+    },
     {
       "type": "link_list",
       "id": "menu",
