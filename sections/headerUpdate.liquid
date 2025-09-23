@@ -272,3 +272,25 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+
+
+{% schema %}
+{
+  "name": "header_navigation",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu"
+    }
+  ],
+  "presets": [
+    { "name": "header_navigation" }
+  ]
+}
+{% endschema %}
