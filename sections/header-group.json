@@ -84,20 +84,22 @@
     },
     "header": {
       "type": "header",
-      "blocks": {
-        "menu_block_Hf8eAY": {
-          "type": "menu_block",
-          "settings": {
-            "title": "Shop",
-            "menu_links": ""
-          }
-        }
-      },
-      "block_order": [
-        "menu_block_Hf8eAY"
-      ],
+      "disabled": true,
       "custom_css": [],
-      "settings": {}
+      "settings": {
+        "desktop_header_layout": "nav-center",
+        "menu": "main-menu",
+        "sticky_header_type": "on-scroll-up",
+        "show_line_separator": true,
+        "megamenu_width": "fullwidth",
+        "color_scheme": "",
+        "menu_color_scheme": "",
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "mobile_logo_position": "center",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
     },
     "datepicker_KwMrUe": {
       "type": "datepicker",
