@@ -84,11 +84,41 @@
     },
     "header": {
       "type": "header",
-      "disabled": true,
+      "blocks": {
+        "mega_menu_gHg6jb": {
+          "type": "mega-menu",
+          "settings": {
+            "menu_title": "Home",
+            "menu_link": "shopify://collections",
+            "menu-block": ""
+          }
+        },
+        "mega_menu_hniFer": {
+          "type": "mega-menu",
+          "settings": {
+            "menu_title": "About",
+            "menu_link": "",
+            "menu-block": ""
+          }
+        },
+        "mega_menu_pUfjy9": {
+          "type": "mega-menu",
+          "settings": {
+            "menu_title": "Collections",
+            "menu_link": "",
+            "menu-block": "main-menu"
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_gHg6jb",
+        "mega_menu_hniFer",
+        "mega_menu_pUfjy9"
+      ],
       "custom_css": [],
       "settings": {
         "desktop_header_layout": "nav-center",
-        "menu": "main-menu",
+        "menu": "bie-footer",
         "sticky_header_type": "on-scroll-up",
         "show_line_separator": true,
         "megamenu_width": "fullwidth",
@@ -147,6 +177,7 @@
         "menu_block_ErPEnn",
         "menu_block_nQFMTb"
       ],
+      "disabled": true,
       "name": "header_navigation",
       "settings": {
         "image_logo": "shopify://shop_images/CENTELLA_1.png"
