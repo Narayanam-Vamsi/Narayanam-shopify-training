@@ -1,18 +1,15 @@
 <div class="header-navigation">
 
-  <!-- Hamburger Menu (mobile only) -->
   <button class="hamburger" aria-label="Menu">
     ☰
   </button>
 
-  <!-- Logo -->
   {% if section.settings.image_logo != blank %}
     <div class="header__heading-logo-wrapper">
       {{ section.settings.image_logo | image_url: width: 200 | image_tag: class: 'header__heading-logo', alt: shop.name }}
     </div>
   {% endif %}
 
-  <!-- Desktop Navigation -->
   <nav class="header__nav">
     <ul>
       {% for block in section.blocks %}
@@ -44,7 +41,7 @@
     </ul>
   </nav>
 
-  <!-- Icons -->
+
   <div class="header__icons">
     <a href="/search" class="icon">🔍</a>
     <a href="/account" class="icon">👤</a>
@@ -52,7 +49,7 @@
   </div>
 </div>
 
-<!-- Mobile Drawer -->
+
 <div class="mobile-drawer">
   <button class="close-drawer">✕</button>
   <ul>
@@ -80,8 +77,9 @@
   </ul>
 </div>
 
+
 <style>
-/* Header */
+
 .header-navigation {
   display: flex;
   align-items: center;
@@ -175,7 +173,7 @@
   color: #007bff;
 }
 
-/* Hamburger - Mobile */
+
 .hamburger {
   display: none;
   font-size: 24px;
@@ -184,7 +182,6 @@
   cursor: pointer;
 }
 
-/* Mobile Drawer */
 .mobile-drawer {
   position: fixed;
   top: 0;
@@ -234,7 +231,7 @@ left:0;
   color: #007bff;
 }
 
-/* Responsive */
+
 @media (max-width: 991px) {
   .header__nav {
     display: none;
@@ -312,3 +309,4 @@ document.addEventListener('DOMContentLoaded', function() {
         ]
        }
 {% endschema %}
+
