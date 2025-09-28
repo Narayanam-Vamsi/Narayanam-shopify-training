@@ -106,7 +106,7 @@
           "settings": {
             "menu_title": "Collections",
             "menu_link": "",
-            "menu-block": "main-menu"
+            "menu-block": ""
           }
         }
       },
@@ -138,50 +138,6 @@
       "settings": {
         "default_date": ""
       }
-    },
-    "header_update_JERUjk": {
-      "type": "headerUpdate",
-      "blocks": {
-        "menu_block_kYtHGF": {
-          "type": "menu_block",
-          "settings": {
-            "title": "Home",
-            "menu_links": "test_menu"
-          }
-        },
-        "menu_block_G7yffc": {
-          "type": "menu_block",
-          "settings": {
-            "title": "Shop",
-            "menu_links": "bie-footer"
-          }
-        },
-        "menu_block_ErPEnn": {
-          "type": "menu_block",
-          "settings": {
-            "title": "About",
-            "menu_links": "bie-footer2"
-          }
-        },
-        "menu_block_nQFMTb": {
-          "type": "menu_block",
-          "settings": {
-            "title": "Media",
-            "menu_links": "bie-footer4"
-          }
-        }
-      },
-      "block_order": [
-        "menu_block_kYtHGF",
-        "menu_block_G7yffc",
-        "menu_block_ErPEnn",
-        "menu_block_nQFMTb"
-      ],
-      "disabled": true,
-      "name": "header_navigation",
-      "settings": {
-        "image_logo": "shopify://shop_images/CENTELLA_1.png"
-      }
     }
   },
   "order": [
@@ -190,7 +146,6 @@
     "announcement-bar",
     "anouncement_bar_update_nyqPAH",
     "header",
-    "datepicker_KwMrUe",
-    "header_update_JERUjk"
+    "datepicker_KwMrUe"
   ]
 }
