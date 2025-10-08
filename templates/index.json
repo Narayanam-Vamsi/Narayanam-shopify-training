@@ -1065,23 +1065,6 @@
         "padding_bottom": 36
       }
     },
-    "our_story_t1_6iNmRD": {
-      "type": "our-story-t1",
-      "disabled": true,
-      "settings": {
-        "margin_bottom_desktop": 36,
-        "margin_bottom_mobile": 36,
-        "brand_name": "SWAYAM",
-        "brand_description": "",
-        "color-background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(0, 0, 0, 1) 100%)",
-        "buttons_alignment": "center",
-        "button-bg": "#000000",
-        "first_button_link": "",
-        "first_button": "Explore",
-        "second_button_link": "",
-        "second_button": "Contact Us"
-      }
-    },
     "footer_update_fxKgVM": {
       "type": "footer-update",
       "blocks": {
@@ -1150,7 +1133,6 @@
     "media_logo_updated_Ca4P3i",
     "bbd238b4-605a-4761-9c7b-1ed49defc2b1",
     "our_story_t4_je7eAn",
-    "our_story_t1_6iNmRD",
     "footer_update_fxKgVM"
   ]
 }
