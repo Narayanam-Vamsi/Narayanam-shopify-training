@@ -1107,8 +1107,8 @@
         "progress_step_PyzhmR": {
           "type": "progress_step",
           "settings": {
-            "step_image": "shopify://shop_images/Frame_65.png",
-            "step_title": "<p>Date 8-9: <strong>Design Confirmation</strong></p>",
+            "step_image": "shopify://shop_images/Frame_65_1.png",
+            "step_title": "<p>Date 8-9: <strong>Metal Preparation</strong></p>",
             "step_description": "Your ring design is finalized and approved for production",
             "step_status": "Completed"
           }
