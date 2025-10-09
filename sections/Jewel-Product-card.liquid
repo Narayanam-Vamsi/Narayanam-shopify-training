@@ -54,6 +54,7 @@
   position: relative;
   z-index: 1;
   overflow: hidden; 
+  width:100%;
 }
 
 
@@ -107,7 +108,7 @@
   background: #1D1D1F;
 }
 
-/* hide pagination on desktop */
+
 @media (min-width: 1024px) {
   .progress-tracker-section .pagination-below {
     display: none !important;
@@ -120,9 +121,6 @@ document.addEventListener("DOMContentLoaded", function () {
   new Swiper(".progress-swiper", {
     slidesPerView: 1.5,
     spaceBetween: 16,
-    centeredSlides: false,      // align slides to left
-    watchOverflow: true,        // disable if not enough slides
-    freeMode: false,            // prevent free scrolling
     pagination: {
       el: ".pagination-below",
       clickable: true,
