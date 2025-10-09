@@ -9,26 +9,27 @@
           {% endif %}
           <h4 class="step-title">{{ block.settings.step_title }}</h4>
           <p class="step-desc">{{ block.settings.step_description }}</p>
-          <p class="status {{ status_class }}">
-            Status: {{ block.settings.step_status }}
-          </p>
+         <p class="status {{ status_class }}">
+  <span class="status-label">Status:</span> {{ block.settings.step_status }}
+</p>
         </div>
       {% endfor %}
     </div>
 
+
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
-
-    <!-- Keep pagination here -->
-    <div class="swiper-pagination pagination-below"></div>
   </div>
+
+ 
+  <div class="swiper-pagination pagination-below"></div>
 </section>
 
 <style>
 
 .progress-tracker-section {
   width: 100%;
-  margin: 10px auto;
+margin: 10px auto 50px; 
   position: relative;
 }
 
@@ -82,23 +83,33 @@
   color: #000;
 }
 
+.progress-tracker-section .progress-swiper {
+  position: relative;
+  z-index: 1;
+}
+
 .progress-tracker-section .pagination-below {
   position: absolute;
+  bottom: -35px;  /* pushes it below swiper */
   left: 50%;
   transform: translateX(-50%);
-  bottom: -30px;  /* pushes pagination outside swiper */
   text-align: center;
-  z-index: 10;
+  z-index: 5;
 }
 
 .progress-tracker-section .swiper-pagination-bullet {
-  background: blue; 
+  background: #000; 
   opacity: 0.5;
   width: 10px;
   height: 10px;
   margin: 0 4px;
 }
 
+
+.progress-step .status-label {
+  color: #000;   
+  font-weight: 400;
+}
 .progress-tracker-section .swiper-pagination-bullet-active {
   opacity: 1;
   background: #000;
@@ -144,7 +155,7 @@
       ]
     }
   ],
-"max_blocks": 12,
+
   "presets": [
     {
       "name": "Progress_Tracker",
@@ -171,7 +182,9 @@ document.addEventListener("DOMContentLoaded", function () {
       768: { slidesPerView: 1.5 },
       1024: { slidesPerView: 3 },
       1280: { slidesPerView: 4.5 }
-    }
+
+    },
+      
   });
 });
 </script>
