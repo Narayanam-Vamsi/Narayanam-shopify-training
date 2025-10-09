@@ -16,13 +16,12 @@
       {% endfor %}
     </div>
 
-
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
-  </div>
 
- 
-  <div class="swiper-pagination pagination-below"></div>
+    <!-- Keep pagination here -->
+    <div class="swiper-pagination pagination-below"></div>
+  </div>
 </section>
 
 <style>
@@ -83,14 +82,17 @@
   color: #000;
 }
 
-
 .progress-tracker-section .pagination-below {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -30px;  /* pushes pagination outside swiper */
   text-align: center;
-  margin-top: 20px; 
+  z-index: 10;
 }
 
 .progress-tracker-section .swiper-pagination-bullet {
-  background: #000; 
+  background: blue; 
   opacity: 0.5;
   width: 10px;
   height: 10px;
@@ -142,7 +144,7 @@
       ]
     }
   ],
-  "max_blocks": 12,
+"max_blocks": 12,
   "presets": [
     {
       "name": "Progress_Tracker",
