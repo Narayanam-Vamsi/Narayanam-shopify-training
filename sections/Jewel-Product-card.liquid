@@ -9,30 +9,26 @@
           {% endif %}
           <h4 class="step-title">{{ block.settings.step_title }}</h4>
           <p class="step-desc">{{ block.settings.step_description }}</p>
-         <p class="status {{ status_class }}">
-  <span class="status-label">Status:</span> {{ block.settings.step_status }}
-</p>
+          <p class="status {{ status_class }}">
+            <span class="status-label">Status:</span> {{ block.settings.step_status }}
+          </p>
         </div>
       {% endfor %}
     </div>
-
 
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
   </div>
 
- 
   <div class="swiper-pagination pagination-below"></div>
 </section>
 
 <style>
-
 .progress-tracker-section {
   width: 100%;
-margin: 10px auto 50px; 
+  margin: 10px auto 50px; 
   position: relative;
 }
-
 
 .progress-step {
   border-radius: 10px;
@@ -41,19 +37,23 @@ margin: 10px auto 50px;
   text-align: left;
 }
 
-
 .progress-step img {
   width: 100%;
   border-radius: 10px;
   margin-bottom: 10px;
 }
 
-
 .progress-step .step-title {
   font-family: 'Lato', sans-serif;
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 10px;
+}
+
+.progress-tracker-section .progress-swiper {
+  position: relative;
+  z-index: 1;
+  overflow: hidden; 
 }
 
 
@@ -65,32 +65,24 @@ margin: 10px auto 50px;
   color: #86868B;
 }
 
-
 .progress-step .status {
   font-family: 'Lato', sans-serif;
   font-size: 14px;
   font-weight: 400;
 }
 
-
 .progress-step .status.completed { color: #369F2D; }     
 .progress-step .status.in-progress { color: #8A38F5; }    
 .progress-step .status.pending { color: #86868B; }        
-
 
 .swiper-button-prev,
 .swiper-button-next {
   color: #000;
 }
 
-.progress-tracker-section .progress-swiper {
-  position: relative;
-  z-index: 1;
-}
-
 .progress-tracker-section .pagination-below {
   position: absolute;
-  bottom: -35px;  /* pushes it below swiper */
+  bottom: -35px;  
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -98,23 +90,56 @@ margin: 10px auto 50px;
 }
 
 .progress-tracker-section .swiper-pagination-bullet {
-  background: #000; 
+  background: #D9D9D9; 
   opacity: 0.5;
   width: 10px;
   height: 10px;
   margin: 0 4px;
 }
 
-
 .progress-step .status-label {
   color: #000;   
   font-weight: 400;
 }
+
 .progress-tracker-section .swiper-pagination-bullet-active {
   opacity: 1;
-  background: #000;
+  background: #1D1D1F;
+}
+
+/* hide pagination on desktop */
+@media (min-width: 1024px) {
+  .progress-tracker-section .pagination-below {
+    display: none !important;
+  }
 }
 </style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  new Swiper(".progress-swiper", {
+    slidesPerView: 1.5,
+    spaceBetween: 16,
+    centeredSlides: false,      // align slides to left
+    watchOverflow: true,        // disable if not enough slides
+    freeMode: false,            // prevent free scrolling
+    pagination: {
+      el: ".pagination-below",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+      768: { slidesPerView: 1.5 },
+      1024: { slidesPerView: 3 },
+      1600: { slidesPerView: 4.5 }
+    },
+  });
+});
+</script>
+
 
 {% schema %}
 {
@@ -165,26 +190,3 @@ margin: 10px auto 50px;
 }
 {% endschema %}
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  new Swiper(".progress-swiper", {
-    slidesPerView: 1.5,
-    spaceBetween: 16,
-    pagination: {
-      el: ".pagination-below", 
-      clickable: true,
-    },
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    breakpoints: {
-      768: { slidesPerView: 1.5 },
-      1024: { slidesPerView: 3 },
-      1600: { slidesPerView: 4.5 }
-
-    },
-      
-  });
-});
-</script>
